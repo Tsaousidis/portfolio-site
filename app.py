@@ -3,8 +3,9 @@ from flask_mail import Mail, Message
 from dotenv import load_dotenv
 import os
 
-# Load environment variables from .env file
-load_dotenv()
+# Load environment variables from .env file in development
+if os.path.exists('.env'):
+    load_dotenv()
 
 app = Flask(__name__)
 
@@ -17,8 +18,8 @@ if not app.secret_key:
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('EMAIL_USER')  # Set this in environment variables
-app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASS')  # Set this in environment variables
+app.config['MAIL_USERNAME'] = os.environ.get('EMAIL_USER')
+app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASS')
 app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('EMAIL_USER')
 
 mail = Mail(app)
@@ -66,10 +67,27 @@ def technologies():
 @app.route("/feedback", methods=['GET', 'POST'])
 def feedback():
     if request.method == 'POST':
-        name = request.form.get('name')
-        email = request.form.get('email')
-        subject = request.form.get('subject')
-        message = request.form.get('message')
+        name = request.form.get('name', '').strip()
+        email = request.form.get('email', '').strip()
+        subject = request.form.get('subject', '').strip()
+        message = request.form.get('message', '').strip()
+        
+        # Validate inputs
+        if not all([name, email, subject, message]):
+            flash('All fields are required.', 'error')
+            return redirect(url_for('feedback'))
+        
+        if len(name) < 2 or not name.replace(' ', '').isalpha():
+            flash('Please enter a valid name (letters only).', 'error')
+            return redirect(url_for('feedback'))
+        
+        if len(subject) < 3 or len(subject) > 100:
+            flash('Subject must be between 3 and 100 characters.', 'error')
+            return redirect(url_for('feedback'))
+            
+        if len(message) < 10 or len(message) > 1000:
+            flash('Message must be between 10 and 1000 characters.', 'error')
+            return redirect(url_for('feedback'))
         
         try:
             msg = Message(

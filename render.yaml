@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: portfolio-site
+    name: tsaousidis-konstantinos
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
