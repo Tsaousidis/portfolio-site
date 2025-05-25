@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}My Projects{% endblock %}
+
+{% block content %}
+<h1>My Projects</h1>
+
+<div class="projects-container">
+    {% if projects %}
+        {% for project in projects %}
+        <div class="project-card">
+            <h2>{{ project.title }}</h2>
+            <p class="project-description">{{ project.description }}</p>
+            <div class="project-tech">
+                <h3>Technologies Used:</h3>
+                <ul>
+                    {% for tech in project.technologies %}
+                    <li>{{ tech }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <a href="{{ project.link }}" class="btn project-link" target="_blank">View on GitHub</a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No projects found.</p>
+    {% endif %}
+</div>
+{% endblock %}
