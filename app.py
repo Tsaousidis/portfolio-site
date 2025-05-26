@@ -36,42 +36,42 @@ def projects():
             "description": "Finds cheap flights and sends alerts via SMS.",
             "technologies": ["Python", "APIs", "Twilio", "Amadeus"],
             "link": "https://github.com/Tsaousidis/oop-api-flights-notifier",
-            "image": "static/images/flights_notifier.png"
+            "image": url_for('static', filename='img/flights-notifier.jpg')
         },
         {
             "title": "Billboard to Spotify",
             "description": "Scrapes Billboard songs and creates a Spotify playlist.",
             "technologies": ["Python", "Web Scraping", "Spotify API"],
             "link": "https://github.com/Tsaousidis/scraper-api-billboard-to-spotify",
-            "image": "static/images/billboard_to_spotify.png"
+            "image": url_for('static', filename='img/billboard-to-spotify.jpg')
         },
         {
             "title": "Greek Flash Card Learning App",
             "description": "A simple flash card application built with Python and Tkinter to help users learn Greek vocabulary. The app displays Greek words on flash cards, allowing users to test their knowledge and track progress.",
             "technologies": ["Python", "GUI", "Automation", "Tkinter", "Greek Language"],
             "link": "https://github.com/Tsaousidis/gui-pandas-greek-flashcards",
-            "image": "static/images/greek-flashcards.png"
+            "image": url_for('static', filename='img/greek-flashcards.png')
         },
         {
             "title": "ISS Real-Time Tracker",
             "description": "Track the International Space Station (ISS) in real time with this Python script!",
             "technologies": ["Python", "API", "Automation", "Requests", "Folium"],
             "link": "https://github.com/Tsaousidis/api-folium-iss-tracker",
-            "image": "static/images/iss-tracker.png"
+            "image": url_for('static', filename='img/iss-tracker.png')
         },
         {
             "title": "The Classic Snake Game",
             "description": "A fun and addictive Snake game built using Python's turtle module. Guide the snake, eat the food, grow longer, and avoid crashing into the walls or your own tail. How long can you survive?",
             "technologies": ["Game", "Python", "OOP", "Snake Game", "Turtle"],
             "link": "https://github.com/Tsaousidis/oop-turtle-snake-game",
-            "image": "static/images/turtle-snake-game.png"
+            "image": url_for('static', filename='img/turtle-snake-game.png')
         },
         {
             "title": "Password Manager",
             "description": "A simple password manager built with Python and Tkinter that allows you to generate and store secure passwords efficiently.",
             "technologies": ["Python", "GUI", "Password Manager", "Tkinter"],
             "link": "https://github.com/Tsaousidis/gui-password-manager",
-            "image": "static/images/password-manager.png"
+            "image": url_for('static', filename='img/password-manager.png')
         }
     ]
 

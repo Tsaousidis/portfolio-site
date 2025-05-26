@@ -3,22 +3,56 @@
 {% block title %}My Technologies{% endblock %}
 
 {% block content %}
-<h1>My Technology Stack</h1>
-
 <div class="tech-container">
+    <div class="tech-header">
+        <h1>My Technology Stack</h1>
+        <p class="tech-subtitle">Exploring and mastering modern development tools</p>
+    </div>
+
     {% if technologies %}
         {% for category in technologies %}
-        <div class="tech-category">
-            <h2>{{ category.category }}</h2>
-            <ul class="tech-list">
+        <div class="tech-section" data-aos="fade-up">
+            <div class="tech-section-header">
+                <div class="tech-icon">
+                    {% if category.category == "Programming Languages" %}
+                    <i class="fas fa-code"></i>
+                    {% elif category.category == "Frameworks & Libraries" %}
+                    <i class="fas fa-layer-group"></i>
+                    {% elif category.category == "Tools & Platforms" %}
+                    <i class="fas fa-tools"></i>
+                    {% elif category.category == "Data & Visualization" %}
+                    <i class="fas fa-chart-bar"></i>
+                    {% elif category.category == "AI & Machine Learning" %}
+                    <i class="fas fa-brain"></i>
+                    {% else %}
+                    <i class="fas fa-star"></i>
+                    {% endif %}
+                </div>
+                <h2>{{ category.category }}</h2>
+            </div>
+            
+            <div class="tech-list">
                 {% for item in category.tech_items %}
-                <li>{{ item }}</li>
+                <div class="tech-badge" data-aos="fade-up" data-aos-delay="{{ loop.index * 50 }}">
+                    <span class="tech-badge-text">{{ item }}</span>
+                </div>
                 {% endfor %}
-            </ul>
+            </div>
         </div>
         {% endfor %}
     {% else %}
-        <p>No technologies found.</p>
+        <p class="no-tech">No technologies found.</p>
     {% endif %}
 </div>
+
+<!-- AOS Library -->
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 800,
+        offset: 50,
+        once: true
+    });
+</script>
 {% endblock %} 

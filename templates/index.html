@@ -3,28 +3,200 @@
 {% block title %}Home | Konstantinos Tsaousidis{% endblock %}
 
 {% block content %}
-<h1>👋 Hi, I'm Konstantinos Tsaousidis</h1>
+<!-- Particle background -->
+<div id="particles-js"></div>
 
-<div class="home-container">
-    <div class="intro-card">
-        <h2>🎯 Python Developer | Automation Enthusiast</h2>
-        <p>
-            I'm a self-taught Python developer with a passion for building small but complete applications that automate tasks, integrate APIs, and offer intuitive GUI experiences.
-            Whether it's a productivity tool, a mini-game, or a smart scraper, I love turning ideas into clean, functional software.
-        </p>
-        <p>
-            I primarily use Python and its ecosystem — <strong>tkinter, requests, pandas, smtplib, folium, BeautifulSoup</strong> — to bring automation and usability together.
-        </p>
-        <p>
-            Currently, I'm expanding my skills into <em>Flask web development</em> and <em>data visualization with Matplotlib and Seaborn</em>.
-        </p>
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1 class="glowing-text">
+                <span class="typing-text"></span>
+            </h1>
+            <p class="hero-subtitle">Python Developer | Automation Enthusiast | GUI & API Builder</p>
+        </div>
+        
+        <div class="hero-cta">
+            <a href="#about" class="cta-button primary">Explore My Work</a>
+            <a href="mailto:kostastsaous23@gmail.com" class="cta-button secondary">Get in Touch</a>
+        </div>
 
-        <div class="cta-buttons">
-            <a href="/projects" class="btn">🚀 Explore My Projects</a>
-            <a href="/technologies" class="btn">🛠️ View Technologies</a>
-            <a href="mailto:kostastsaous23@gmail.com" class="btn">📧 Contact Me</a>
-            <a href="https://www.linkedin.com/in/konstantinos-tsaousidis" target="_blank" class="btn">💼 LinkedIn</a>
+        <div class="social-links">
+            <a href="https://github.com/Tsaousidis" target="_blank" class="social-icon github">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/konstantinos-tsaousidis-1b7360225/" target="_blank" class="social-icon linkedin">
+                <i class="fab fa-linkedin"></i>
+            </a>
         </div>
     </div>
-</div>
+
+    <!-- 3D rotating cube with tech stack -->
+    <div class="cube-container">
+        <div class="cube">
+            <div class="cube-face front"><i class="fab fa-python"></i></div>
+            <div class="cube-face back"><i class="fas fa-database"></i></div>
+            <div class="cube-face right"><i class="fas fa-code"></i></div>
+            <div class="cube-face left"><i class="fas fa-robot"></i></div>
+            <div class="cube-face top"><i class="fas fa-server"></i></div>
+            <div class="cube-face bottom"><i class="fas fa-terminal"></i></div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about" id="about">
+    <div class="glass-card">
+        <h2 class="section-title">About Me</h2>
+        <p class="about-text">
+            I'm a self-taught Python developer with a passion for building small but complete applications that automate tasks, 
+            integrate APIs, and offer intuitive GUI experiences. Whether it's a productivity tool, a mini-game, or a smart scraper, 
+            I love turning ideas into clean, functional software.
+        </p>
+        
+        <!-- Tech Stack -->
+        <div class="tech-stack">
+            <h3>Tech Stack</h3>
+            <div class="tech-grid">
+                <div class="tech-item" data-tooltip="Python">
+                    <i class="fab fa-python"></i>
+                    <span class="tech-label">Python</span>
+                </div>
+                <div class="tech-item" data-tooltip="REST APIs">
+                    <i class="fas fa-cloud"></i>
+                    <span class="tech-label">REST APIs</span>
+                </div>
+                <div class="tech-item" data-tooltip="GUI Development">
+                    <i class="fas fa-window-maximize"></i>
+                    <span class="tech-label">GUI Dev</span>
+                </div>
+                <div class="tech-item" data-tooltip="Data Analysis">
+                    <i class="fas fa-chart-bar"></i>
+                    <span class="tech-label">Data</span>
+                </div>
+                <div class="tech-item" data-tooltip="Automation">
+                    <i class="fas fa-robot"></i>
+                    <span class="tech-label">Automation</span>
+                </div>
+                <div class="tech-item" data-tooltip="Web Scraping">
+                    <i class="fas fa-spider"></i>
+                    <span class="tech-label">Scraping</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Projects Preview -->
+<section class="featured-projects">
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="project-cards">
+        <div class="project-card" data-aos="fade-up">
+            <div class="project-icon">
+                <i class="fas fa-gamepad"></i>
+            </div>
+            <h3>Snake Game</h3>
+            <p>OOP-based classic Snake game using Turtle graphics</p>
+            <a href="https://github.com/Tsaousidis/oop-turtle-snake-game" class="project-link">View Project</a>
+        </div>
+        <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="project-icon">
+                <i class="fas fa-key"></i>
+            </div>
+            <h3>Password Manager</h3>
+            <p>GUI-based secure password management tool</p>
+            <a href="https://github.com/Tsaousidis/gui-password-manager" class="project-link">View Project</a>
+        </div>
+        <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="project-icon">
+                <i class="fas fa-plane"></i>
+            </div>
+            <h3>Flight Notifier</h3>
+            <p>Automated flight price tracker with email notifications</p>
+            <a href="https://github.com/Tsaousidis/oop-api-smtp-flights-notifier" class="project-link">View Project</a>
+        </div>
+    </div>
+</section>
+
+<!-- Required Libraries -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+
+<!-- Initialize Particles.js and Typed.js -->
+<script>
+    // Initialize Typed.js
+    new Typed('.typing-text', {
+        strings: [
+            'Hi, I\'m Konstantinos Tsaousidis',
+            'I Build Python Applications',
+            'I Create Automation Tools',
+            'I Develop GUI Solutions'
+        ],
+        typeSpeed: 50,
+        backSpeed: 30,
+        backDelay: 1500,
+        loop: true
+    });
+
+    // Initialize Particles.js
+    particlesJS('particles-js',
+        {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#2D3FE1"
+                },
+                "shape": {
+                    "type": "circle"
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false
+                },
+                "size": {
+                    "value": 3,
+                    "random": true
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#6C22BD",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                }
+            },
+            "retina_detect": true
+        }
+    );
+</script>
 {% endblock %}

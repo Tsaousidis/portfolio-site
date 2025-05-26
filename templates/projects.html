@@ -3,27 +3,52 @@
 {% block title %}My Projects{% endblock %}
 
 {% block content %}
-<h1>My Projects</h1>
+<div class="projects-hero">
+    <h1>Featured Projects</h1>
+    <p class="projects-subtitle">Exploring the intersection of automation, APIs, and user experience</p>
+</div>
 
 <div class="projects-container">
     {% if projects %}
         {% for project in projects %}
-        <div class="project-card">
-            <h2>{{ project.title }}</h2>
-            <p class="project-description">{{ project.description }}</p>
-            <div class="project-tech">
-                <h3>Technologies Used:</h3>
-                <ul>
-                    {% for tech in project.technologies %}
-                    <li>{{ tech }}</li>
-                    {% endfor %}
-                </ul>
+        <div class="project-card" data-aos="fade-up">
+            <div class="project-image">
+                <img src="{{ project.image }}" alt="{{ project.title }}" loading="lazy">
+                <div class="project-overlay">
+                    <a href="{{ project.link }}" class="project-link" target="_blank">
+                        <span>View on GitHub</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                    </a>
+                </div>
             </div>
-            <a href="{{ project.link }}" class="btn project-link" target="_blank">View on GitHub</a>
+            <div class="project-content">
+                <h2>{{ project.title }}</h2>
+                <p class="project-description">{{ project.description }}</p>
+                <div class="project-tech">
+                    {% for tech in project.technologies %}
+                    <span class="tech-tag">{{ tech }}</span>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
         {% endfor %}
     {% else %}
         <p>No projects found.</p>
     {% endif %}
 </div>
+
+<!-- AOS Library for scroll animations -->
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 800,
+        offset: 100,
+        once: true
+    });
+</script>
 {% endblock %}

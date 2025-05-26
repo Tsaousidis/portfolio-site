@@ -19,13 +19,14 @@ const botData = {
 
 // Initialize chatbot
 function initChatbot() {
+    // Create chat icon for mobile
+    const chatIcon = document.createElement('div');
+    chatIcon.className = 'chat-icon';
+    chatIcon.innerHTML = '<img src="/static/img/chat-icon.png" alt="Chat">';
+    document.body.appendChild(chatIcon);
+
     const chatContainer = document.createElement('div');
-    chatContainer.className = 'chat-container';
-    
-    // Check if chatbot was previously collapsed
-    if (localStorage.getItem('chatbotCollapsed') === 'true') {
-        chatContainer.classList.add('collapsed');
-    }
+    chatContainer.className = 'chat-container collapsed';
     
     chatContainer.innerHTML = `
         <div class="chat-header">
@@ -53,23 +54,28 @@ function initChatbot() {
 
     function toggleChatbot() {
         chatContainer.classList.toggle('collapsed');
+        chatContainer.classList.toggle('visible');
         const isCollapsed = chatContainer.classList.contains('collapsed');
         toggleBtn.textContent = isCollapsed ? '+' : '×';
-        // Store state in localStorage
-        localStorage.setItem('chatbotCollapsed', isCollapsed);
     }
 
     // Make both header and toggle button clickable
     header.addEventListener('click', (e) => {
-        // Only toggle if clicking the header itself or the toggle button
         if (e.target === header || e.target === header.querySelector('span')) {
             toggleChatbot();
         }
     });
 
     toggleBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent header click event
+        e.stopPropagation();
         toggleChatbot();
+    });
+
+    // Add click handler for mobile chat icon
+    chatIcon.addEventListener('click', () => {
+        chatContainer.classList.remove('collapsed');
+        chatContainer.classList.add('visible');
+        toggleBtn.textContent = '×';
     });
 
     function sendMessage() {
