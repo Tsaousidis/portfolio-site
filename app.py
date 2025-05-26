@@ -35,15 +35,46 @@ def projects():
             "title": "Flights Notifier",
             "description": "Finds cheap flights and sends alerts via SMS.",
             "technologies": ["Python", "APIs", "Twilio", "Amadeus"],
-            "link": "https://github.com/Tsaousidis/oop-api-flights-notifier"
+            "link": "https://github.com/Tsaousidis/oop-api-flights-notifier",
+            "image": "static/images/flights_notifier.png"
         },
         {
             "title": "Billboard to Spotify",
             "description": "Scrapes Billboard songs and creates a Spotify playlist.",
             "technologies": ["Python", "Web Scraping", "Spotify API"],
-            "link": "https://github.com/Tsaousidis/scraper-api-billboard-to-spotify"
+            "link": "https://github.com/Tsaousidis/scraper-api-billboard-to-spotify",
+            "image": "static/images/billboard_to_spotify.png"
+        },
+        {
+            "title": "Greek Flash Card Learning App",
+            "description": "A simple flash card application built with Python and Tkinter to help users learn Greek vocabulary. The app displays Greek words on flash cards, allowing users to test their knowledge and track progress.",
+            "technologies": ["Python", "GUI", "Automation", "Tkinter", "Greek Language"],
+            "link": "https://github.com/Tsaousidis/gui-pandas-greek-flashcards",
+            "image": "static/images/greek-flashcards.png"
+        },
+        {
+            "title": "ISS Real-Time Tracker",
+            "description": "Track the International Space Station (ISS) in real time with this Python script!",
+            "technologies": ["Python", "API", "Automation", "Requests", "Folium"],
+            "link": "https://github.com/Tsaousidis/api-folium-iss-tracker",
+            "image": "static/images/iss-tracker.png"
+        },
+        {
+            "title": "The Classic Snake Game",
+            "description": "A fun and addictive Snake game built using Python's turtle module. Guide the snake, eat the food, grow longer, and avoid crashing into the walls or your own tail. How long can you survive?",
+            "technologies": ["Game", "Python", "OOP", "Snake Game", "Turtle"],
+            "link": "https://github.com/Tsaousidis/oop-turtle-snake-game",
+            "image": "static/images/turtle-snake-game.png"
+        },
+        {
+            "title": "Password Manager",
+            "description": "A simple password manager built with Python and Tkinter that allows you to generate and store secure passwords efficiently.",
+            "technologies": ["Python", "GUI", "Password Manager", "Tkinter"],
+            "link": "https://github.com/Tsaousidis/gui-password-manager",
+            "image": "static/images/password-manager.png"
         }
     ]
+
     return render_template("projects.html", projects=my_projects)
 
 @app.route("/technologies")
@@ -51,15 +82,32 @@ def technologies():
     tech_list = [
         {
             "category": "Programming Languages",
-            "tech_items": ["Python", "JavaScript", "HTML", "CSS"]
+            "tech_items": ["Python", "SQL", "JavaScript", "PHP", "HTML", "CSS"]
         },
         {
             "category": "Frameworks & Libraries",
-            "tech_items": ["Flask", "Bootstrap", "jQuery"]
+            "tech_items": [
+                "Requests", "BeautifulSoup4", "SMTP", "Folium",
+                "Tkinter", "Turtle"
+            ]
         },
         {
             "category": "Tools & Platforms",
-            "tech_items": ["Git", "GitHub", "VS Code", "APIs"]
+            "tech_items": [
+                "Git", "GitHub", "Docker", "Postman", "Camunda", "Azure", "AWS"
+            ]
+        },
+        {
+            "category": "Data & Visualization",
+            "tech_items": ["Pandas", "NumPy", "Tableau", "Power BI", "Excel"]
+        },
+        {
+            "category": "AI & Machine Learning",
+            "tech_items": ["Salesforce AI Fundamentals"]
+        },
+        {
+            "category": "Concepts & Methodologies",
+            "tech_items": ["OOP", "REST APIs", "BPM", "Agile", "Business Intelligence", "Data Science"]
         }
     ]
     return render_template("technologies.html", technologies=tech_list)
