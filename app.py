@@ -34,42 +34,74 @@ def projects():
         {
             "title": "Flights Notifier",
             "description": "Finds cheap flights and sends alerts via SMS.",
-            "technologies": ["Python", "APIs", "Twilio", "Amadeus"],
+            "technologies": [
+                {"name": "Python", "icon": "fab fa-python"},
+                {"name": "APIs", "icon": "fas fa-cloud"},
+                {"name": "Twilio", "icon": "fas fa-sms"},
+                {"name": "Amadeus", "icon": "fas fa-plane"}
+            ],
             "link": "https://github.com/Tsaousidis/oop-api-flights-notifier",
             "image": url_for('static', filename='img/flights-notifier.jpg')
         },
         {
             "title": "Billboard to Spotify",
             "description": "Scrapes Billboard songs and creates a Spotify playlist.",
-            "technologies": ["Python", "Web Scraping", "Spotify API"],
+            "technologies": [
+                {"name": "Python", "icon": "fab fa-python"},
+                {"name": "Web Scraping", "icon": "fas fa-spider"},
+                {"name": "Spotify API", "icon": "fab fa-spotify"}
+            ],
             "link": "https://github.com/Tsaousidis/scraper-api-billboard-to-spotify",
             "image": url_for('static', filename='img/billboard-to-spotify.jpg')
         },
         {
             "title": "Greek Flash Card Learning App",
             "description": "A simple flash card application built with Python and Tkinter to help users learn Greek vocabulary. The app displays Greek words on flash cards, allowing users to test their knowledge and track progress.",
-            "technologies": ["Python", "GUI", "Automation", "Tkinter", "Greek Language"],
+            "technologies": [
+                {"name": "Python", "icon": "fab fa-python"},
+                {"name": "GUI", "icon": "fas fa-desktop"},
+                {"name": "Automation", "icon": "fas fa-robot"},
+                {"name": "Tkinter", "icon": "fas fa-window-maximize"},
+                {"name": "Greek Language", "icon": "fas fa-language"}
+            ],
             "link": "https://github.com/Tsaousidis/gui-pandas-greek-flashcards",
             "image": url_for('static', filename='img/greek-flashcards.png')
         },
         {
             "title": "ISS Real-Time Tracker",
             "description": "Track the International Space Station (ISS) in real time with this Python script!",
-            "technologies": ["Python", "API", "Automation", "Requests", "Folium"],
+            "technologies": [
+                {"name": "Python", "icon": "fab fa-python"},
+                {"name": "API", "icon": "fas fa-cloud"},
+                {"name": "Automation", "icon": "fas fa-robot"},
+                {"name": "Requests", "icon": "fas fa-exchange-alt"},
+                {"name": "Folium", "icon": "fas fa-map-marked-alt"}
+            ],
             "link": "https://github.com/Tsaousidis/api-folium-iss-tracker",
             "image": url_for('static', filename='img/iss-tracker.png')
         },
         {
             "title": "The Classic Snake Game",
             "description": "A fun and addictive Snake game built using Python's turtle module. Guide the snake, eat the food, grow longer, and avoid crashing into the walls or your own tail. How long can you survive?",
-            "technologies": ["Game", "Python", "OOP", "Snake Game", "Turtle"],
+            "technologies": [
+                {"name": "Game", "icon": "fas fa-gamepad"},
+                {"name": "Python", "icon": "fab fa-python"},
+                {"name": "OOP", "icon": "fas fa-cubes"},
+                {"name": "Snake Game", "icon": "fas fa-snake"},
+                {"name": "Turtle", "icon": "fas fa-draw-polygon"}
+            ],
             "link": "https://github.com/Tsaousidis/oop-turtle-snake-game",
             "image": url_for('static', filename='img/turtle-snake-game.png')
         },
         {
             "title": "Password Manager",
             "description": "A simple password manager built with Python and Tkinter that allows you to generate and store secure passwords efficiently.",
-            "technologies": ["Python", "GUI", "Password Manager", "Tkinter"],
+            "technologies": [
+                {"name": "Python", "icon": "fab fa-python"},
+                {"name": "GUI", "icon": "fas fa-desktop"},
+                {"name": "Password Manager", "icon": "fas fa-key"},
+                {"name": "Tkinter", "icon": "fas fa-window-maximize"}
+            ],
             "link": "https://github.com/Tsaousidis/gui-password-manager",
             "image": url_for('static', filename='img/password-manager.png')
         }

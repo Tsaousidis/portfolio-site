@@ -30,7 +30,10 @@
                 <p class="project-description">{{ project.description }}</p>
                 <div class="project-tech">
                     {% for tech in project.technologies %}
-                    <span class="tech-tag">{{ tech }}</span>
+                    <span class="tech-tag">
+                        <i class="{{ tech.icon }}"></i>
+                        {{ tech.name }}
+                    </span>
                     {% endfor %}
                 </div>
             </div>
