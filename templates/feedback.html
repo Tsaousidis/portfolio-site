@@ -26,17 +26,17 @@
 
     <div class="feedback-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
         <form class="feedback-form" method="POST">
-            <div class="form-group" data-aos="fade-up" data-aos-duration="400" data-aos-delay="100">
+            <div class="form-group">
+                <input type="text" id="name" name="name" required placeholder=" ">
                 <label for="name">Name</label>
-                <input type="text" id="name" name="name" required>
             </div>
             <div class="form-group" data-aos="fade-up" data-aos-duration="400" data-aos-delay="150">
+                <input type="email" id="email" name="email" required placeholder=" ">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
             </div>
             <div class="form-group" data-aos="fade-up" data-aos-duration="400" data-aos-delay="200">
+                <textarea id="message" name="message" required placeholder=" "></textarea>
                 <label for="message">Message</label>
-                <textarea id="message" name="message" required></textarea>
             </div>
             <button type="submit" class="submit-btn" data-aos="fade-up" data-aos-duration="400" data-aos-delay="250">
                 Send Message
