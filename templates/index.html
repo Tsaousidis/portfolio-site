@@ -9,25 +9,26 @@
 <!-- Hero Section -->
 <section class="hero">
     <div class="hero-content">
-        <div class="hero-text">
+        <div class="animated-text-container">
             <h1 class="glowing-text">
                 <span class="typing-text"></span>
             </h1>
+        </div>
+        <div class="hero-static-content">
             <p class="hero-subtitle">Python Developer | Automation Enthusiast | GUI & API Builder</p>
-        </div>
-        
-        <div class="hero-cta">
-            <a href="#about" class="cta-button primary">Explore My Work</a>
-            <a href="mailto:kostastsaous23@gmail.com" class="cta-button secondary">Get in Touch</a>
-        </div>
-
-        <div class="social-links">
-            <a href="https://github.com/Tsaousidis" target="_blank" class="social-icon github">
-                <i class="fab fa-github"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/konstantinos-tsaousidis-1b7360225/" target="_blank" class="social-icon linkedin">
-                <i class="fab fa-linkedin"></i>
-            </a>
+            <div class="hero-cta">
+                <a href="#about" class="cta-button primary">Explore My Work</a>
+                <a href="#certifications" class="cta-button secondary">Professional Certifications</a>
+                <a href="#current-training" class="cta-button secondary">Current Training</a>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/Tsaousidis" target="_blank" class="social-icon github">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/konstantinos-tsaousidis-1b7360225/" target="_blank" class="social-icon linkedin">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -160,16 +161,18 @@
             <div class="timeline-item" data-aos="fade-right">
                 <div class="timeline-icon">
                     <i class="fab fa-python"></i>
+                    <div class="circular-progress" data-percent="85">
+                        <svg width="60" height="60">
+                            <circle cx="30" cy="30" r="26" stroke="#6C22BD" stroke-width="6" fill="none" opacity="0.15"/>
+                            <circle cx="30" cy="30" r="26" stroke="#6C22BD" stroke-width="6" fill="none" stroke-dasharray="163.36" stroke-dashoffset="24.5" stroke-linecap="round"/>
+                        </svg>
+                        <span class="progress-text">85%</span>
+                    </div>
                 </div>
                 <div class="timeline-content">
                     <h3>Python Programming Course</h3>
                     <p class="training-institution">University of Patras (Remote)</p>
-                    <div class="progress-container">
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 40%"></div>
-                        </div>
-                        <p class="completion-date">Expected completion: June 2025</p>
-                    </div>
+                    <p class="completion-date">Expected completion: June 2025</p>
                 </div>
             </div>
 
@@ -177,16 +180,18 @@
             <div class="timeline-item" data-aos="fade-right" data-aos-delay="100">
                 <div class="timeline-icon">
                     <i class="fas fa-code"></i>
+                    <div class="circular-progress" data-percent="55">
+                        <svg width="60" height="60">
+                            <circle cx="30" cy="30" r="26" stroke="#2D3FE1" stroke-width="6" fill="none" opacity="0.15"/>
+                            <circle cx="30" cy="30" r="26" stroke="#2D3FE1" stroke-width="6" fill="none" stroke-dasharray="163.36" stroke-dashoffset="73.5" stroke-linecap="round"/>
+                        </svg>
+                        <span class="progress-text">55%</span>
+                    </div>
                 </div>
                 <div class="timeline-content">
                     <h3>100 Days of Code: The Complete Python Pro Bootcamp</h3>
                     <p class="training-institution">Udemy</p>
-                    <div class="progress-container">
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 30%"></div>
-                        </div>
-                        <p class="completion-date">Expected completion: July 2025</p>
-                    </div>
+                    <p class="completion-date">Expected completion: July 2025</p>
                 </div>
             </div>
         </div>
@@ -211,7 +216,8 @@
         typeSpeed: 50,
         backSpeed: 30,
         backDelay: 1500,
-        loop: true
+        loop: true,
+        showCursor: false
     });
 
     // Initialize Particles.js
@@ -274,4 +280,25 @@
         }
     );
 </script>
+
+<style>
+@media (max-width: 600px) {
+  .hero-cta {
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+  .hero-cta .cta-button {
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+    padding: 1.2rem 0;
+  }
+}
+.hero-cta .cta-button {
+  min-width: 180px;
+  font-size: 1.08rem;
+  padding: 1.1rem 2.2rem;
+}
+</style>
 {% endblock %}
