@@ -19,6 +19,11 @@ const botData = {
 
 // Initialize chatbot
 function initChatbot() {
+    // Create chat overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'chat-overlay';
+    document.body.appendChild(overlay);
+
     // Create chat icon for mobile
     const chatIcon = document.createElement('div');
     chatIcon.className = 'chat-icon';
@@ -50,44 +55,67 @@ function initChatbot() {
     const messagesDiv = chatContainer.querySelector('.chat-messages');
 
     // Load saved messages
-    loadMessages();
+    loadMessages(messagesDiv);
 
-    function toggleChatbot() {
-        chatContainer.classList.toggle('collapsed');
-        chatContainer.classList.toggle('visible');
-        const isCollapsed = chatContainer.classList.contains('collapsed');
-        toggleBtn.textContent = isCollapsed ? '+' : '×';
+    function toggleChatbot(show = null) {
+        const shouldShow = show !== null ? show : !chatContainer.classList.contains('visible');
+        
+        if (shouldShow) {
+            chatContainer.classList.remove('collapsed');
+            chatContainer.classList.add('visible');
+            overlay.classList.add('visible');
+            toggleBtn.textContent = '×';
+            messagesDiv.style.display = 'flex';
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            input.focus();
+        } else {
+            chatContainer.classList.add('collapsed');
+            chatContainer.classList.remove('visible');
+            overlay.classList.remove('visible');
+            toggleBtn.textContent = '+';
+        }
     }
 
-    // Make both header and toggle button clickable
+    // Make header clickable (but not for mobile)
     header.addEventListener('click', (e) => {
-        if (e.target === header || e.target === header.querySelector('span')) {
+        if (window.innerWidth > 768 && (e.target === header || e.target === header.querySelector('span'))) {
             toggleChatbot();
         }
     });
 
+    // Close button handler
     toggleBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        toggleChatbot();
+        toggleChatbot(false);
+    });
+
+    // Overlay click handler
+    overlay.addEventListener('click', () => {
+        toggleChatbot(false);
     });
 
     // Add click handler for mobile chat icon
     chatIcon.addEventListener('click', () => {
-        chatContainer.classList.remove('collapsed');
-        chatContainer.classList.add('visible');
-        toggleBtn.textContent = '×';
+        toggleChatbot(true);
+    });
+
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && chatContainer.classList.contains('visible')) {
+            toggleChatbot(false);
+        }
     });
 
     function sendMessage() {
         const message = input.value.trim();
         if (message) {
             // Add user message
-            appendMessage('user', message);
+            appendMessage(messagesDiv, 'user', message);
             input.value = '';
             
             // Generate and add bot response
             generateResponse(message).then(response => {
-                appendMessage('bot', response);
+                appendMessage(messagesDiv, 'bot', response);
             });
         }
     }
@@ -96,11 +124,16 @@ function initChatbot() {
     input.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') sendMessage();
     });
+
+    // Show initial welcome message
+    if (messagesDiv.children.length === 0) {
+        appendMessage(messagesDiv, 'bot', "Hi! I'm your AI assistant. Ask me anything about Tsaousidis Konstantinos or his projects!");
+    }
 }
 
 // Save messages to localStorage
-function saveMessages() {
-    const messages = document.querySelectorAll('.chat-messages .message');
+function saveMessages(messagesDiv) {
+    const messages = messagesDiv.querySelectorAll('.message');
     const messageHistory = Array.from(messages).map(msg => ({
         type: msg.classList.contains('user') ? 'user' : 'bot',
         text: msg.textContent
@@ -109,30 +142,24 @@ function saveMessages() {
 }
 
 // Load messages from localStorage
-function loadMessages() {
-    const messagesDiv = document.querySelector('.chat-messages');
+function loadMessages(messagesDiv) {
     const savedMessages = localStorage.getItem('chatMessages');
     
-    if (!savedMessages) {
-        // If no saved messages, show welcome message
-        appendMessage('bot', "Hi! I'm your AI assistant. Ask me anything about Tsaousidis Konstantinos or his projects!");
-        return;
+    if (savedMessages) {
+        const messageHistory = JSON.parse(savedMessages);
+        messageHistory.forEach(msg => {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${msg.type}`;
+            messageDiv.textContent = msg.text;
+            messagesDiv.appendChild(messageDiv);
+        });
+        
+        // Scroll to bottom of messages
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
-    
-    const messageHistory = JSON.parse(savedMessages);
-    messageHistory.forEach(msg => {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${msg.type}`;
-        messageDiv.textContent = msg.text;
-        messagesDiv.appendChild(messageDiv);
-    });
-    
-    // Scroll to bottom of messages
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
 
-function appendMessage(type, text) {
-    const messagesDiv = document.querySelector('.chat-messages');
+function appendMessage(messagesDiv, type, text) {
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${type}`;
     messageDiv.textContent = text;
@@ -140,7 +167,7 @@ function appendMessage(type, text) {
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
     
     // Save messages after each new message
-    saveMessages();
+    saveMessages(messagesDiv);
 }
 
 async function generateResponse(message) {
