@@ -33,11 +33,11 @@ def projects():
     my_projects = [
         {
             "title": "Flights Notifier",
-            "description": "Finds cheap flights and sends alerts via SMS.",
+            "description": "A system to track and notify users about low-price flights for specific destinations using the Amadeus API, Sheety for data management, and email notifications via SMTP.",
             "technologies": [
                 {"name": "Python", "icon": "fab fa-python"},
                 {"name": "APIs", "icon": "fas fa-cloud"},
-                {"name": "Twilio", "icon": "fas fa-sms"},
+                {"name": "SMTP", "icon": "fas fa-envelope"},
                 {"name": "Amadeus", "icon": "fas fa-plane"}
             ],
             "link": "https://github.com/Tsaousidis/oop-api-flights-notifier",
@@ -45,11 +45,12 @@ def projects():
         },
         {
             "title": "Billboard to Spotify",
-            "description": "Scrapes Billboard songs and creates a Spotify playlist.",
+            "description": "Α Python automation project that scrapes the Billboard Hot 100 chart for a user-specified date and creates a private Spotify playlist with the top 100 songs of that day.",
             "technologies": [
                 {"name": "Python", "icon": "fab fa-python"},
                 {"name": "Web Scraping", "icon": "fas fa-spider"},
-                {"name": "Spotify API", "icon": "fab fa-spotify"}
+                {"name": "Spotify", "icon": "fab fa-spotify"},
+                {"name": "APIs", "icon": "fas fa-cloud"},
             ],
             "link": "https://github.com/Tsaousidis/scraper-api-billboard-to-spotify",
             "image": url_for('static', filename='img/billboard-to-spotify.jpg')
@@ -69,12 +70,11 @@ def projects():
         },
         {
             "title": "ISS Real-Time Tracker",
-            "description": "Track the International Space Station (ISS) in real time with this Python script!",
+            "description": "This script fetches the current position of the ISS from an API and updates an interactive map every 10 seconds. The map is displayed in your browser, showing the ISS's latest location.",
             "technologies": [
                 {"name": "Python", "icon": "fab fa-python"},
                 {"name": "API", "icon": "fas fa-cloud"},
                 {"name": "Automation", "icon": "fas fa-robot"},
-                {"name": "Requests", "icon": "fas fa-exchange-alt"},
                 {"name": "Folium", "icon": "fas fa-map-marked-alt"}
             ],
             "link": "https://github.com/Tsaousidis/api-folium-iss-tracker",
@@ -84,18 +84,16 @@ def projects():
             "title": "The Classic Snake Game",
             "description": "A fun and addictive Snake game built using Python's turtle module. Guide the snake, eat the food, grow longer, and avoid crashing into the walls or your own tail. How long can you survive?",
             "technologies": [
-                {"name": "Game", "icon": "fas fa-gamepad"},
                 {"name": "Python", "icon": "fab fa-python"},
-                {"name": "OOP", "icon": "fas fa-cubes"},
-                {"name": "Snake Game", "icon": "fas fa-snake"},
-                {"name": "Turtle", "icon": "fas fa-draw-polygon"}
+                {"name": "Game", "icon": "fas fa-gamepad"},
+                {"name": "OOP", "icon": "fas fa-cubes"}
             ],
             "link": "https://github.com/Tsaousidis/oop-turtle-snake-game",
             "image": url_for('static', filename='img/turtle-snake-game.png')
         },
         {
             "title": "Password Manager",
-            "description": "A simple password manager built with Python and Tkinter that allows you to generate and store secure passwords efficiently.",
+            "description": "A password manager built with Python and Tkinter that allows you to generate and store secure passwords efficiently.",
             "technologies": [
                 {"name": "Python", "icon": "fab fa-python"},
                 {"name": "GUI", "icon": "fas fa-desktop"},
@@ -149,11 +147,10 @@ def feedback():
     if request.method == 'POST':
         name = request.form.get('name', '').strip()
         email = request.form.get('email', '').strip()
-        subject = request.form.get('subject', '').strip()
         message = request.form.get('message', '').strip()
         
         # Validate inputs
-        if not all([name, email, subject, message]):
+        if not all([name, email, message]):
             flash('All fields are required.', 'error')
             return redirect(url_for('feedback'))
         
@@ -161,27 +158,23 @@ def feedback():
             flash('Please enter a valid name (letters only).', 'error')
             return redirect(url_for('feedback'))
         
-        if len(subject) < 3 or len(subject) > 100:
-            flash('Subject must be between 3 and 100 characters.', 'error')
-            return redirect(url_for('feedback'))
-            
         if len(message) < 10 or len(message) > 1000:
             flash('Message must be between 10 and 1000 characters.', 'error')
             return redirect(url_for('feedback'))
         
         try:
             msg = Message(
-                subject=f"Portfolio Feedback: {subject}",
+                subject="Feedback from tsaousidis.site",
                 recipients=[app.config['MAIL_USERNAME']],
                 body=f"""
                 New feedback received from your portfolio website:
                 
                 From: {name} ({email})
-                Subject: {subject}
                 
                 Message:
                 {message}
-                """)
+                """
+            )
             mail.send(msg)
             flash('Thank you for your feedback! I will get back to you soon.', 'success')
             return redirect(url_for('feedback'))

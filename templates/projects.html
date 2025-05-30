@@ -13,7 +13,7 @@
         {% for project in projects %}
         <div class="project-card" data-aos="fade-up">
             <div class="project-image">
-                <img src="{{ project.image }}" alt="{{ project.title }}" loading="lazy">
+                <img src="{{ project.image }}" alt="Screenshot of {{ project.title }} project: {{ project.description }}" loading="lazy">
                 <div class="project-overlay">
                     <a href="{{ project.link }}" class="project-link" target="_blank">
                         <span>View on GitHub</span>
