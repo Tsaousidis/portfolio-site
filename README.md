@@ -12,7 +12,7 @@ A modern, responsive portfolio website built with Flask and modern web technolog
 
 #### 🎯 Core Features
 - 🎨 Modern, responsive design with glassmorphism effects
-- 💬 Interactive AI-powered chatbot for visitor assistance
+- 💬 Interactive chatbot for visitor assistance
 - 📱 Mobile-first approach with adaptive layouts
 - 🔄 Dynamic content loading with smooth animations
 - 📧 Secure contact form with email integration
@@ -23,7 +23,6 @@ A modern, responsive portfolio website built with Flask and modern web technolog
 - 🌐 SEO-optimized structure
 - 📊 Performance-optimized assets
 - 🎭 Cross-browser compatibility
-- ♿ WCAG accessibility compliance
 - 🔍 Clean, maintainable code structure
 
 ---
