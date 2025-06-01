@@ -138,25 +138,44 @@ const botData = {
 // Synonym map for common variations and misspellings
 const synonymMap = {
     // Contact related
-    'contact': ['reach', 'email', 'phone', 'number', 'website', 'social', 'linkedin', 'github', 'connect', 'message', 'mail'],
-    'email': ['e-mail', 'mail', 'gmail', 'electronic mail', 'e mail'],
-    'phone': ['telephone', 'mobile', 'cell', 'number', 'call'],
+    'contact': ['reach', 'email', 'phone', 'number', 'website', 'social', 'linkedin', 'github', 'connect', 'message', 'mail', 'get in touch', 'contact info', 'contact details', 'reach out', 'communicate', 'send message', 'contact information'],
+    'email': ['e-mail', 'mail', 'gmail', 'electronic mail', 'e mail', 'send mail', 'electronic address', 'mail address', 'email address'],
+    'phone': ['telephone', 'mobile', 'cell', 'number', 'call', 'phone number', 'mobile number', 'cell number', 'contact number', 'cellular'],
     
     // Skills related
-    'skills': ['abilities', 'capabilities', 'competencies', 'expertise', 'proficiency', 'talent', 'knowledge'],
-    'programming': ['coding', 'development', 'software', 'developing', 'code'],
-    'experience': ['work', 'job', 'career', 'employment', 'position', 'role', 'history'],
+    'skills': ['abilities', 'capabilities', 'competencies', 'expertise', 'proficiency', 'talent', 'knowledge', 'know-how', 'skillset', 'qualifications', 'strong points', 'strengths', 'competences', 'proficiencies'],
+    'programming': ['coding', 'development', 'software', 'developing', 'code', 'programming languages', 'dev', 'software development', 'coding skills', 'tech stack', 'development skills', 'software engineering', 'engineering'],
+    'experience': ['work', 'job', 'career', 'employment', 'position', 'role', 'history', 'background', 'work history', 'professional experience', 'job history', 'career path', 'work experience', 'professional background', 'occupation', 'profession'],
     
     // Education related
-    'education': ['study', 'degree', 'university', 'college', 'school', 'academic', 'studies'],
-    'certification': ['certificate', 'certifications', 'certified', 'credentials', 'qualifications'],
+    'education': ['study', 'degree', 'university', 'college', 'school', 'academic', 'studies', 'qualification', 'educational background', 'academic history', 'schooling', 'academic qualification', 'academic background', 'education history', 'studying', 'student'],
+    'certification': ['certificate', 'certifications', 'certified', 'credentials', 'qualifications', 'accreditation', 'diploma', 'certification course', 'professional certification', 'training certificate', 'certified in', 'credentials'],
     
     // Project related
-    'projects': ['portfolio', 'work', 'builds', 'applications', 'apps', 'programs'],
+    'projects': ['portfolio', 'work', 'builds', 'applications', 'apps', 'programs', 'developments', 'creations', 'project work', 'personal projects', 'side projects', 'project portfolio', 'developed', 'created', 'built', 'made'],
+    
+    // Technical skills related
+    'technical': ['tech', 'technology', 'technologies', 'technical skills', 'tech skills', 'technical knowledge', 'technical expertise', 'technical background', 'tech stack', 'technical proficiency', 'technological'],
+    'framework': ['frameworks', 'library', 'libraries', 'tools', 'technology stack', 'development tools', 'development framework', 'tech framework', 'development environment', 'tech tools', 'development stack'],
+    'database': ['db', 'databases', 'data storage', 'sql', 'nosql', 'data', 'storage', 'data management', 'dbms', 'data systems'],
+    'knowledge': ['expertise', 'experience', 'proficiency', 'understanding', 'mastery', 'competency', 'competencies', 'capabilities', 'know-how', 'background'],
+    
+    // Language proficiency related
+    'language': ['languages', 'speak', 'speaking', 'linguistic', 'communication', 'fluency', 'language skills', 'multilingual', 'language proficiency', 'spoken languages'],
+    'fluent': ['fluency', 'proficient', 'native', 'bilingual', 'multilingual', 'speaking level', 'language level', 'language ability'],
     
     // Common misspellings of Konstantinos
-    'konstantinos': ['constantinos', 'konstantine', 'konstantine', 'kostas', 'konst'],
-    'tsaousidis': ['tsaous', 'tsausidis', 'tsaousides', 'tsaousidi']
+    'konstantinos': ['constantinos', 'konstantine', 'konstantine', 'kostas', 'konst', 'costa', 'konstant', 'constantin', 'konstantine', 'konstantino'],
+    'tsaousidis': ['tsaous', 'tsausidis', 'tsaousides', 'tsaousidi', 'tsaousid', 'tsao', 'tsaou'],
+
+    // Volunteering related
+    'volunteer': ['volunteering', 'community service', 'social work', 'charity', 'community work', 'giving back', 'blood donation', 'blood donor', 'community involvement'],
+
+    // Personal skills related
+    'soft skills': ['interpersonal skills', 'personal skills', 'people skills', 'social skills', 'communication skills', 'soft abilities', 'personal qualities', 'personal traits'],
+
+    // Location related
+    'location': ['based', 'live', 'living', 'residence', 'city', 'country', 'address', 'place', 'located', 'where', 'current location', 'hometown', 'base']
 };
 
 // Function to calculate Levenshtein distance for fuzzy matching
@@ -249,7 +268,7 @@ function initChatbot() {
     
     chatContainer.innerHTML = `
         <div class="chat-header">
-            <span>Portfolio Assistant</span>
+            <span>Tsaousidis Interactive FAQ</span>
             <button class="chat-toggle">×</button>
         </div>
         <div class="chat-messages">
@@ -293,10 +312,14 @@ function initChatbot() {
         }
     }
 
-    // Make header clickable (but not for mobile)
+    // Make header clickable (for both mobile and desktop)
     header.addEventListener('click', (e) => {
-        if (window.innerWidth > 768 && (e.target === header || e.target === header.querySelector('span'))) {
-            toggleChatbot();
+        if (e.target === header || e.target === header.querySelector('span')) {
+            if (window.innerWidth <= 768) {
+                toggleChatbot(false); // Close on mobile
+            } else {
+                toggleChatbot(); // Toggle on desktop
+            }
         }
     });
 
@@ -404,7 +427,12 @@ async function generateResponse(message) {
     };
     
     // Check for greetings first
-    const greetings = ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening', 'howdy', 'hola', 'greetings'];
+    const greetings = [
+        'hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening', 
+        'howdy', 'hola', 'greetings', 'hi there', 'hello there', 'morning', 
+        'afternoon', 'evening', 'yo', 'heya', 'hiya', 'greetings', 'sup', 
+        'whats up', "what's up", 'how are you', 'how do you do'
+    ];
     if (containsAny(greetings)) {
         const timeOfDay = new Date().getHours();
         let greeting = "Hello";
@@ -419,13 +447,13 @@ async function generateResponse(message) {
         }
         
         // Otherwise, give the full introduction
-        return `<b>${greeting}!</b> 👋 I'm here to help you learn more about Tsaousidis Konstantinos. You can ask me about:<br>
-<ul>
-• <b>Professional background</b> and experience
-• <b>Technical skills</b> and projects
-• <b>Education</b> and certifications
-• <b>Contact information</b>
-• <b>Languages</b> and personal skills
+        return `<b>${greeting}!</b> 👋 I'm here to help you learn more about Tsaousidis Konstantinos. You can ask me about:
+<ul style="text-align: left; padding-left: 20px; list-style-position: outside;">
+<li><b>Professional background</b> and experience</li>
+<li><b>Technical skills</b> and projects</li>
+<li><b>Education</b> and certifications</li>
+<li><b>Contact information</b></li>
+<li><b>Languages</b> and personal skills</li>
 </ul>
 What would you like to know?`;
     }
@@ -461,7 +489,7 @@ What would you like to know?`;
     }
 
     // Technical skills keywords
-    if (containsAny(['skill', 'technology', 'tech stack', 'programming', 'language', 'framework', 'tool', 'platform'])) {
+    if (containsAny(['skill', 'skills', 'technology', 'technologies', 'tech stack', 'programming', 'language', 'languages', 'framework', 'frameworks', 'tool', 'tools', 'platform', 'platforms', 'knowledge', 'expertise', 'tech', 'technological'])) {
         let response = '';
         if (containsAny(['language', 'programming'])) {
             response = `<b>${botData.name}</b> is proficient in the following programming languages:<br><ul>
@@ -568,13 +596,12 @@ What would you like to know?`;
 
     // Default response with conversation starters
     return `I can tell you about <b>${botData.name}'s:</b>
-<ul>
-• <b>Professional background</b> and experience
-• <b>Technical skills</b> and projects
-• <b>Education</b> and certifications
-• <b>Contact information</b>
-• <b>Languages</b> and personal skills
-• <b>Volunteering</b> activities
+<ul style="text-align: left; padding-left: 20px; list-style-position: outside;">
+<li><b>Professional background</b> and experience</li>
+<li><b>Technical skills</b> and projects</li>
+<li><b>Education</b> and certifications</li>
+<li><b>Contact information</b></li>
+<li><b>Languages</b> and personal skills</li>
 </ul>
 What would you like to know more about?`;
 }
