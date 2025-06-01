@@ -149,18 +149,24 @@ def feedback():
         email = request.form.get('email', '').strip()
         message = request.form.get('message', '').strip()
         
+        form_data = {
+            'name': name,
+            'email': email,
+            'message': message
+        }
+        
         # Validate inputs
         if not all([name, email, message]):
             flash('All fields are required.', 'error')
-            return redirect(url_for('feedback'))
+            return render_template("feedback.html", form_data=form_data)
         
         if len(name) < 2 or not name.replace(' ', '').isalpha():
             flash('Please enter a valid name (letters only).', 'error')
-            return redirect(url_for('feedback'))
+            return render_template("feedback.html", form_data=form_data)
         
         if len(message) < 10 or len(message) > 1000:
             flash('Message must be between 10 and 1000 characters.', 'error')
-            return redirect(url_for('feedback'))
+            return render_template("feedback.html", form_data=form_data)
         
         try:
             msg = Message(
@@ -182,9 +188,9 @@ def feedback():
             print(f"Error sending email: {str(e)}")
             print(f"Mail settings: SERVER={app.config['MAIL_SERVER']}, PORT={app.config['MAIL_PORT']}, USERNAME={app.config['MAIL_USERNAME']}")
             flash('Sorry, there was an error sending your feedback. Please try again later.', 'error')
-            return redirect(url_for('feedback'))
+            return render_template("feedback.html", form_data=form_data)
             
-    return render_template("feedback.html")
+    return render_template("feedback.html", form_data={})
 
 if __name__ == "__main__":
     app.run(debug=True)
