@@ -45,7 +45,7 @@ def projects():
         },
         {
             "title": "Billboard to Spotify",
-            "description": "Α Python automation project that scrapes the Billboard Hot 100 chart for a user-specified date and creates a private Spotify playlist with the top 100 songs of that day.",
+            "description": "A Python automation project that scrapes the Billboard Hot 100 chart for a user-specified date and creates a private Spotify playlist with the top 100 songs of that day.",
             "technologies": [
                 {"name": "Python", "icon": "fab fa-python"},
                 {"name": "Web Scraping", "icon": "fas fa-spider"},
