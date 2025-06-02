@@ -3,6 +3,7 @@ from flask_mail import Mail, Message
 from flask_wtf.csrf import CSRFProtect
 from dotenv import load_dotenv
 import os
+import requests
 
 # Load environment variables from .env file in development
 if os.path.exists('.env'):
@@ -14,6 +15,13 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY')
 if not app.secret_key:
     raise ValueError("No SECRET_KEY set in environment variables")
+
+# reCAPTCHA configuration
+RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY')
+RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_SECRET_KEY')
+
+if not RECAPTCHA_SITE_KEY or not RECAPTCHA_SECRET_KEY:
+    raise ValueError("reCAPTCHA keys not set in environment variables")
 
 # Initialize CSRF protection
 csrf = CSRFProtect(app)
@@ -183,6 +191,28 @@ def technologies():
 def feedback():
     if request.method == 'POST':
         # CSRF token is automatically checked by flask-wtf
+        
+        # Check honeypot field - if it's filled, it's probably a bot
+        if request.form.get('website'):
+            flash('Bot detected. Access denied.', 'error')
+            return redirect(url_for('feedback'))
+            
+        # Verify reCAPTCHA
+        recaptcha_response = request.form.get('g-recaptcha-response')
+        if not recaptcha_response:
+            flash('Please complete the reCAPTCHA.', 'error')
+            return render_template("feedback.html", form_data=request.form, recaptcha_site_key=RECAPTCHA_SITE_KEY)
+            
+        # Verify the reCAPTCHA response with Google
+        verify_response = requests.post('https://www.google.com/recaptcha/api/siteverify', {
+            'secret': RECAPTCHA_SECRET_KEY,
+            'response': recaptcha_response
+        }).json()
+        
+        if not verify_response['success']:
+            flash('reCAPTCHA verification failed. Please try again.', 'error')
+            return render_template("feedback.html", form_data=request.form, recaptcha_site_key=RECAPTCHA_SITE_KEY)
+            
         name = request.form.get('name', '').strip()
         email = request.form.get('email', '').strip()
         message = request.form.get('message', '').strip()
@@ -196,15 +226,15 @@ def feedback():
         # Validate inputs
         if not all([name, email, message]):
             flash('All fields are required.', 'error')
-            return render_template("feedback.html", form_data=form_data)
+            return render_template("feedback.html", form_data=form_data, recaptcha_site_key=RECAPTCHA_SITE_KEY)
         
         if len(name) < 2 or not name.replace(' ', '').isalpha():
             flash('Please enter a valid name (letters only).', 'error')
-            return render_template("feedback.html", form_data=form_data)
+            return render_template("feedback.html", form_data=form_data, recaptcha_site_key=RECAPTCHA_SITE_KEY)
         
         if len(message) < 10 or len(message) > 1000:
             flash('Message must be between 10 and 1000 characters.', 'error')
-            return render_template("feedback.html", form_data=form_data)
+            return render_template("feedback.html", form_data=form_data, recaptcha_site_key=RECAPTCHA_SITE_KEY)
         
         try:
             msg = Message(
@@ -226,9 +256,9 @@ def feedback():
             print(f"Error sending email: {str(e)}")
             print(f"Mail settings: SERVER={app.config['MAIL_SERVER']}, PORT={app.config['MAIL_PORT']}, USERNAME={app.config['MAIL_USERNAME']}")
             flash('Sorry, there was an error sending your feedback. Please try again later.', 'error')
-            return render_template("feedback.html", form_data=form_data)
+            return render_template("feedback.html", form_data=form_data, recaptcha_site_key=RECAPTCHA_SITE_KEY)
             
-    return render_template("feedback.html", form_data={})
+    return render_template("feedback.html", form_data={}, recaptcha_site_key=RECAPTCHA_SITE_KEY)
 
 if __name__ == "__main__":
     app.run(debug=True)

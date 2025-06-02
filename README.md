@@ -30,8 +30,6 @@ A modern, responsive portfolio website built with Flask and modern web technolog
 ### 🚀 Live Demo
 Visit the live site: [tsaousidis.site](https://tsaousidis.site)
 
----
-
 ### 💻 Tech Stack
 
 #### Frontend
@@ -52,42 +50,6 @@ Visit the live site: [tsaousidis.site](https://tsaousidis.site)
 - Render Cloud Platform
 - Environment variable management
 - Responsive design tools
-
----
-
-### 🛠 Installation & Setup
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Tsaousidis/portfolio-site.git
-   cd portfolio-site
-   ```
-
-2. **Set up virtual environment**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Configure environment variables**
-   Create a `.env` file:
-   ```env
-   SECRET_KEY=your_secret_key
-   EMAIL_USER=your_email@gmail.com
-   EMAIL_PASS=your_email_password
-   ```
-
-5. **Run the application**
-   ```bash
-   python app.py
-   ```
-
-   Visit `http://localhost:5000` in your browser.
 
 ---
 
@@ -128,11 +90,16 @@ The website is fully responsive across all devices:
 ### 🔒 Security Features
 
 - ✔️ Form validation and sanitization
-- 🔐 Secure email handling
 - 🛡️ Environment variable protection
-- 🔒 CSRF protection
-- 📝 Input validation
-- 🚫 Error handling
+- 🔒 CSRF protection with secure token implementation
+- 📝 Input validation and XSS prevention
+- 🔑 Rate limiting on sensitive endpoints
+- 🛑 SQL injection prevention
+- 🔍 Security headers implementation (HSTS, CSP, X-Frame-Options)
+- 🔐 Session security with secure cookie configuration
+- 🚦 IP-based request throttling
+- 🛡️ Protected file uploads with type validation
+- 🚫 Bot protection with reCAPTCHA integration
 
 ---
 

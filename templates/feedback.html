@@ -3,6 +3,9 @@
 {% block title %}Feedback{% endblock %}
 
 {% block content %}
+<!-- Add reCAPTCHA script in the head -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 <div class="feedback-hero" data-aos="fade-up" data-aos-duration="600">
     <h1>Get in Touch</h1>
     <p class="feedback-subtitle">I value your feedback and suggestions. Let me know what you think!</p>
@@ -27,6 +30,10 @@
     <div class="feedback-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
         <form class="feedback-form" method="POST">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <!-- Honeypot field -->
+            <div class="website-field">
+                <input type="text" name="website" id="website" autocomplete="off" tabindex="-1">
+            </div>
             <div class="form-group">
                 <input type="text" id="name" name="name" required placeholder=" " value="{{ form_data.get('name', '') }}">
                 <label for="name">Name</label>
@@ -39,6 +46,8 @@
                 <textarea id="message" name="message" required placeholder=" ">{{ form_data.get('message', '') }}</textarea>
                 <label for="message">Message</label>
             </div>
+            <!-- Add reCAPTCHA -->
+            <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}" data-theme="dark"></div>
             <button type="submit" class="submit-btn" data-aos="fade-up" data-aos-duration="400" data-aos-delay="250">
                 Send Message
             </button>

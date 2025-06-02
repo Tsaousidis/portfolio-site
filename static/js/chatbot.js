@@ -138,14 +138,18 @@ const botData = {
 // Synonym map for common variations and misspellings
 const synonymMap = {
     // Contact related
-    'contact': ['reach', 'email', 'phone', 'number', 'website', 'social', 'linkedin', 'github', 'connect', 'message', 'mail', 'get in touch', 'contact info', 'contact details', 'reach out', 'communicate', 'send message', 'contact information'],
+    'contact': ['reach out', 'get in touch', 'contact info', 'contact details', 'contact information', 'connect with', 'communicate with'],
     'email': ['e-mail', 'mail', 'gmail', 'electronic mail', 'e mail', 'send mail', 'electronic address', 'mail address', 'email address'],
-    'phone': ['telephone', 'mobile', 'cell', 'number', 'call', 'phone number', 'mobile number', 'cell number', 'contact number', 'cellular'],
+    'phone': ['telephone', 'mobile', 'cell', 'call', 'phone number', 'mobile number', 'cell number', 'contact number', 'cellular'],
+    
+    // Experience and Jobs related
+    'experience': ['work history', 'professional experience', 'job history', 'career path', 'work experience', 'professional background', 'employment history'],
+    'job': ['jobs', 'position', 'role', 'employment', 'occupation', 'profession', 'career', 'work', 'workplace'],
+    'company': ['employer', 'organization', 'workplace', 'business', 'firm'],
     
     // Skills related
-    'skills': ['abilities', 'capabilities', 'competencies', 'expertise', 'proficiency', 'talent', 'knowledge', 'know-how', 'skillset', 'qualifications', 'strong points', 'strengths', 'competences', 'proficiencies'],
-    'programming': ['coding', 'development', 'software', 'developing', 'code', 'programming languages', 'dev', 'software development', 'coding skills', 'tech stack', 'development skills', 'software engineering', 'engineering'],
-    'experience': ['work', 'job', 'career', 'employment', 'position', 'role', 'history', 'background', 'work history', 'professional experience', 'job history', 'career path', 'work experience', 'professional background', 'occupation', 'profession'],
+    'skills': ['abilities', 'capabilities', 'competencies', 'expertise', 'proficiency', 'talent', 'know-how', 'skillset', 'qualifications', 'strong points', 'strengths', 'competences'],
+    'programming': ['coding', 'development', 'software', 'developing', 'code', 'programming languages', 'dev', 'software development', 'coding skills', 'development skills', 'software engineering'],
     
     // Education related
     'education': ['study', 'degree', 'university', 'college', 'school', 'academic', 'studies', 'qualification', 'educational background', 'academic history', 'schooling', 'academic qualification', 'academic background', 'education history', 'studying', 'student'],
@@ -411,10 +415,20 @@ function initChatbot() {
 }
 
 async function generateResponse(message) {
-    message = message.toLowerCase();
+    // Clean the message: remove punctuation and convert to lowercase
+    message = message.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").trim();
+    
+    // Helper function for strict matching (no fuzzy matching)
+    const containsExact = (keywords) => {
+        const words = message.split(/\s+/);
+        return words.some(word => keywords.includes(word));
+    };
     
     // Helper function to check if message contains any of the keywords with fuzzy matching
-    const containsAny = (keywords) => {
+    const containsAny = (keywords, useStrict = false) => {
+        if (useStrict) {
+            return containsExact(keywords);
+        }
         const words = message.split(/\s+/);
         return words.some(word => {
             const bestMatch = findBestMatch(word);
@@ -425,15 +439,17 @@ async function generateResponse(message) {
             );
         });
     };
-    
-    // Check for greetings first
+
+    // Check for greetings first - this should take precedence over all other checks
     const greetings = [
         'hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening', 
         'howdy', 'hola', 'greetings', 'hi there', 'hello there', 'morning', 
         'afternoon', 'evening', 'yo', 'heya', 'hiya', 'greetings', 'sup', 
         'whats up', "what's up", 'how are you', 'how do you do'
     ];
-    if (containsAny(greetings)) {
+
+    // If the message is ONLY a greeting (1-2 words max) and matches exactly
+    if (message.split(/\s+/).length <= 2 && containsAny(greetings, true)) {
         const timeOfDay = new Date().getHours();
         let greeting = "Hello";
         
@@ -441,13 +457,14 @@ async function generateResponse(message) {
         else if (timeOfDay < 18) greeting = "Good afternoon";
         else greeting = "Good evening";
 
-        // If it's just a greeting without questions, give a simple response
-        if (!containsAny(['who', 'what', 'where', 'when', 'why', 'how', 'tell', 'show', 'give', 'list'])) {
-            return `<b>${greeting}!</b> 👋 How can I help you today?`;
-        }
-        
-        // Otherwise, give the full introduction
-        return `<b>${greeting}!</b> 👋 I'm here to help you learn more about Tsaousidis Konstantinos. You can ask me about:
+        return `<b>${greeting}!</b> 👋 How can I help you today?`;
+    }
+
+    // General introduction/about queries
+    if (containsAny(['who', 'what', 'tell me about', 'know about']) && 
+        (message.includes('tsaousidis') || message.includes('konstantinos') || message.includes('him'))) {
+        return `<b>${botData.name}</b> is a <b>${botData.role}</b> based in <b>${botData.location}</b>. ${botData.profile}<br><br>
+You can ask me about:
 <ul style="text-align: left; padding-left: 20px; list-style-position: outside;">
 <li><b>Professional background</b> and experience</li>
 <li><b>Technical skills</b> and projects</li>
@@ -455,17 +472,86 @@ async function generateResponse(message) {
 <li><b>Contact information</b></li>
 <li><b>Languages</b> and personal skills</li>
 </ul>
-What would you like to know?`;
+What would you like to know more about?`;
     }
 
-    // Introduction/Identity keywords
-    if (containsAny(['who', 'introduce', 'tell me about', 'what do you know', 'hello', 'hi']) && 
-        containsAny(['you', 'yourself', 'about', 'there'])) {
-        return `Hi! I'm an AI assistant that can tell you all about <b>${botData.name}</b>. He is a <b>${botData.role}</b> based in <b>${botData.location}</b>. ${botData.profile}`;
+    // Experience/Jobs keywords - moved before technical skills and made more specific
+    if (containsAny(['experience', 'work', 'job', 'jobs', 'career', 'company', 'position', 'role', 'employment', 'occupation', 'profession']) || 
+        (containsAny(['what', 'tell', 'about']) && containsAny(['experience', 'work', 'job', 'jobs', 'career', 'company']))) {
+        let response = `Here's <b>${botData.name}'s work experience:</b><br><br>`;
+        botData.experience.forEach(exp => {
+            response += `<b>${exp.title}</b> at <b>${exp.company}</b> (${exp.period})<br>`;
+            response += `Key responsibilities:<ul>`;
+            exp.responsibilities.forEach(resp => {
+                response += `• ${resp}<br>`;
+            });
+            response += `</ul><br>`;
+        });
+        return response;
     }
 
-    // Contact information keywords
-    if (containsAny(['contact', 'reach', 'email', 'phone', 'number', 'website', 'social', 'linkedin', 'github'])) {
+    // Project keywords - handle both direct and follow-up questions
+    if (containsAny(['project', 'portfolio', 'build', 'develop', 'create']) || 
+        (containsAny(['what', 'tell', 'about']) && message.includes('project'))) {
+        let response = `Here are some notable projects by <b>${botData.name}:</b><br><br>`;
+        botData.projects.forEach(project => {
+            response += `<b>${project.name}</b><br>`;
+            response += `${project.description}<br><br>`;
+        });
+        response += `👉 Explore more projects at <a href="https://tsaousidis.site/projects" target="_blank">tsaousidis.site/projects</a>`;
+        return response;
+    }
+
+    // Education keywords - handle both direct and follow-up questions
+    if (containsAny(['education', 'study', 'degree', 'university', 'college', 'school']) || 
+        (containsAny(['what', 'tell', 'about']) && message.includes('education'))) {
+        return `<b>${botData.name}</b> is pursuing <b>${botData.education.degree}</b> at <b>${botData.education.institution}</b>. He started in ${botData.education.period} with expected graduation in ${botData.education.expectedGraduation}.`;
+    }
+
+    // Certification keywords - handle both direct and follow-up questions
+    if (containsAny(['certification', 'certificate', 'training', 'course']) || 
+        (containsAny(['what', 'tell', 'about']) && containsAny(['certification', 'certificate', 'training']))) {
+        let response = `<b>${botData.name}'s certifications and training:</b><br><br>`;
+        response += '<b>Completed Training:</b><ul>';
+        botData.certifications.training.forEach(cert => {
+            response += `• ${cert.name} from <b>${cert.issuer}</b> (${cert.date})<br>`;
+        });
+        response += '</ul><br><b>Ongoing Training:</b><ul>';
+        botData.certifications.currentTraining.forEach(training => {
+            response += `• ${training.name} at <b>${training.institution || training.platform}</b> (Expected: ${training.expectedCompletion})<br>`;
+        });
+        response += '</ul>';
+        return response;
+    }
+
+    // Technical skills keywords - handle both direct and follow-up questions
+    if (containsAny(['skill', 'skills', 'technology', 'technologies', 'tech stack', 'programming', 'language', 'languages', 'framework', 'frameworks', 'tool', 'tools', 'platform', 'platforms', 'knowledge', 'expertise', 'tech', 'technological']) || 
+        (containsAny(['what', 'tell', 'about']) && containsAny(['skill', 'tech', 'technology', 'programming']))) {
+        let response = '';
+        if (containsAny(['language', 'programming'])) {
+            response = `<b>${botData.name}</b> is proficient in the following programming languages:<br><ul>
+• ${botData.technicalSkills.languages.join('<br>• ')}</ul>
+<br>👉 See all technologies at <a href="https://tsaousidis.site/technologies" target="_blank">tsaousidis.site/technologies</a>`;
+        } else if (containsAny(['framework', 'library'])) {
+            response = `<b>${botData.name}</b> works with these frameworks and libraries:<br><ul>
+• ${botData.technicalSkills.frameworksAndLibraries.join('<br>• ')}</ul>
+<br>👉 See all technologies at <a href="https://tsaousidis.site/technologies" target="_blank">tsaousidis.site/technologies</a>`;
+        } else {
+            response = `<b>${botData.name}'s technical skills include:</b><br><br>`;
+            response += `<b>Programming Languages:</b><br><ul>• ${botData.technicalSkills.languages.join('<br>• ')}</ul><br>`;
+            response += `<b>Frameworks & Libraries:</b><br><ul>• ${botData.technicalSkills.frameworksAndLibraries.join('<br>• ')}</ul><br>`;
+            response += `<b>Tools & Platforms:</b><br><ul>• ${botData.technicalSkills.toolsAndPlatforms.join('<br>• ')}</ul><br>`;
+            response += `<b>Data & Visualization:</b><br><ul>• ${botData.technicalSkills.dataAndVisualization.join('<br>• ')}</ul><br>`;
+            response += `<b>AI & ML:</b><br><ul>• ${botData.technicalSkills.aiAndMl.join('<br>• ')}</ul><br>`;
+            response += `<b>Key Concepts:</b><br><ul>• ${botData.technicalSkills.concepts.join('<br>• ')}</ul>`;
+            response += `<br>👉 See all technologies at <a href="https://tsaousidis.site/technologies" target="_blank">tsaousidis.site/technologies</a>`;
+        }
+        return response;
+    }
+
+    // Contact information keywords - handle both direct and follow-up questions
+    if (containsAny(['contact', 'reach', 'email', 'phone', 'number', 'website', 'social', 'linkedin', 'github', 'connect', 'message', 'mail']) || 
+        (containsAny(['what', 'tell', 'about']) && containsAny(['contact', 'reach', 'email']))) {
         let response = `Here's how you can reach <b>Konstantinos Tsaousidis</b>:`;
         
         if (message.includes('email')) {
@@ -488,81 +574,9 @@ What would you like to know?`;
         return response;
     }
 
-    // Technical skills keywords
-    if (containsAny(['skill', 'skills', 'technology', 'technologies', 'tech stack', 'programming', 'language', 'languages', 'framework', 'frameworks', 'tool', 'tools', 'platform', 'platforms', 'knowledge', 'expertise', 'tech', 'technological'])) {
-        let response = '';
-        if (containsAny(['language', 'programming'])) {
-            response = `<b>${botData.name}</b> is proficient in the following programming languages:<br><ul>
-• ${botData.technicalSkills.languages.join('<br>• ')}</ul>
-<br>👉 See all technologies at <a href="https://tsaousidis.site/technologies" target="_blank">tsaousidis.site/technologies</a>`;
-        } else if (containsAny(['framework', 'library'])) {
-            response = `<b>${botData.name}</b> works with these frameworks and libraries:<br><ul>
-• ${botData.technicalSkills.frameworksAndLibraries.join('<br>• ')}</ul>
-<br>👉 See all technologies at <a href="https://tsaousidis.site/technologies" target="_blank">tsaousidis.site/technologies</a>`;
-        } else if (containsAny(['tool', 'platform'])) {
-            response = `<b>Tools & Platforms:</b><br><ul>
-• ${botData.technicalSkills.toolsAndPlatforms.join('<br>• ')}</ul>
-<br>👉 See all technologies at <a href="https://tsaousidis.site/technologies" target="_blank">tsaousidis.site/technologies</a>`;
-        } else {
-            response = `<b>${botData.name}'s technical skills include:</b><br><br>`;
-            response += `<b>Programming Languages:</b><br><ul>• ${botData.technicalSkills.languages.join('<br>• ')}</ul><br>`;
-            response += `<b>Frameworks & Libraries:</b><br><ul>• ${botData.technicalSkills.frameworksAndLibraries.join('<br>• ')}</ul><br>`;
-            response += `<b>Tools & Platforms:</b><br><ul>• ${botData.technicalSkills.toolsAndPlatforms.join('<br>• ')}</ul><br>`;
-            response += `<b>Data & Visualization:</b><br><ul>• ${botData.technicalSkills.dataAndVisualization.join('<br>• ')}</ul><br>`;
-            response += `<b>AI & ML:</b><br><ul>• ${botData.technicalSkills.aiAndMl.join('<br>• ')}</ul><br>`;
-            response += `<b>Key Concepts:</b><br><ul>• ${botData.technicalSkills.concepts.join('<br>• ')}</ul>`;
-            response += `<br>👉 See all technologies at <a href="https://tsaousidis.site/technologies" target="_blank">tsaousidis.site/technologies</a>`;
-        }
-        return response;
-    }
-
-    // Experience keywords
-    if (containsAny(['experience', 'work', 'job', 'career', 'company', 'position', 'role'])) {
-        let response = `Here's <b>${botData.name}'s work experience:</b><br><br>`;
-        botData.experience.forEach(exp => {
-            response += `<b>${exp.title}</b> at <b>${exp.company}</b> (${exp.period})<br>`;
-            response += `Key responsibilities:<ul>`;
-            exp.responsibilities.forEach(resp => {
-                response += `• ${resp}<br>`;
-            });
-            response += `</ul><br>`;
-        });
-        return response;
-    }
-
-    // Project keywords
-    if (containsAny(['project', 'portfolio', 'build', 'develop', 'create'])) {
-        let response = `Here are some notable projects by <b>${botData.name}:</b><br><br>`;
-        botData.projects.forEach(project => {
-            response += `<b>${project.name}</b><br>`;
-            response += `${project.description}<br><br>`;
-        });
-        response += `👉 Explore more projects at <a href="https://tsaousidis.site/projects" target="_blank">tsaousidis.site/projects</a>`;
-        return response;
-    }
-
-    // Education keywords
-    if (containsAny(['education', 'study', 'degree', 'university', 'college', 'school'])) {
-        return `<b>${botData.name}</b> is pursuing <b>${botData.education.degree}</b> at <b>${botData.education.institution}</b>. He started in ${botData.education.period} with expected graduation in ${botData.education.expectedGraduation}.`;
-    }
-
-    // Certification keywords
-    if (containsAny(['certification', 'certificate', 'training', 'course'])) {
-        let response = `<b>${botData.name}'s certifications and training:</b><br><br>`;
-        response += '<b>Completed Training:</b><ul>';
-        botData.certifications.training.forEach(cert => {
-            response += `• ${cert.name} from <b>${cert.issuer}</b> (${cert.date})<br>`;
-        });
-        response += '</ul><br><b>Ongoing Training:</b><ul>';
-        botData.certifications.currentTraining.forEach(training => {
-            response += `• ${training.name} at <b>${training.institution || training.platform}</b> (Expected: ${training.expectedCompletion})<br>`;
-        });
-        response += '</ul>';
-        return response;
-    }
-
-    // Language keywords
-    if (containsAny(['language', 'speak', 'fluent'])) {
+    // Language proficiency keywords - handle both direct and follow-up questions
+    if (containsAny(['language', 'speak', 'fluent']) || 
+        (containsAny(['what', 'tell', 'about']) && message.includes('language'))) {
         let response = `<b>${botData.name}'s language proficiency:</b><ul>`;
         botData.languages.forEach(lang => {
             response += `• <b>${lang.language}:</b> ${lang.level}<br>`;
@@ -570,29 +584,6 @@ What would you like to know?`;
         response += '</ul>';
         return response;
     }
-
-    // Skills and abilities keywords
-    if (containsAny(['skill', 'ability', 'capable', 'competency', 'soft skill'])) {
-        return `<b>${botData.name}'s key skills and abilities include:</b><ul>
-• ${botData.skills.join('<br>• ')}</ul>`;
-    }
-
-    // Volunteering keywords
-    if (containsAny(['volunteer', 'donation', 'community', 'blood'])) {
-        return `<b>${botData.name}</b> has been a <b>${botData.volunteering.role}</b> since ${botData.volunteering.period}, showing his commitment to community service.`;
-    }
-
-    // Location keywords
-    if (containsAny(['where', 'location', 'city', 'country', 'based'])) {
-        return `<b>${botData.name}</b> is based in <b>${botData.location}</b>.`;
-    }
-
-    // Handle specific project inquiries
-    botData.projects.forEach(project => {
-        if (message.includes(project.name.toLowerCase())) {
-            return `<b>${project.name}:</b> ${project.description}<br><br>👉 See more details at <a href="https://tsaousidis.site/projects" target="_blank">tsaousidis.site/projects</a>`;
-        }
-    });
 
     // Default response with conversation starters
     return `I can tell you about <b>${botData.name}'s:</b>

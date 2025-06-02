@@ -1086,12 +1086,26 @@ h2 {
 .feedback-form {
     display: flex;
     flex-direction: column;
-    gap: 2.7rem;
+    gap: 1.5rem;
 }
+
+/* Honeypot field styling */
+.website-field {
+    display: none !important;
+    opacity: 0;
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    height: 0;
+    width: 0;
+    z-index: -1;
+}
+
 .form-group {
     position: relative;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
+
 .form-group input,
 .form-group textarea {
     width: 100%;
