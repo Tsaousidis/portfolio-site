@@ -47,12 +47,12 @@ mail = Mail(app)
 def add_security_headers(response):
     # Content Security Policy - Carefully configured to allow necessary resources
     response.headers['Content-Security-Policy'] = "default-src 'self'; " \
-        "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com https://cdnjs.cloudflare.com https://unpkg.com https://*.google-analytics.com; " \
+        "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com https://cdnjs.cloudflare.com https://unpkg.com https://*.google-analytics.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; " \
         "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://unpkg.com; " \
         "img-src 'self' data: https: https://*.google-analytics.com; " \
         "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; " \
         "connect-src 'self' https://*.google-analytics.com; " \
-        "frame-ancestors 'none'; " \
+        "frame-src 'self' https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; " \
         "form-action 'self';"
     
     # HSTS (HTTP Strict Transport Security)
