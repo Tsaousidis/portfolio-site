@@ -1242,7 +1242,7 @@ h2 {
 
 .typing-text {
     display: block;
-    /* min-height: 40px; --- Removed, parent h1 will handle height */
+    min-height: 4em;
 }
 
 .hero-subtitle {
@@ -2062,4 +2062,33 @@ main {
     .hero-subtitle {
         font-size: 1rem !important;
     }
+}
+
+/* Screen reader only text */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@media (max-width: 768px) {
+  .typing-text {
+    min-height: 3em; 
+    max-width: 95vw;
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    white-space: pre-line;
+    word-break: break-word;
+    background: transparent;
+    border: none;
+    box-sizing: border-box;
+    /* Optionally, add pointer-events: none; if you want it to be fully non-interactive */
+  }
 }
