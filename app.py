@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_mail import Mail, Message
+from flask_wtf.csrf import CSRFProtect
 from dotenv import load_dotenv
 import os
 
@@ -14,6 +15,15 @@ app.secret_key = os.environ.get('SECRET_KEY')
 if not app.secret_key:
     raise ValueError("No SECRET_KEY set in environment variables")
 
+# Initialize CSRF protection
+csrf = CSRFProtect(app)
+
+# Session security configurations
+app.config['SESSION_COOKIE_SECURE'] = True  # Ensure cookies only sent over HTTPS
+app.config['SESSION_COOKIE_HTTPONLY'] = True  # Prevent JavaScript access to session cookie
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Protect against CSRF
+app.config['PERMANENT_SESSION_LIFETIME'] = 3600  # Session timeout in seconds (1 hour)
+
 # Configure Flask-Mail
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
@@ -23,6 +33,33 @@ app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASS')
 app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('EMAIL_USER')
 
 mail = Mail(app)
+
+# Security Headers
+@app.after_request
+def add_security_headers(response):
+    # Content Security Policy - Carefully configured to allow necessary resources
+    response.headers['Content-Security-Policy'] = "default-src 'self'; " \
+        "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com https://cdnjs.cloudflare.com https://unpkg.com https://*.google-analytics.com; " \
+        "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://unpkg.com; " \
+        "img-src 'self' data: https: https://*.google-analytics.com; " \
+        "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; " \
+        "connect-src 'self' https://*.google-analytics.com; " \
+        "frame-ancestors 'none'; " \
+        "form-action 'self';"
+    
+    # HSTS (HTTP Strict Transport Security)
+    response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+    
+    # Prevent Clickjacking
+    response.headers['X-Frame-Options'] = 'DENY'
+    
+    # Prevent content-type sniffing
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    
+    # Referrer Policy
+    response.headers['Referrer-Policy'] = 'no-referrer-when-downgrade'
+    
+    return response
 
 @app.route("/")
 def home():
@@ -117,14 +154,14 @@ def technologies():
         {
             "category": "Frameworks & Libraries",
             "tech_items": [
-                "Requests", "BeautifulSoup4", "SMTP", "Folium",
+                "Flask", "AOS", "Typed.js", "Requests", "BeautifulSoup4", "SMTP", "Folium",
                 "Tkinter", "Turtle"
             ]
         },
         {
             "category": "Tools & Platforms",
             "tech_items": [
-                "Git", "GitHub", "Docker", "Postman", "Camunda", "Azure", "AWS"
+                "Git", "GitHub", "Docker", "Postman", "Camunda", "Azure", "AWS", "Render", "Flask-Mail", "Gunicorn"
             ]
         },
         {
@@ -132,12 +169,12 @@ def technologies():
             "tech_items": ["Pandas", "NumPy", "Tableau", "Power BI", "Excel"]
         },
         {
-            "category": "AI & Machine Learning",
-            "tech_items": ["Salesforce AI Fundamentals"]
+            "category": "Concepts & Methodologies",
+            "tech_items": ["OOP", "REST APIs", "BPM", "Agile", "Business Intelligence", "Data Science", "Web Apps"]
         },
         {
-            "category": "Concepts & Methodologies",
-            "tech_items": ["OOP", "REST APIs", "BPM", "Agile", "Business Intelligence", "Data Science"]
+            "category": "AI & Machine Learning",
+            "tech_items": ["Salesforce AI Fundamentals"]
         }
     ]
     return render_template("technologies.html", technologies=tech_list)
@@ -145,6 +182,7 @@ def technologies():
 @app.route("/feedback", methods=['GET', 'POST'])
 def feedback():
     if request.method == 'POST':
+        # CSRF token is automatically checked by flask-wtf
         name = request.form.get('name', '').strip()
         email = request.form.get('email', '').strip()
         message = request.form.get('message', '').strip()

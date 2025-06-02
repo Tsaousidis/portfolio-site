@@ -13,8 +13,8 @@ const botData = {
     profile: "Motivated and detail-oriented Software Engineer with hands-on experience in Python, REST APIs, data processing, and desktop GUI applications. Experienced in automating workflows and building scalable and maintainable software solutions. Passionate about problem solving and continuous learning. Proven ability to deliver robust solutions and collaborate in cross-functional teams.",
     technicalSkills: {
         languages: ["Python", "SQL", "JavaScript", "PHP", "HTML", "CSS"],
-        frameworksAndLibraries: ["Requests (API)", "BeautifulSoup4 (Web Scraping)", "SMTP (emails)", "Folium (SMS)", "Tkinter (GUI)", "Turtle", "Flask"],
-        toolsAndPlatforms: ["Git", "Github", "Docker", "Postman", "Camunda", "Azure", "AWS"],
+        frameworksAndLibraries: ["Requests (API)", "Flask (Web Apps)", "AOS", "Typed.js", "BeautifulSoup4 (Web Scraping)", "SMTP (emails)", "Folium (SMS)", "Tkinter (GUI)", "Turtle", "Flask"],
+        toolsAndPlatforms: ["Git", "Github", "Docker", "Postman", "Camunda", "Azure", "AWS", "Render", "Flask-Mail", "Gunicorn"],
         dataAndVisualization: ["Pandas", "NumPy", "Tableau", "Power BI", "Excel"],
         aiAndMl: ["Salesforce AI fundamental technologies"],
         concepts: ["OOP", "REST APIs", "BPM", "Agile", "BI", "Data Science"]

@@ -26,6 +26,7 @@
 
     <div class="feedback-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
         <form class="feedback-form" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <div class="form-group">
                 <input type="text" id="name" name="name" required placeholder=" " value="{{ form_data.get('name', '') }}">
                 <label for="name">Name</label>

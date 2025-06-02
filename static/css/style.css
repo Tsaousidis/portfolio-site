@@ -2026,3 +2026,26 @@ main {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-5px); opacity: 0.8; }
 }
+
+/* Mobile styles for headers */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 1.8rem !important;
+        margin-bottom: 1.5rem;
+    }
+    
+    .cert-content h3,
+    .timeline-content h3,
+    .tech-section h2 {
+        font-size: 1.2rem !important;
+    }
+    
+    .hero h1,
+    .glowing-text {
+        font-size: 2rem !important;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem !important;
+    }
+}
