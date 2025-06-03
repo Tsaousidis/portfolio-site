@@ -2,13 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="Konstantinos 
     Tsaousidis is a Python developer from Greece, 
     focused on automation, APIs, and building 
     full-featured mini tools." />
     <meta name="author" content="Konstantinos Tsaousidis">
     <meta name="keywords" content="Konstantinos Tsaousidis, Python Developer, Software Engineer, Automation, APIs, Greece Developer">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tsaousidis.site/">
+    <meta property="og:title" content="Konstantinos Tsaousidis - Python Developer">
+    <meta property="og:description" content="Konstantinos Tsaousidis is a Python developer from Greece, focused on automation, APIs, and building full-featured mini tools.">
+    <meta property="og:image" content="https://tsaousidis.site{{ url_for('static', filename='img/graph-tag.webp') }}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tsaousidis.site/">
+    <meta property="twitter:title" content="Konstantinos Tsaousidis - Python Developer">
+    <meta property="twitter:description" content="Konstantinos Tsaousidis is a Python developer from Greece, focused on automation, APIs, and building full-featured mini tools.">
+    <meta property="twitter:image" content="https://tsaousidis.site{{ url_for('static', filename='img/graph-tag.webp') }}">
+
     <title>{% block title %}Konstantinos Tsaousidis - Python Developer{% endblock %}</title>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-K8VMCCKH02"></script>
@@ -31,7 +46,7 @@
     <nav>
         <div class="navbar-container">
             <a href="/" class="nav-brand">
-                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Portfolio Logo by Konstantinos Tsaousidis">
+                <img src="{{ url_for('static', filename='img/logo.webp') }}" alt="Portfolio Logo by Konstantinos Tsaousidis">
             </a>
             <button class="navbar-toggle" aria-label="Toggle navigation">
                 <span class="toggle-icon"></span>

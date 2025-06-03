@@ -2079,7 +2079,8 @@ main {
 
 @media (max-width: 768px) {
   .typing-text {
-    min-height: 3em; 
+    min-height: 3.3em; 
+    min-width: 0;
     max-width: 95vw;
     width: 100%;
     display: block;
@@ -2089,6 +2090,5 @@ main {
     background: transparent;
     border: none;
     box-sizing: border-box;
-    /* Optionally, add pointer-events: none; if you want it to be fully non-interactive */
   }
 }

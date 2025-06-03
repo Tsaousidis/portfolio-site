@@ -86,7 +86,7 @@ def projects():
                 {"name": "Amadeus", "icon": "fas fa-plane"}
             ],
             "link": "https://github.com/Tsaousidis/oop-api-flights-notifier",
-            "image": url_for('static', filename='img/flights-notifier.jpg')
+            "image": url_for('static', filename='img/flights-notifier.webp')
         },
         {
             "title": "Billboard to Spotify",
@@ -98,7 +98,7 @@ def projects():
                 {"name": "APIs", "icon": "fas fa-cloud"},
             ],
             "link": "https://github.com/Tsaousidis/scraper-api-billboard-to-spotify",
-            "image": url_for('static', filename='img/billboard-to-spotify.jpg')
+            "image": url_for('static', filename='img/billboard-to-spotify.webp')
         },
         {
             "title": "Greek Flash Card Learning App",
@@ -111,7 +111,7 @@ def projects():
                 {"name": "Greek Language", "icon": "fas fa-language"}
             ],
             "link": "https://github.com/Tsaousidis/gui-pandas-greek-flashcards",
-            "image": url_for('static', filename='img/greek-flashcards.png')
+            "image": url_for('static', filename='img/greek-flashcards.webp')
         },
         {
             "title": "ISS Real-Time Tracker",
@@ -123,7 +123,7 @@ def projects():
                 {"name": "Folium", "icon": "fas fa-map-marked-alt"}
             ],
             "link": "https://github.com/Tsaousidis/api-folium-iss-tracker",
-            "image": url_for('static', filename='img/iss-tracker.png')
+            "image": url_for('static', filename='img/iss-tracker.webp')
         },
         {
             "title": "The Classic Snake Game",
@@ -134,7 +134,7 @@ def projects():
                 {"name": "OOP", "icon": "fas fa-cubes"}
             ],
             "link": "https://github.com/Tsaousidis/oop-turtle-snake-game",
-            "image": url_for('static', filename='img/turtle-snake-game.png')
+            "image": url_for('static', filename='img/turtle-snake-game.webp')
         },
         {
             "title": "Password Manager",
@@ -146,7 +146,7 @@ def projects():
                 {"name": "Tkinter", "icon": "fas fa-window-maximize"}
             ],
             "link": "https://github.com/Tsaousidis/gui-password-manager",
-            "image": url_for('static', filename='img/password-manager.png')
+            "image": url_for('static', filename='img/password-manager.webp')
         }
     ]
 

@@ -264,7 +264,7 @@ function initChatbot() {
     // Create chat icon for mobile
     const chatIcon = document.createElement('div');
     chatIcon.className = 'chat-icon';
-    chatIcon.innerHTML = '<img src="/static/img/chat-icon.png" alt="Chat">';
+    chatIcon.innerHTML = '<img src="/static/img/chat-icon.webp" alt="Chat">';
     document.body.appendChild(chatIcon);
 
     const chatContainer = document.createElement('div');
