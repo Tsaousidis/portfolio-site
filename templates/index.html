@@ -2,6 +2,29 @@
 
 {% block title %}Python Developer – Konstantinos Tsaousidis | Automation, APIs, Tools{% endblock %}
 
+{% block head %}
+    {{ super() }}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "About Me – Konstantinos Tsaousidis",
+      "description": "I am a self-taught Software Engineer specializing in building practical, end-to-end solutions that automate tasks, integrate APIs, and provide intuitive user interfaces. My projects range from productivity tools and automation scripts to educational mini-games and data-driven applications. I am passionate about delivering clean, maintainable code and transforming ideas into robust, user-friendly software.",
+      "author": {
+        "@type": "Person",
+        "name": "Konstantinos Tsaousidis"
+      },
+      "image": "/static/img/graph-tag.webp",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ request.url if request else '' }}"
+      },
+      "datePublished": "2025-06-01",
+      "dateModified": "2025-06-01"
+    }
+    </script>
+{% endblock %}
+
 {% block content %}
 <!-- Particle background -->
 <div id="particles-js"></div>
@@ -15,7 +38,7 @@
             </h1>
         </div>
         <div class="hero-static-content">
-            <p class="hero-subtitle">Python Developer | Software Engineer | Automation Enthusiast</p>
+            <p class="hero-subtitle">Software Engineer | Python Developer | Automation Enthusiast</p>
             <div class="hero-cta">
                 <a href="#about" class="cta-button primary">Explore My Work</a>
                 <a href="#certifications" class="cta-button secondary">Professional Certifications</a>
@@ -52,7 +75,7 @@
     <div class="glass-card">
         <h2 class="section-title">About Me</h2>
         <p class="about-text">
-            I am a self-taught Python developer specializing in building practical, 
+            I am a self-taught Software Engineer specializing in building practical, 
             end-to-end solutions that automate tasks, integrate APIs, and provide intuitive 
             user interfaces. My projects range from productivity tools and automation scripts to 
             educational mini-games and data-driven applications. I am passionate about delivering clean, 
