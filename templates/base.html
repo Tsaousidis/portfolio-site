@@ -25,14 +25,19 @@
     <meta property="twitter:image" content="https://tsaousidis.site{{ url_for('static', filename='img/graph-tag.webp') }}">
 
     <title>{% block title %}Konstantinos Tsaousidis - Software Engineer{% endblock %}</title>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K8VMCCKH02"></script>
+    <!-- Google tag (gtag.js) - delayed load -->
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+    window.addEventListener('load', function() {
+      var gtagScript = document.createElement('script');
+      gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-K8VMCCKH02';
+      gtagScript.async = true;
+      document.head.appendChild(gtagScript);
 
-    gtag('config', 'G-K8VMCCKH02');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-K8VMCCKH02');
+    });
     </script>    
     <!-- Bootstrap CSS (async) -->
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
