@@ -3,12 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Konstantinos 
-    Tsaousidis is a Software Engineer from Greece, 
-    focused on automation, APIs, and building 
-    full-featured mini tools." />
+    <meta name="description" content="Konstantinos Tsaousidis is a Software Engineer from Greece, focused on automation, APIs, and building full-featured mini tools.">
     <meta name="author" content="Konstantinos Tsaousidis">
-    <meta name="keywords" content="Konstantinos Tsaousidis, Software Engineer, Python Developer, Automation, APIs, Greece Developer">
+    <meta name="keywords" content="Konstantinos Tsaousidis, Software Engineer, Python Developer, Automation, APIs, Greece Developer, Full Stack Developer">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#1a1f42">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://tsaousidis.site{{ request.path }}">
+    
+    <!-- DNS Prefetch and Preconnect -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
@@ -16,17 +24,20 @@
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://tsaousidis.site/">
-    <meta property="og:title" content="Konstantinos Tsaousidis - Software Engineer">
-    <meta property="og:description" content="Konstantinos Tsaousidis is a Software Engineer from Greece, focused on automation, APIs, and building full-featured mini tools.">
+    <meta property="og:url" content="https://tsaousidis.site{{ request.path }}">
+    <meta property="og:title" content="{% block og_title %}Konstantinos Tsaousidis - Software Engineer{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Konstantinos Tsaousidis is a Software Engineer from Greece, focused on automation, APIs, and building full-featured mini tools.{% endblock %}">
     <meta property="og:image" content="https://tsaousidis.site/static/img/logo.webp">
+    <meta property="og:site_name" content="Konstantinos Tsaousidis Portfolio">
+    <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://tsaousidis.site/">
-    <meta property="twitter:title" content="Konstantinos Tsaousidis - Software Engineer">
-    <meta property="twitter:description" content="Konstantinos Tsaousidis is a Software Engineer from Greece, focused on automation, APIs, and building full-featured mini tools.">
-    <meta property="twitter:image" content="https://tsaousidis.site/static/img/logo.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://tsaousidis.site{{ request.path }}">
+    <meta name="twitter:title" content="{% block twitter_title %}Konstantinos Tsaousidis - Software Engineer{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Konstantinos Tsaousidis is a Software Engineer from Greece, focused on automation, APIs, and building full-featured mini tools.{% endblock %}">
+    <meta name="twitter:image" content="https://tsaousidis.site/static/img/logo.webp">
+    <meta name="twitter:creator" content="@KTsaousidis">
 
     <title>{% block title %}Konstantinos Tsaousidis - Software Engineer{% endblock %}</title>
     <!-- Google tag (gtag.js) - delayed load -->
