@@ -1031,8 +1031,8 @@ h2 {
     border-radius: 2px;
 }
 
-/* Feedback page styles */
-.feedback-container {
+/* contact page styles */
+.contact-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem 1rem;
@@ -1041,7 +1041,7 @@ h2 {
     background: transparent;
 }
 
-.feedback-hero {
+.contact-hero {
     text-align: center;
     padding: 2rem 0;
     position: relative;
@@ -1049,7 +1049,7 @@ h2 {
     z-index: 1;
 }
 
-.feedback-hero h1 {
+.contact-hero h1 {
     font-size: 4rem;
     margin-bottom: 1.5rem;
     background: linear-gradient(135deg, #4A3AFF 0%, #8E2DE2 100%);
@@ -1058,7 +1058,7 @@ h2 {
     background-clip: text;
 }
 
-.feedback-subtitle {
+.contact-subtitle {
     font-size: 1.2rem;
     color: rgba(255, 255, 255, 0.9);
     max-width: 700px;
@@ -1066,8 +1066,8 @@ h2 {
     font-weight: 400;
 }
 
-/* Modern Feedback Form 2025 */
-.feedback-card {
+/* Modern contact Form 2025 */
+.contact-card {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(18px) saturate(160%);
     -webkit-backdrop-filter: blur(18px) saturate(160%);
@@ -1079,11 +1079,11 @@ h2 {
     margin: 0 auto;
     transition: box-shadow 0.3s, transform 0.3s;
 }
-.feedback-card:hover {
+.contact-card:hover {
     transform: translateY(-6px) scale(1.012);
     box-shadow: 0 16px 48px 0 rgba(45, 63, 225, 0.16), 0 2px 12px 0 rgba(44,62,80,0.10);
 }
-.feedback-form {
+.contact-form {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -1183,11 +1183,11 @@ h2 {
     box-shadow: 0 8px 32px 0 rgba(255,77,143,0.13);
 }
 @media (max-width: 900px) {
-    .feedback-card {
+    .contact-card {
         max-width: 98vw;
         padding: 2.2rem 0.7rem 1.5rem 0.7rem;
     }
-    .feedback-form {
+    .contact-form {
         gap: 1.5rem;
     }
 }
@@ -1959,7 +1959,7 @@ h2 {
 }
 
 @media (max-width: 768px) {
-    .feedback-hero h1 {
+    .contact-hero h1 {
         font-size: 2.5rem;
     }
 }

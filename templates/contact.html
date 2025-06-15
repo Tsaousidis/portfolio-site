@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %}Feedback{% endblock %}
+{% block title %}Contact{% endblock %}
 
 {% block content %}
 <!-- Add reCAPTCHA script in the head -->
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-<div class="feedback-hero" data-aos="fade-up" data-aos-duration="600">
+<div class="contact-hero" data-aos="fade-up" data-aos-duration="600">
     <h1>Get in Touch</h1>
-    <p class="feedback-subtitle">I value your feedback and suggestions. Let me know what you think!</p>
+    <p class="contact-subtitle">I value your messages and suggestions. Let me know what you think!</p>
 </div>
 
-<div class="feedback-container">
+<div class="contact-container">
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
@@ -27,8 +27,8 @@
         {% endif %}
     {% endwith %}
 
-    <div class="feedback-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
-        <form class="feedback-form" method="POST">
+    <div class="contact-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
+        <form class="contact-form" method="POST">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <!-- Honeypot field -->
             <div class="website-field">

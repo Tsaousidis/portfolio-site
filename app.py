@@ -187,21 +187,21 @@ def technologies():
     ]
     return render_template("technologies.html", technologies=tech_list)
 
-@app.route("/feedback", methods=['GET', 'POST'])
-def feedback():
+@app.route("/contact", methods=['GET', 'POST'])
+def contact():
     if request.method == 'POST':
         # CSRF token is automatically checked by flask-wtf
         
         # Check honeypot field - if it's filled, it's probably a bot
         if request.form.get('website'):
             flash('Bot detected. Access denied.', 'error')
-            return redirect(url_for('feedback'))
+            return redirect(url_for('contact'))
             
         # Verify reCAPTCHA
         recaptcha_response = request.form.get('g-recaptcha-response')
         if not recaptcha_response:
             flash('Please complete the reCAPTCHA.', 'error')
-            return render_template("feedback.html", form_data=request.form, recaptcha_site_key=RECAPTCHA_SITE_KEY)
+            return render_template("contact.html", form_data=request.form, recaptcha_site_key=RECAPTCHA_SITE_KEY)
             
         # Verify the reCAPTCHA response with Google
         verify_response = requests.post('https://www.google.com/recaptcha/api/siteverify', {
@@ -211,7 +211,7 @@ def feedback():
         
         if not verify_response['success']:
             flash('reCAPTCHA verification failed. Please try again.', 'error')
-            return render_template("feedback.html", form_data=request.form, recaptcha_site_key=RECAPTCHA_SITE_KEY)
+            return render_template("contact.html", form_data=request.form, recaptcha_site_key=RECAPTCHA_SITE_KEY)
             
         name = request.form.get('name', '').strip()
         email = request.form.get('email', '').strip()
@@ -226,22 +226,22 @@ def feedback():
         # Validate inputs
         if not all([name, email, message]):
             flash('All fields are required.', 'error')
-            return render_template("feedback.html", form_data=form_data, recaptcha_site_key=RECAPTCHA_SITE_KEY)
+            return render_template("contact.html", form_data=form_data, recaptcha_site_key=RECAPTCHA_SITE_KEY)
         
         if len(name) < 2 or not name.replace(' ', '').isalpha():
             flash('Please enter a valid name (letters only).', 'error')
-            return render_template("feedback.html", form_data=form_data, recaptcha_site_key=RECAPTCHA_SITE_KEY)
+            return render_template("contact.html", form_data=form_data, recaptcha_site_key=RECAPTCHA_SITE_KEY)
         
         if len(message) < 10 or len(message) > 1000:
             flash('Message must be between 10 and 1000 characters.', 'error')
-            return render_template("feedback.html", form_data=form_data, recaptcha_site_key=RECAPTCHA_SITE_KEY)
+            return render_template("contact.html", form_data=form_data, recaptcha_site_key=RECAPTCHA_SITE_KEY)
         
         try:
             msg = Message(
-                subject="Feedback from tsaousidis.site",
+                subject="contact from tsaousidis.site",
                 recipients=[app.config['MAIL_USERNAME']],
                 body=f"""
-                New feedback received from your portfolio website:
+                New contact received from your portfolio website:
                 
                 From: {name} ({email})
                 
@@ -251,14 +251,14 @@ def feedback():
             )
             mail.send(msg)
             flash('Thank you for your feedback! I will get back to you soon.', 'success')
-            return redirect(url_for('feedback'))
+            return redirect(url_for('contact'))
         except Exception as e:
             print(f"Error sending email: {str(e)}")
             print(f"Mail settings: SERVER={app.config['MAIL_SERVER']}, PORT={app.config['MAIL_PORT']}, USERNAME={app.config['MAIL_USERNAME']}")
             flash('Sorry, there was an error sending your feedback. Please try again later.', 'error')
-            return render_template("feedback.html", form_data=form_data, recaptcha_site_key=RECAPTCHA_SITE_KEY)
+            return render_template("contact.html", form_data=form_data, recaptcha_site_key=RECAPTCHA_SITE_KEY)
             
-    return render_template("feedback.html", form_data={}, recaptcha_site_key=RECAPTCHA_SITE_KEY)
+    return render_template("contact.html", form_data={}, recaptcha_site_key=RECAPTCHA_SITE_KEY)
 
 if __name__ == "__main__":
     app.run(debug=True)
