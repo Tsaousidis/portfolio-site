@@ -987,6 +987,10 @@ h2 {
     .tech-label {
         font-size: 0.8rem;
     }
+
+    .tech-stack h3 {
+        text-align: center;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1441,6 +1445,7 @@ h2 {
     font-size: 1.1rem;
     line-height: 1.8;
     margin-bottom: 3rem;
+    text-align: center;
 }
 
 /* Featured Projects */
@@ -1734,6 +1739,7 @@ h2 {
     font-size: 2.5rem;
     margin-bottom: 1.5rem;
     color: var(--accent-color);
+    text-align: center;
 }
 
 .cert-content h3 {
@@ -2046,6 +2052,7 @@ main {
     .section-title {
         font-size: 1.8rem !important;
         margin-bottom: 1.5rem;
+        text-align: center;
     }
     
     .cert-content h3,
@@ -2091,4 +2098,40 @@ main {
     border: none;
     box-sizing: border-box;
   }
+}
+
+@media (max-width: 768px) {
+    .cert-content h3 {
+        text-align: center;
+        width: 100%;
+        display: block;
+    }
+    
+}
+
+@media (max-width: 768px) {
+    .cert-issuer,
+    .cert-date {
+        text-align: center;
+        width: 100%;
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+    .timeline-content h3 {
+        text-align: center;
+        width: 100%;
+        display: block;
+    }
+    
+}
+
+@media (max-width: 768px) {
+    .training-institution,
+    .completion-date {
+        text-align: center;
+        width: 100%;
+        display: block;
+    }
 }

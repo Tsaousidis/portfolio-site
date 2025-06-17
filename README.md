@@ -67,7 +67,7 @@ portfolio-site/
 │   ├── index.html
 │   ├── projects.html
 │   ├── technologies.html
-│   └── feedback.html
+│   └── contact.html
 ├── app.py
 ├── wsgi.py
 ├── requirements.txt
@@ -132,7 +132,7 @@ This portfolio and its contents are personal work and may not be reproduced with
 
 ### 🛠 Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check [feedback page](https://tsaousidis.site/feedback).
+Contributions, issues, and feature requests are welcome! Feel free to check [contact page](https://tsaousidis.site/contact).
 
 ---
 
