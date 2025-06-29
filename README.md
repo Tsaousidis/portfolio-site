@@ -59,6 +59,7 @@ portfolio-site/
 ├── static/
 │   ├── css/
 │   │   └── style.css
+│   │   └── style.min.css
 │   ├── js/
 │   │   └── chatbot.js
 │   └── img/
@@ -125,7 +126,7 @@ The website is fully responsive across all devices:
 
 ### ©️ Copyright
 
-© 2024 Konstantinos Tsaousidis. All rights reserved.
+© 2025 Konstantinos Tsaousidis. All rights reserved.
 This portfolio and its contents are personal work and may not be reproduced without permission.
 
 ---
