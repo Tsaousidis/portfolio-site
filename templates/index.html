@@ -1,324 +1,793 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Konstantinos Tsaousidis | Portfolio</title>
 
-{% block title %}Konstantinos Tsaousidis – Software Engineer | Automation, APIs, Tools{% endblock %}
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
 
-{% block head %}
-    {{ super() }}
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": "About Me – Konstantinos Tsaousidis",
-      "description": "I am a Software Engineer specializing in building practical, end-to-end solutions that automate tasks, integrate APIs, and provide intuitive user interfaces. My projects range from productivity tools and automation scripts to educational mini-games and data-driven applications. I am passionate about delivering clean, maintainable code and transforming ideas into robust, user-friendly software.",
-      "author": {
-        "@type": "Person",
-        "name": "Konstantinos Tsaousidis"
-      },
-      "image": "/static/img/graph-tag.webp",
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "{{ request.url if request else '' }}"
-      },
-      "datePublished": "2025-06-01",
-      "dateModified": "2025-06-16"
-    }
-    </script>
-{% endblock %}
-
-{% block content %}
-<!-- Particle background -->
-<div id="particles-js"></div>
-
-<!-- Hero Section -->
-<section class="hero">
-    <div class="hero-content">
-        <div class="animated-text-container">
-            <h1 class="glowing-text">
-                <span class="typing-text"></span>
-            </h1>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+    
+    <!-- ── TopNavBar ── -->
+    <nav class="fixed top-4 left-1/2 -translate-x-1/2 w-[90%] max-w-7xl rounded-sm border border-[#3b494c]/15 bg-[#131313]/40 backdrop-blur-md flex justify-between items-center px-8 py-4 z-50 shadow-[0_4px_30px_rgba(0,0,0,0.5),0_0_15px_rgba(0,218,243,0.05)] tracking-tight headlines-serif labels-mono">
+        <a href="#hero" class="text-xl font-serif italic text-[#e5e2e1]">Konstantinos Tsaousidis</a>
+        <div class="hidden md:flex gap-8 items-center">
+            <a class="text-[#00e5ff] font-bold border-b border-[#00e5ff]/50 transition-all duration-300" href="#hero">Home</a>
+            <a class="text-[#e5e2e1]/70 hover:text-[#e5e2e1] transition-colors duration-300" href="#projects">Projects</a>
+            <a class="text-[#e5e2e1]/70 hover:text-[#e5e2e1] transition-colors duration-300" href="#studies">Experience</a>
+            <a class="text-[#e5e2e1]/70 hover:text-[#e5e2e1] transition-colors duration-300" href="#skills">Skills</a>
+            <a class="text-[#e5e2e1]/70 hover:text-[#e5e2e1] transition-colors duration-300" href="#education">Education</a>
         </div>
-        <div class="hero-static-content">
-            <p class="hero-subtitle">Software Engineer | Full Stack Developer | Automation Specialist</p>
-            <div class="hero-cta">
-                <a href="#about" class="cta-button primary">About Me</a>
-                <a href="#certifications" class="cta-button secondary">Certifications</a>
-                <a href="#current-training" class="cta-button secondary">Current Training</a>
-            </div>
-            <div class="social-links">
-                <a href="https://github.com/Tsaousidis" target="_blank" class="social-icon github" aria-label="Visit Konstantinos Tsaousidis's GitHub profile">
-                    <i class="fab fa-github" aria-hidden="true"></i>
-                    <span class="sr-only">GitHub Profile</span>
-                </a>
-                <a href="https://www.linkedin.com/in/konstantinos-tsaousidis-1b7360225/" target="_blank" class="social-icon linkedin" aria-label="Visit Konstantinos Tsaousidis's LinkedIn profile">
-                    <i class="fab fa-linkedin" aria-hidden="true"></i>
-                    <span class="sr-only">LinkedIn Profile</span>
-                </a>
-            </div>
-        </div>
+        <a href="#contact" class="nav-connect hidden md:inline-flex">
+            <span class="nav-connect-text">Connect</span>
+            <span class="nav-connect-icon">↗</span>
+        </a>
+        <button class="mobile-nav-toggle md:hidden" id="mobileNavToggle" type="button" aria-label="Open menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>        
+    </nav>
+
+    <div class="mobile-nav-panel md:hidden" id="mobileNavPanel">
+        <a href="#hero" class="mobile-nav-link">Home</a>
+        <a href="#projects" class="mobile-nav-link">Projects</a>
+        <a href="#studies" class="mobile-nav-link">Experience</a>
+        <a href="#skills" class="mobile-nav-link">Skills</a>
+        <a href="#education" class="mobile-nav-link">Education</a>
+        <a href="#contact" class="mobile-nav-link">Connect</a>
     </div>
 
-    <!-- 3D rotating cube with tech stack -->
-    <div class="cube-container">
-        <div class="cube">
-            <div class="cube-face front"><i class="fab fa-python"></i></div>
-            <div class="cube-face back"><i class="fas fa-database"></i></div>
-            <div class="cube-face right"><i class="fas fa-code"></i></div>
-            <div class="cube-face left"><i class="fas fa-robot"></i></div>
-            <div class="cube-face top"><i class="fas fa-server"></i></div>
-            <div class="cube-face bottom"><i class="fas fa-terminal"></i></div>
-        </div>
-    </div>
-</section>
+    <!-- ── Hero Section ── -->
+    <section id="hero">
+        <div class="hero-sticky">
+            <div class="hero-content">
+                <div class="hero-visual">
+                    <div class="glow glow-1"></div>
+                    <div class="glow glow-2"></div>
 
-<!-- About Section -->
-<section class="about" id="about">
-    <div class="glass-card">
-        <h2 class="section-title">About Me</h2>
-        <p class="about-text">
-            I am a Software Engineer specializing in building practical, 
-            end-to-end solutions that automate tasks, integrate APIs, and provide intuitive 
-            user interfaces. My projects range from productivity tools and automation scripts to 
-            educational mini-games and data-driven applications. I am passionate about delivering clean, 
-            maintainable code and transforming ideas into robust, user-friendly software.
-        </p>
-        <!-- Tech Stack -->
-        <div class="tech-stack">
-            <h3>Tech Stack</h3>
-            <div class="tech-grid">
-                <div class="tech-item" data-tooltip="Python">
-                    <i class="fab fa-python"></i>
-                    <span class="tech-label">Python</span>
+                    <div class="piece-entrance" id="pieceEntrance">
+                        <div class="piece-scroll" id="pieceScroll">
+                            <img
+                                src="{{ url_for('static', filename='images/hero/chess-glass-no-bg.png') }}"
+                                alt="Futuristic glass chess king"
+                                class="hero-piece"
+                            />
+                        </div>
+                    </div>
                 </div>
-                <div class="tech-item" data-tooltip="REST APIs">
-                    <i class="fas fa-cloud"></i>
-                    <span class="tech-label">REST APIs</span>
-                </div>
-                <div class="tech-item" data-tooltip="GUI Development">
-                    <i class="fas fa-window-maximize"></i>
-                    <span class="tech-label">GUI Dev</span>
-                </div>
-                <div class="tech-item" data-tooltip="Data Analysis">
-                    <i class="fas fa-chart-bar"></i>
-                    <span class="tech-label">Data</span>
-                </div>
-                <div class="tech-item" data-tooltip="Automation">
-                    <i class="fas fa-robot"></i>
-                    <span class="tech-label">Automation</span>
-                </div>
-                <div class="tech-item" data-tooltip="Web Scraping">
-                    <i class="fas fa-spider"></i>
-                    <span class="tech-label">Scraping</span>
+
+                <div class="hero-copy">
+                    <p class="eyebrow font-label text-xs uppercase tracking-[0.12em] text-primary mb-4 inline-block px-4 py-2 border border-outline-variant/30 rounded-full bg-white/5">
+                        Software Developer
+                    </p>
+                    <h1 class="font-headline text-on-surface">
+                        Playing the Long Game
+                        <span class="italic">in Software Engineering</span>
+                    </h1>
+                    <p class="hero-text font-body text-on-surface-variant">
+                        I build data-driven applications, automate workflows,
+                        and develop practical software solutions with a focus on
+                        clean implementation, strategic thinking, and continuous improvement.
+                    </p>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Certifications Section -->
-<section class="certifications" id="certifications">
-    <div class="glass-card">
-        <h2 class="section-title">Professional Certifications</h2>
-        <p class="cert-intro about-text">Continuous learning is a core value for me. Here are some of my recent certifications:</p>
-        <div class="cert-grid">
-            <!-- Python Programming Course -->
-            <div class="cert-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="cert-icon">
-                    <i class="fas fa-code"></i>
-                </div>
-                <div class="cert-content">
-                    <h3>Python Programming Course</h3>
-                    <p class="cert-issuer">University of Patras (Remote)</p>
-                    <p class="cert-date">July 2025</p>
-                </div>
+    <!-- ── Projects Section (Scroll-driven Cards) ── -->
+    <section class="projects-scroll projects-desktop" id="projects">
+        <div class="projects-sticky">
+            <div class="projects-bg"></div>
+            <div class="projects-overlay"></div>
+
+            <div class="projects-word-wrap">
+                <h2 class="projects-word font-headline">Projects</h2>
             </div>
 
-            <!-- Salesforce Certification -->
-            <div class="cert-card" data-aos="fade-up">
-                <div class="cert-icon">
-                    <i class="fab fa-salesforce"></i>
-                </div>
-                <div class="cert-content">
-                    <h3>Salesforce Certified AI Associate</h3>
-                    <p class="cert-issuer">Salesforce (Remote)</p>
-                    <p class="cert-date">December 2024</p>
-                    <div class="cert-id">
-                        <span>Credential ID:</span> 5447667
+            <div class="projects-track">
+                <article class="project-card">
+                    <div>
+                        <div class="thumb">
+                            <img
+                                src="{{ url_for('static', filename='images/projects/flights-notifier.webp') }}"
+                                alt="Flight Price Alert System preview"
+                            />
+                        </div>
+                        <h3>Flight Price Alert System</h3>
+                        <p>
+                            A Python-based system that tracks airfare prices through the Amadeus API
+                            and sends automated email alerts when prices drop below a chosen threshold.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="project-tags">
+                            <span>Python</span>
+                            <span>API</span>
+                            <span>Automation</span>
+                        </div>
+                        <a href="https://github.com/Tsaousidis/oop-api-smtp-flights-notifier" class="card-link" target="_blank" rel="noopener noreferrer">
+                            View Project
+                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M1 11L11 1M11 1H4M11 1V8"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <div>
+                        <div class="thumb">
+                            <img
+                                src="{{ url_for('static', filename='images/projects/billboard-to-spotify.webp') }}"
+                                alt="Billboard to Spotify preview"
+                            />
+                        </div>
+                        <h3>Billboard to Spotify</h3>
+                        <p>
+                            A Python automation project that scrapes the Billboard Hot 100 chart 
+                            for a user-specified date and creates a private Spotify playlist with the top 100 songs of that day.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="project-tags">
+                            <span>Python</span>
+                            <span>API</span>
+                            <span>Web Scraping</span>
+                        </div>
+                        <a href="https://github.com/Tsaousidis/scraper-api-billboard-to-spotify" class="card-link" target="_blank" rel="noopener noreferrer">
+                            View Project
+                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M1 11L11 1M11 1H4M11 1V8"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <div>
+                        <div class="thumb">
+                            <img
+                                src="{{ url_for('static', filename='images/projects/turtle-snake-game.webp') }}"
+                                alt="The Classic Snake Game preview"
+                            />
+                        </div>
+                        <h3>The Classic Snake Game</h3>
+                        <p>
+                            A fun and addictive Snake game built using Python's turtle module. Guide the snake, eat the food, grow longer, and avoid crashing into the walls... or your own tail. How long can you survive?
+                        </p>
+                    </div>
+                    <div>
+                        <div class="project-tags">
+                            <span>Python</span>
+                            <span>Game</span>
+                            <span>OOP</span>
+                        </div>
+                        <a href="https://github.com/Tsaousidis/oop-turtle-snake-game" class="card-link" target="_blank" rel="noopener noreferrer">
+                            View Project
+                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M1 11L11 1M11 1H4M11 1V8"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <div>
+                        <div class="thumb">
+                            <img
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCl3_2T1OwTFdYkerIwPJ4DL1tl_MleyH1mwRPQem9lW-i1G5BzliKXxrmOOf5sIfr5UbNUa49dFzmy1I1yJW58wClzX-sSttUEaXKL6Mp0nbjfXC_zOjw26iLoY2J57p-Qdd9B4tUArOXmrBfLyui4W02JKy9-knzR4fs4cCHSP6fLHn20GLeGDX7Io5chkEPMU3lJ6MgZxD6PacwoU5mSGHWIgnoSWzdMT-mo3boB-PuBA5ArINTrCr_dVHmkYbtNpLaptj31Ch0"
+                                alt="Product Configuration Tools preview"
+                            />
+                        </div>
+                        <h3>Product Configuration Tools</h3>
+                        <p>
+                            Developed interactive frontend tools using PHP, JavaScript, HTML, and CSS, enabling users to input product parameters and receive real-time calculations and recommendations based on custom business logic.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="project-tags">
+                            <span>PHP</span>
+                            <span>JavaScript</span>
+                            <span>Custom Logic</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Projects Section Mobile (Old Logic) ── -->
+    <section class="projects-mobile py-20 px-6 max-w-7xl mx-auto" id="projects-mobile">
+        <div class="mb-14">
+            <h2 class="font-headline text-4xl text-on-surface">
+                Projects &amp;<br><span class="italic">Strategic Builds</span>
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 overflow-hidden">
+            <div class="group relative min-h-[420px] overflow-hidden bg-surface-container rounded-sm transition-all duration-500">
+                <img
+                    class="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity"
+                    src="{{ url_for('static', filename='images/projects/flights-notifier.webp') }}"
+                    alt="Flight Price Alert System preview"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+                <div class="relative h-full flex flex-col justify-end p-8">
+                    <span class="font-label text-[10px] text-primary-fixed-dim uppercase tracking-widest mb-2">Automation System</span>
+                    <h3 class="font-headline text-[1.6rem] mb-4">Flight Price Alert System</h3>
+                    <p class="font-body text-on-surface-variant max-w-full text-sm mb-6">
+                        A Python-based system that tracks airfare prices through the Amadeus API
+                        and sends automated email alerts when prices drop below a chosen threshold.
+                    </p>
+                    <div class="flex gap-4">
+                        <a class="text-primary hover:text-white transition-colors"
+                           href="https://github.com/Tsaousidis/oop-api-smtp-flights-notifier"
+                           target="_blank" rel="noopener noreferrer">
+                            <span class="material-symbols-outlined text-xl">code</span>
+                        </a>
+                        <a class="text-primary hover:text-white transition-colors"
+                           href="https://github.com/Tsaousidis/oop-api-smtp-flights-notifier"
+                           target="_blank" rel="noopener noreferrer">
+                            <span class="material-symbols-outlined text-xl">open_in_new</span>
+                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Data Science Certification -->
-            <div class="cert-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="cert-icon">
-                    <i class="fas fa-chart-network"></i>
+            <div class="group relative min-h-[420px] overflow-hidden bg-surface-container rounded-sm transition-all duration-500">
+                <img
+                    class="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity"
+                    src="{{ url_for('static', filename='images/projects/billboard-to-spotify.webp') }}"
+                    alt="Billboard to Spotify preview"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+                <div class="relative h-full flex flex-col justify-end p-8">
+                    <span class="font-label text-[10px] text-primary-fixed-dim uppercase tracking-widest mb-2">Automation</span>
+                    <h3 class="font-headline text-[1.6rem] mb-4">Billboard to Spotify</h3>
+                    <p class="font-body text-on-surface-variant max-w-full text-sm mb-6">
+                        A Python automation project that scrapes the Billboard Hot 100 chart and creates a Spotify playlist for a selected date.
+                    </p>
+                    <div class="flex gap-4">
+                        <a class="text-primary hover:text-white transition-colors"
+                           href="https://github.com/Tsaousidis/scraper-api-billboard-to-spotify"
+                           target="_blank" rel="noopener noreferrer">
+                            <span class="material-symbols-outlined text-xl">code</span>
+                        </a>
+                        <a class="text-primary hover:text-white transition-colors"
+                           href="https://github.com/Tsaousidis/scraper-api-billboard-to-spotify"
+                           target="_blank" rel="noopener noreferrer">
+                            <span class="material-symbols-outlined text-xl">open_in_new</span>
+                        </a>
+                    </div>
                 </div>
-                <div class="cert-content">
-                    <h3>Data Science Professional</h3>
-                    <p class="cert-issuer">Reatcode-Workearly (Remote)</p>
-                    <p class="cert-date">October 2024</p>
-                    <a href="https://www.credly.com/badges/6745fdd2-7c54-4b2e-9884-72f440cf653d/linked_in?t=snd7rj" 
-                       class="cert-badge" target="_blank">
-                        View Badge <i class="fas fa-external-link-alt"></i>
+            </div>
+
+            <div class="group relative min-h-[420px] overflow-hidden bg-surface-container rounded-sm transition-all duration-500">
+                <img
+                    class="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity"
+                    src="{{ url_for('static', filename='images/projects/turtle-snake-game.webp') }}"
+                    alt="Snake Game preview"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+                <div class="relative h-full flex flex-col justify-end p-8">
+                    <span class="font-label text-[10px] text-primary-fixed-dim uppercase tracking-widest mb-2">Game</span>
+                    <h3 class="font-headline text-[1.6rem] mb-4">The Classic Snake Game</h3>
+                    <p class="font-body text-on-surface-variant max-w-full text-sm mb-6">
+                        A Python-based Snake game built with the turtle module, focusing on object-oriented design and gameplay logic.
+                    </p>
+                    <div class="flex gap-4">
+                        <a class="text-primary hover:text-white transition-colors"
+                           href="https://github.com/Tsaousidis/oop-turtle-snake-game"
+                           target="_blank" rel="noopener noreferrer">
+                            <span class="material-symbols-outlined text-xl">code</span>
+                        </a>
+                        <a class="text-primary hover:text-white transition-colors"
+                           href="https://github.com/Tsaousidis/oop-turtle-snake-game"
+                           target="_blank" rel="noopener noreferrer">
+                            <span class="material-symbols-outlined text-xl">open_in_new</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group relative min-h-[420px] overflow-hidden bg-surface-container rounded-sm transition-all duration-500">
+                <img
+                    class="absolute inset-0 w-full h-full object-cover opacity-30 transition-opacity"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCl3_2T1OwTFdYkerIwPJ4DL1tl_MleyH1mwRPQem9lW-i1G5BzliKXxrmOOf5sIfr5UbNUa49dFzmy1I1yJW58wClzX-sSttUEaXKL6Mp0nbjfXC_zOjw26iLoY2J57p-Qdd9B4tUArOXmrBfLyui4W02JKy9-knzR4fs4cCHSP6fLHn20GLeGDX7Io5chkEPMU3lJ6MgZxD6PacwoU5mSGHWIgnoSWzdMT-mo3boB-PuBA5ArINTrCr_dVHmkYbtNpLaptj31Ch0"
+                    alt="Product Configuration Tools preview"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+                <div class="relative h-full flex flex-col justify-end p-8">
+                    <span class="font-label text-[10px] text-primary-fixed-dim uppercase tracking-widest mb-2">Frontend Tools</span>
+                    <h3 class="font-headline text-[1.6rem] mb-4">Product Configuration Tools</h3>
+                    <p class="font-body text-on-surface-variant max-w-full text-sm mb-6">
+                        Developed interactive frontend tools using PHP and JavaScript to enable real-time product configuration, calculations, and recommendations based on custom logic.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Experience Section (Trajectory Timeline) ── -->
+    <section class="py-32 px-6 md:px-10 bg-surface-container-low overflow-hidden relative" id="studies">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-20 text-center">
+                <h2 class="font-headline text-5xl md:text-6xl text-on-surface mb-4">
+                    Experience &amp; <span class="italic">Trajectory</span>
+                </h2>
+                <p class="max-w-2xl mx-auto text-on-surface-variant leading-relaxed">
+                    A path shaped through operations, technical support, software development,
+                    and system-focused problem solving.
+                </p>
+            </div>
+
+            <div class="relative">
+                <div class="absolute left-[6px] md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/60 via-primary-fixed-dim/30 to-transparent"></div>
+
+                <div class="relative mb-20 md:flex items-center justify-between group">
+                    <div class="hidden md:block w-5/12 text-right pr-14">
+                        <span class="font-label text-sm uppercase tracking-[0.18em] text-on-surface-variant">
+                            2025 — Present
+                        </span>
+                    </div>
+                    <div class="absolute left-0 md:left-1/2 md:-translate-x-1/2 top-2 w-3 h-3 rounded-full bg-primary-container border-4 border-surface-container-low z-10"></div>
+                    <div class="md:w-5/12 pl-10 md:pl-14 transition-transform duration-300 md:group-hover:translate-x-2">
+                        <div class="md:hidden font-label text-[11px] uppercase tracking-[0.18em] text-primary mb-2">
+                            2025 — Present
+                        </div>
+                        <h4 class="font-headline text-2xl md:text-3xl text-on-surface mb-1">
+                            Product Operations Engineer
+                        </h4>
+                        <div class="font-label text-[#2563eb] text-sm uppercase tracking-[0.12em] mb-4">
+                            POWER FACTORS
+                        </div>
+                        <p class="text-on-surface-variant text-sm leading-relaxed max-w-md">
+                            Contributing to production-grade systems and operational workflows with a strong
+                            focus on reliability and performance. Working daily with Linux environments,
+                            Python, SQL, and distributed data systems including Cassandra to support scalable
+                            and resilient infrastructure.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative mb-20 md:flex items-center justify-between group md:flex-row-reverse">
+                    <div class="hidden md:block w-5/12 text-left pl-14">
+                        <span class="font-label text-sm uppercase tracking-[0.18em] text-on-surface-variant">
+                            2022 — 2025
+                        </span>
+                    </div>
+                    <div class="absolute left-0 md:left-1/2 md:-translate-x-1/2 top-2 w-3 h-3 rounded-full bg-[#22c55e] border-4 border-surface-container-low z-10"></div>
+                    <div class="md:w-5/12 pl-10 md:pl-0 md:pr-14 transition-transform duration-300 md:text-right md:group-hover:-translate-x-2">
+                        <div class="md:hidden font-label text-[11px] uppercase tracking-[0.18em] text-primary mb-2">
+                            2022 — 2025
+                        </div>
+                        <h4 class="font-headline text-2xl md:text-3xl text-on-surface mb-1">
+                            WordPress Developer &amp; General Manager
+                        </h4>
+                        <div class="font-label text-[#22c55e] text-sm uppercase tracking-[0.12em] mb-4">
+                            Altersmoke
+                        </div>
+                        <p class="text-on-surface-variant text-sm leading-relaxed max-w-md md:ml-auto">
+                            Designed automation systems for order validation, promotions, and reporting.
+                            Built internal tools with PHP, JavaScript, HTML, CSS, SQL, and Python,
+                            while integrating APIs and streamlining product onboarding workflows.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative mb-20 md:flex items-center justify-between group">
+                    <div class="hidden md:block w-5/12 text-right pr-14">
+                        <span class="font-label text-sm uppercase tracking-[0.18em] text-on-surface-variant">
+                            2021 — 2022
+                        </span>
+                    </div>
+                    <div class="absolute left-0 md:left-1/2 md:-translate-x-1/2 top-2 w-3 h-3 rounded-full bg-[#38bdf8] border-4 border-surface-container-low z-10"></div>
+                    <div class="md:w-5/12 pl-10 md:pl-14 transition-transform duration-300 md:group-hover:translate-x-2">
+                        <div class="md:hidden font-label text-[11px] uppercase tracking-[0.18em] text-[#7dd3fc] mb-2">
+                            2021 — 2022
+                        </div>
+                        <h4 class="font-headline text-2xl md:text-3xl text-on-surface mb-1">
+                            Customer Service Representative
+                        </h4>
+                        <div class="font-label text-[#38bdf8] text-sm uppercase tracking-[0.12em] mb-4">
+                            OPAP
+                        </div>
+                        <p class="text-on-surface-variant text-sm leading-relaxed max-w-md">
+                            Managed high-volume transactions, supported customers with accuracy,
+                            and maintained reliable day-to-day operational flow.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative mb-20 md:flex items-center justify-between group md:flex-row-reverse">
+                    <div class="hidden md:block w-5/12 text-left pl-14">
+                        <span class="font-label text-sm uppercase tracking-[0.18em] text-on-surface-variant">
+                            2021
+                        </span>
+                    </div>
+                    <div class="absolute left-0 md:left-1/2 md:-translate-x-1/2 top-2 w-3 h-3 rounded-full bg-[#c084fc] border-4 border-surface-container-low z-10"></div>
+                    <div class="md:w-5/12 pl-10 md:pl-0 md:pr-14 transition-transform duration-300 md:text-right md:group-hover:-translate-x-2">
+                        <div class="md:hidden font-label text-[11px] uppercase tracking-[0.18em] text-[#c084fc] mb-2">
+                            2021
+                        </div>
+                        <h4 class="font-headline text-2xl md:text-3xl text-on-surface mb-1">
+                            Barista
+                        </h4>
+                        <div class="font-label text-[#c084fc] text-sm uppercase tracking-[0.12em] mb-4">
+                            Idees
+                        </div>
+                        <p class="text-on-surface-variant text-sm leading-relaxed max-w-md md:ml-auto">
+                            Worked in a fast-paced customer-facing environment, improving service workflows
+                            and supporting team efficiency.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative mb-20 md:flex items-center justify-between group">
+                    <div class="hidden md:block w-5/12 text-right pr-14">
+                        <span class="font-label text-sm uppercase tracking-[0.18em] text-on-surface-variant">
+                            2018 — 2021
+                        </span>
+                    </div>
+                    <div class="absolute left-0 md:left-1/2 md:-translate-x-1/2 top-2 w-3 h-3 rounded-full bg-[#f59e0b] border-4 border-surface-container-low z-10"></div>
+                    <div class="md:w-5/12 pl-10 md:pl-14 transition-transform duration-300 md:group-hover:translate-x-2">
+                        <div class="md:hidden font-label text-[11px] uppercase tracking-[0.18em] text-[#f59e0b] mb-2">
+                            2018 — 2021
+                        </div>
+                        <h4 class="font-headline text-2xl md:text-3xl text-on-surface mb-1">
+                            IT Support
+                        </h4>
+                        <div class="font-label text-[#f59e0b] text-sm uppercase tracking-[0.12em] mb-4">
+                            Battlenet Display
+                        </div>
+                        <p class="text-on-surface-variant text-sm leading-relaxed max-w-md">
+                            Provided technical support for hardware and software issues while maintaining
+                            and optimizing systems for improved performance and reliability.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Skills Section ── -->
+    <section id="skills" class="skills-section">
+        <div class="skills-section-inner">
+            <h2 class="font-headline text-on-surface italic">Technical Skills</h2>
+        </div>
+
+        <div class="tech-mobile-grid" id="mobileChips">
+            <div class="tech-chip"><span class="chip-dot"></span>Python</div>
+            <div class="tech-chip"><span class="chip-dot"></span>JavaScript</div>
+            <div class="tech-chip"><span class="chip-dot"></span>REST APIs</div>
+            <div class="tech-chip"><span class="chip-dot"></span>SQL</div>
+            <div class="tech-chip"><span class="chip-dot"></span>Pandas</div>
+            <div class="tech-chip"><span class="chip-dot"></span>Excel</div>
+            <div class="tech-chip"><span class="chip-dot"></span>AWS</div>
+            <div class="tech-chip"><span class="chip-dot"></span>Azure</div>
+            <div class="tech-chip"><span class="chip-dot"></span>Docker</div>
+            <div class="tech-chip"><span class="chip-dot"></span>OOP</div>
+            <div class="tech-chip"><span class="chip-dot"></span>Power BI</div>
+            <div class="tech-chip"><span class="chip-dot"></span>GitHub</div>
+            <div class="tech-chip"><span class="chip-dot"></span>Cassandra</div>
+            <div class="tech-chip"><span class="chip-dot"></span>Linux</div>
+        </div>
+
+        <div class="tech-rows-wrap">
+            <div class="tech-row" id="rowA">
+                <div class="tech-pill">Python</div>
+                <div class="tech-pill">JavaScript</div>
+                <div class="tech-pill">REST APIs</div>
+                <div class="tech-pill">SQL</div>
+                <div class="tech-pill">Linux</div>
+            </div>
+
+            <div class="row-spacer"></div>
+
+            <div class="tech-row" id="rowB">
+                <div class="tech-pill">Pandas</div>
+                <div class="tech-pill">Excel</div>
+                <div class="tech-pill">AWS</div>
+                <div class="tech-pill">Azure</div>
+                <div class="tech-pill">Cassandra</div>
+            </div>
+
+            <div class="row-spacer"></div>
+
+            <div class="tech-row" id="rowC">
+                <div class="tech-pill">Docker</div>
+                <div class="tech-pill">PHP</div>
+                <div class="tech-pill">OOP</div>
+                <div class="tech-pill">Power BI</div>
+                <div class="tech-pill">GitHub</div>
+            </div>
+        </div>
+    </section>  
+
+    <!-- ── Education Section ── -->
+    <section class="education-section" id="education">
+        <div class="education-sticky">
+            <div class="education-inner">
+                <div class="education-heading">
+                    <h2 class="font-headline text-on-surface">
+                        Education &amp; <span class="italic">Continuous Learning</span>
+                    </h2>
+                    <p class="text-on-surface-variant">
+                        A selection of courses and certifications that reflect my focus on practical software development,
+                        data, automation, and continuous skill building.
+                    </p>
+                </div>
+
+                <div class="education-cards-stage" id="educationCardsStage">
+                    <article class="education-card education-card-1">
+                        <div class="education-card-inner">
+                            <div class="education-card-copy">
+                                <small>Learning 01</small>
+                                <h3>Python Programming Course</h3>
+                                <p>
+                                    A focused training program in Python covering programming fundamentals,
+                                    problem solving, and practical software development concepts.
+                                </p>
+                            </div>
+                            <div class="education-meta">
+                                <strong>Institution</strong>
+                                <span>University of Patras (Remote)</span>
+                                <strong class="meta-gap">Completed</strong>
+                                <span>July 2025</span>
+                                <strong class="meta-gap">Track</strong>
+                                <span>Python / Programming Foundations</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="education-card education-card-2">
+                        <div class="education-card-inner">
+                            <div class="education-card-copy">
+                                <small>Learning 02</small>
+                                <h3>Salesforce Certified AI Associate</h3>
+                                <p>
+                                    Certification focused on core AI concepts, responsible AI practices,
+                                    and Salesforce ecosystem knowledge for modern business applications.
+                                </p>
+                            </div>
+                            <div class="education-meta">
+                                <strong>Institution</strong>
+                                <span>Salesforce (Remote)</span>
+                                <strong class="meta-gap">Completed</strong>
+                                <span>December 2024</span>
+                                <strong class="meta-gap">Credential ID</strong>
+                                <span>5447667</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="education-card education-card-3">
+                        <div class="education-card-inner">
+                            <div class="education-card-copy">
+                                <small>Learning 03</small>
+                                <h3>Data Science Professional</h3>
+                                <p>
+                                    Professional training in data analysis, data handling, and practical
+                                    data science workflows with emphasis on real-world application.
+                                </p>
+                            </div>
+                            <div class="education-meta">
+                                <strong>Institution</strong>
+                                <span>Reatcode-Workearly (Remote)</span>
+                                <strong class="meta-gap">Completed</strong>
+                                <span>October 2024</span>
+                                <strong class="meta-gap">Credential</strong>
+                                <span>
+                                    <a href="https://www.credly.com/badges/6745fdd2-7c54-4b2e-9884-72f440cf653d/linked_in?t=snd7rj"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        View Badge
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="education-card education-card-4">
+                        <div class="education-card-inner">
+                            <div class="education-card-copy">
+                                <small>Learning 04</small>
+                                <h3>Microsoft Excel Course</h3>
+                                <p>
+                                    Coursework focused on spreadsheet logic, data organization,
+                                    reporting structure, and productivity-oriented Excel workflows.
+                                </p>
+                            </div>
+                            <div class="education-meta">
+                                <strong>Institution</strong>
+                                <span>Reatcode-Workearly (Remote)</span>
+                                <strong class="meta-gap">Completed</strong>
+                                <span>October 2024</span>
+                                <strong class="meta-gap">Track</strong>
+                                <span>Excel / Data Handling / Reporting</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="education-card education-card-5">
+                        <div class="education-card-inner">
+                            <div class="education-card-copy">
+                                <small>Learning 05</small>
+                                <h3>Specialist in Digital Marketing &amp; Online Branding</h3>
+                                <p>
+                                    Training in digital strategy, online branding, and marketing communication,
+                                    with a practical view of user-facing digital ecosystems.
+                                </p>
+                            </div>
+                            <div class="education-meta">
+                                <strong>Institution</strong>
+                                <span>TUV Hellas (Remote)</span>
+                                <strong class="meta-gap">Completed</strong>
+                                <span>December 2023</span>
+                                <strong class="meta-gap">Track</strong>
+                                <span>Digital Marketing / Branding</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Contact Section ── -->
+    <section class="contact-section" id="contact">
+        <div class="contact-shell">
+            <div class="contact-glow contact-glow-1"></div>
+            <div class="contact-glow contact-glow-2"></div>
+
+            <div class="contact-panel">
+                <div class="contact-header text-center">
+                    <h2 class="font-headline contact-title">
+                        Let’s Work Together <span class="italic">on the Next Move</span>
+                    </h2>
+
+                    <p class="contact-intro font-body text-on-surface-variant">
+                        Open to collaborations and opportunities in software development,
+                        automation, data workflows, and system-focused problem solving.
+                    </p>
+                </div>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div class="mb-6 space-y-3">
+                            {% for category, message in messages %}
+                                <div class="rounded-sm border px-4 py-3 text-sm
+                                    {% if category == 'success' %}
+                                        border-green-500/30 bg-green-500/10 text-green-200
+                                    {% else %}
+                                        border-red-500/30 bg-red-500/10 text-red-200
+                                    {% endif %}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <form class="contact-form" method="POST" action="{{ url_for('home') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <input
+                        type="text"
+                        name="website"
+                        tabindex="-1"
+                        autocomplete="off"
+                        class="hidden"
+                        aria-hidden="true"
+                    >
+
+                    <div class="contact-grid">
+                        <div class="contact-field">
+                            <label class="contact-label" for="contact-name">Name</label>
+                            <input
+                                id="contact-name"
+                                class="contact-input"
+                                placeholder="Your name"
+                                type="text"
+                                name="name"
+                                required
+                            />
+                        </div>
+
+                        <div class="contact-field">
+                            <label class="contact-label" for="contact-email">Email</label>
+                            <input
+                                id="contact-email"
+                                class="contact-input"
+                                placeholder="your@email.com"
+                                type="email"
+                                name="email"
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div class="contact-field">
+                        <label class="contact-label" for="contact-message">Message</label>
+                        <textarea
+                            id="contact-message"
+                            class="contact-textarea"
+                            placeholder="Tell me a bit about your project, idea, or opportunity."
+                            rows="5"
+                            name="message"
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div class="contact-actions flex flex-col items-start gap-4">
+                        <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+
+                        <button class="contact-button" type="submit">
+                            <span>Send Message</span>
+                            <span class="contact-button-icon">↗</span>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="contact-links">
+                    <a
+                        class="contact-link"
+                        href="https://www.linkedin.com/in/konstantinos-tsaousidis-1b7360225/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <span class="contact-link-kicker">Professional</span>
+                        <span class="contact-link-title">LinkedIn</span>
+                    </a>
+
+                    <a
+                        class="contact-link"
+                        href="https://github.com/Tsaousidis"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <span class="contact-link-kicker">Code</span>
+                        <span class="contact-link-title">GitHub</span>
+                    </a>
+
+                    <a
+                        class="contact-link"
+                        href="mailto:kostastsaousbm@gmail.com"
+                    >
+                        <span class="contact-link-kicker">Direct</span>
+                        <span class="contact-link-title">Email</span>
                     </a>
                 </div>
             </div>
-
-            <!-- Excel Certification -->
-            <div class="cert-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="cert-icon">
-                    <i class="fas fa-table"></i>
-                </div>
-                <div class="cert-content">
-                    <h3>Microsoft Excel Course</h3>
-                    <p class="cert-issuer">Reatcode-Workearly (Remote)</p>
-                    <p class="cert-date">October 2024</p>
-                </div>
-            </div>            
-
-            <!-- Digital Marketing Certification -->
-            <div class="cert-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="cert-icon">
-                    <i class="fas fa-bullhorn"></i>
-                </div>
-                <div class="cert-content">
-                    <h3>Specialist in Digital Marketing & Online Branding</h3>
-                    <p class="cert-issuer">TUV Hellas (Remote)</p>
-                    <p class="cert-date">December 2023</p>
-                </div>
-            </div>
-
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Current Training Section -->
-<section class="current-training" id="current-training">
-    <div class="glass-card">
-        <h2 class="section-title">Current Training</h2>
-        <p class="training-intro about-text">I am always expanding my skills. Here's what I'm currently working on:</p>
-        <div class="training-timeline">
-            <!-- Udemy Python Course -->
-            <div class="timeline-item" data-aos="fade-right" data-aos-delay="100">
-                <div class="timeline-icon">
-                    <i class="fas fa-code"></i>
-                    <div class="circular-progress" data-percent="55">
-                        <svg width="60" height="60">
-                            <circle cx="30" cy="30" r="26" stroke="#2D3FE1" stroke-width="6" fill="none" opacity="0.15"/>
-                            <circle cx="30" cy="30" r="26" stroke="#2D3FE1" stroke-width="6" fill="none" stroke-dasharray="163.36" stroke-dashoffset="73.5" stroke-linecap="round"/>
-                        </svg>
-                        <span class="progress-text">55%</span>
-                    </div>
-                </div>
-                <div class="timeline-content">
-                    <h3>100 Days of Code: The Complete Python Pro Bootcamp</h3>
-                    <p class="training-institution">Udemy</p>
-                </div>
+    <!-- ── Footer ── -->
+    <footer class="w-full border-t border-[#3b494c]/15 py-12 bg-[#0e0e0e] font-mono text-[10px] uppercase tracking-[0.2em] text-[#e5e2e1]/50">
+        <div class="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto px-8">
+            <div class="font-serif italic text-lg text-[#e5e2e1] mb-4 md:mb-0">Konstantinos Tsaousidis</div>
+            <div class="text-center md:text-left mb-4 md:mb-0">
+                © 2026 Konstantinos Tsaousidis | Built with strategy, precision, and clean code.
+            </div>
+            <div class="flex gap-8">
+                <a class="text-[#e5e2e1]/40 hover:text-[#00e5ff] transition-colors duration-200" href="https://www.linkedin.com/in/konstantinos-tsaousidis-1b7360225/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a class="text-[#e5e2e1]/40 hover:text-[#00e5ff] transition-colors duration-200" href="https://github.com/Tsaousidis" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a class="text-[#e5e2e1]/40 hover:text-[#00e5ff] transition-colors duration-200" href="mailto:kostastsaousbm@gmail.com">Email</a>
             </div>
         </div>
-    </div>
-</section>
+    </footer>
 
-<!-- Required Libraries -->
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
-
-<!-- Initialize Particles.js and Typed.js -->
-<script>
-    // Initialize Typed.js
-    new Typed('.typing-text', {
-        strings: [
-            'Hi, I\'m Konstantinos Tsaousidis',
-            'I Build End-to-End Python Applications',
-            'I Automate Workflows',
-            'Fueled by Coffee and Dark Mode'
-        ],
-        typeSpeed: 45,
-        backSpeed: 25,
-        backDelay: 1500,
-        loop: true,
-        showCursor: false
-    });
-
-    // Initialize Particles.js
-    particlesJS('particles-js',
-        {
-            "particles": {
-                "number": {
-                    "value": 80,
-                    "density": {
-                        "enable": true,
-                        "value_area": 800
-                    }
-                },
-                "color": {
-                    "value": "#2D3FE1"
-                },
-                "shape": {
-                    "type": "circle"
-                },
-                "opacity": {
-                    "value": 0.5,
-                    "random": false
-                },
-                "size": {
-                    "value": 3,
-                    "random": true
-                },
-                "line_linked": {
-                    "enable": true,
-                    "distance": 150,
-                    "color": "#6C22BD",
-                    "opacity": 0.4,
-                    "width": 1
-                },
-                "move": {
-                    "enable": true,
-                    "speed": 6,
-                    "direction": "none",
-                    "random": false,
-                    "straight": false,
-                    "out_mode": "out",
-                    "bounce": false
-                }
-            },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": {
-                    "onhover": {
-                        "enable": true,
-                        "mode": "repulse"
-                    },
-                    "onclick": {
-                        "enable": true,
-                        "mode": "push"
-                    },
-                    "resize": true
-                }
-            },
-            "retina_detect": true
-        }
-    );
-</script>
-
-<style>
-@media (max-width: 600px) {
-  .hero-cta {
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-  }
-  .hero-cta .cta-button {
-    width: 100%;
-    text-align: center;
-    font-size: 1rem;
-    padding: 1.2rem 0;
-  }
-}
-.hero-cta .cta-button {
-  min-width: 180px;
-  font-size: 1.08rem;
-  padding: 1.1rem 2.2rem;
-}
-</style>
-{% endblock %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
