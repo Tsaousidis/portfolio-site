@@ -215,7 +215,7 @@ section#hero {
   inset: 0;
   background-image:
     linear-gradient(rgba(7, 9, 15, 0.45), rgba(7, 9, 15, 0.8)),
-    url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=80');
+    url('../images/projects/projects-chessobard.png');
   background-size: cover;
   background-position: center;
   transform: scale(1.08);
@@ -368,6 +368,11 @@ section#hero {
   padding: 8rem 0;
   overflow: visible;
   max-width: 100%;
+  position: relative;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(0, 229, 255, 0.06), transparent 24%),
+    radial-gradient(circle at 80% 30%, rgba(76, 110, 245, 0.07), transparent 26%),
+    linear-gradient(180deg, #090909 0%, #050505 100%);
 }
 
 .skills-section-inner {
@@ -468,18 +473,20 @@ section#hero {
 .education-section {
   position: relative;
   height: 420vh;
-  background:
-    radial-gradient(circle at top left, rgba(0, 229, 255, 0.05), transparent 26%),
-    linear-gradient(180deg, #111314 0%, #131313 100%);
 }
 
 .education-sticky {
   position: sticky;
   top: 0;
   height: 100vh;
-  overflow: hidden;
   display: flex;
   align-items: center;
+  background-image:
+    linear-gradient(rgba(7, 9, 15, 0.78), rgba(7, 9, 15, 0.9)),
+    url('../images/education/education-chessobard.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .education-inner {
@@ -723,14 +730,17 @@ section#hero {
    Contact
    ===================================================== */
 
-.contact-section {
+.contact-section,
+#studies {
   position: relative;
-  padding: 8rem 1.5rem;
   background:
     radial-gradient(circle at 20% 20%, rgba(0, 229, 255, 0.06), transparent 24%),
     radial-gradient(circle at 80% 30%, rgba(76, 110, 245, 0.07), transparent 26%),
     linear-gradient(180deg, #090909 0%, #050505 100%);
-  overflow: hidden;
+}
+
+.contact-section {
+  padding: 8rem 1.5rem;
 }
 
 .contact-shell {

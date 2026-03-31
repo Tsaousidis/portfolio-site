@@ -322,23 +322,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('#contact form');
     if (form) {
         form.addEventListener('submit', (e) => {
-            e.preventDefault();
-
             if (!form.checkValidity()) {
+                e.preventDefault();
                 form.reportValidity();
                 return;
             }
 
             const btn = form.querySelector('button[type="submit"]');
-            const original = btn.textContent;
-            btn.textContent = 'Transmission Sent ✓';
-            btn.disabled = true;
-
-            setTimeout(() => {
-                btn.textContent = original;
-                btn.disabled = false;
-                form.reset();
-            }, 3000);
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<span>Sending...</span><span class="contact-button-icon">↗</span>';
+            }
         });
     }
 
