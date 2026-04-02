@@ -3,13 +3,22 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build:css": "tailwindcss -i ./src/tailwind-input.css -o ./static/css/tailwind.css --minify",
+    "build:tailwind": "tailwindcss -i ./src/tailwind-input.css -o ./static/css/tailwind.css --minify",
+    "build:style": "cleancss -o ./static/css/style.min.css ./static/css/style.css",
+
+    "build:merge": "node -e \"const fs=require('fs'); const a=fs.readFileSync('./static/css/tailwind.css','utf8'); const b=fs.readFileSync('./static/css/style.min.css','utf8'); fs.writeFileSync('./static/css/app.css', a + b);\"",
+
+    "build:minify-final": "cleancss -o ./static/css/app.min.css ./static/css/app.css",
+
+    "build:css": "npm run build:tailwind && npm run build:style && npm run build:merge && npm run build:minify-final",
+
     "watch:css": "tailwindcss -i ./src/tailwind-input.css -o ./static/css/tailwind.css --watch"
   },
   "devDependencies": {
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.10",
     "autoprefixer": "^10.4.21",
+    "clean-css-cli": "^5.6.3",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17"
   }

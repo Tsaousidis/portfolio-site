@@ -10,8 +10,7 @@
     <!-- Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.min.css') }}">
     <!-- reCAPTCHA -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
@@ -59,7 +58,8 @@
                     <div class="piece-entrance" id="pieceEntrance">
                         <div class="piece-scroll" id="pieceScroll">
                             <img
-                                src="{{ url_for('static', filename='images/hero/chess-glass-no-bg.png') }}"
+                                src="{{ url_for('static', filename='images/hero/chess-glass-no-bg.webp') }}"
+                                loading="lazy"
                                 alt="Futuristic glass chess king"
                                 class="hero-piece"
                             />
