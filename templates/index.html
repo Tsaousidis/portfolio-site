@@ -7,12 +7,8 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet"/>
-    <!-- Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <!-- Styles -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/app.min.css') }}">
-    <!-- reCAPTCHA -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
@@ -59,7 +55,8 @@
                         <div class="piece-scroll" id="pieceScroll">
                             <img
                                 src="{{ url_for('static', filename='images/hero/chess-glass-no-bg.webp') }}"
-                                loading="lazy"
+                                fetchpriority="high"
+                                decoding="async"
                                 alt="Futuristic glass chess king"
                                 class="hero-piece"
                             />
@@ -101,6 +98,8 @@
                         <div class="thumb">
                             <img
                                 src="{{ url_for('static', filename='images/projects/flights-notifier.webp') }}"
+                                loading="lazy"
+                                decoding="async"
                                 alt="Flight Price Alert System preview"
                             />
                         </div>
@@ -220,6 +219,8 @@
                 <img
                     class="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity"
                     src="{{ url_for('static', filename='images/projects/flights-notifier.webp') }}"
+                    loading="lazy"
+                    decoding="async"                    
                     alt="Flight Price Alert System preview"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
@@ -232,14 +233,23 @@
                     </p>
                     <div class="flex gap-4">
                         <a class="text-primary hover:text-white transition-colors"
-                           href="https://github.com/Tsaousidis/oop-api-smtp-flights-notifier"
-                           target="_blank" rel="noopener noreferrer">
-                            <span class="material-symbols-outlined text-xl">code</span>
+                        href="https://github.com/Tsaousidis/oop-api-smtp-flights-notifier"
+                        target="_blank" rel="noopener noreferrer"
+                        aria-label="View code">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l-4 3 4 3"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16 9l4 3-4 3"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l-4 14"></path>
+                            </svg>
                         </a>
                         <a class="text-primary hover:text-white transition-colors"
-                           href="https://github.com/Tsaousidis/oop-api-smtp-flights-notifier"
-                           target="_blank" rel="noopener noreferrer">
-                            <span class="material-symbols-outlined text-xl">open_in_new</span>
+                        href="https://github.com/Tsaousidis/oop-api-smtp-flights-notifier"
+                        target="_blank" rel="noopener noreferrer"
+                        aria-label="Open project">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h8v8"></path>
+                            </svg>
                         </a>
                     </div>
                 </div>
@@ -249,6 +259,8 @@
                 <img
                     class="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity"
                     src="{{ url_for('static', filename='images/projects/billboard-to-spotify.webp') }}"
+                    loading="lazy"
+                    decoding="async"                    
                     alt="Billboard to Spotify preview"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
@@ -261,13 +273,22 @@
                     <div class="flex gap-4">
                         <a class="text-primary hover:text-white transition-colors"
                            href="https://github.com/Tsaousidis/scraper-api-billboard-to-spotify"
-                           target="_blank" rel="noopener noreferrer">
-                            <span class="material-symbols-outlined text-xl">code</span>
+                           target="_blank" rel="noopener noreferrer"
+                            aria-label="View code">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l-4 3 4 3"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 9l4 3-4 3"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l-4 14"></path>
+                                </svg>
                         </a>
                         <a class="text-primary hover:text-white transition-colors"
                            href="https://github.com/Tsaousidis/scraper-api-billboard-to-spotify"
-                           target="_blank" rel="noopener noreferrer">
-                            <span class="material-symbols-outlined text-xl">open_in_new</span>
+                           target="_blank" rel="noopener noreferrer"
+                            aria-label="Open project">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h8v8"></path>
+                                </svg>
                         </a>
                     </div>
                 </div>
@@ -277,6 +298,8 @@
                 <img
                     class="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity"
                     src="{{ url_for('static', filename='images/projects/turtle-snake-game.webp') }}"
+                    loading="lazy"
+                    decoding="async"                    
                     alt="Snake Game preview"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
@@ -289,13 +312,22 @@
                     <div class="flex gap-4">
                         <a class="text-primary hover:text-white transition-colors"
                            href="https://github.com/Tsaousidis/oop-turtle-snake-game"
-                           target="_blank" rel="noopener noreferrer">
-                            <span class="material-symbols-outlined text-xl">code</span>
+                           target="_blank" rel="noopener noreferrer"
+                            aria-label="View code">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l-4 3 4 3"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 9l4 3-4 3"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l-4 14"></path>
+                                </svg>
                         </a>
                         <a class="text-primary hover:text-white transition-colors"
                            href="https://github.com/Tsaousidis/oop-turtle-snake-game"
-                           target="_blank" rel="noopener noreferrer">
-                            <span class="material-symbols-outlined text-xl">open_in_new</span>
+                           target="_blank" rel="noopener noreferrer"
+                            aria-label="Open project">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h8v8"></path>
+                                </svg>                           
                         </a>
                     </div>
                 </div>

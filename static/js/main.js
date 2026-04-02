@@ -40,6 +40,9 @@ const CARDS_START = 0.18;
 const CARDS_END = 0.80;
 const SKILLS_MOVE = 180;
 
+let viewportWidth = window.innerWidth;
+let viewportHeight = getViewportHeight();
+
 /* =====================================================
    Utility Functions
    ===================================================== */
@@ -64,6 +67,11 @@ function easeOutCubic(t) {
     return 1 - Math.pow(1 - t, 3);
 }
 
+function updateViewportMetrics() {
+    viewportWidth = window.innerWidth;
+    viewportHeight = getViewportHeight();
+}
+
 /* =====================================================
    Hero Scroll Animation
    ===================================================== */
@@ -81,13 +89,21 @@ function updateHeroScroll() {
     }
 
     root.style.setProperty('--scroll-progress', progress.toFixed(4));
+}
+
+function runFrameUpdates() {
+    updateViewportMetrics();
+    updateHeroScroll();
+    animateProjects();
+    updateEducationCards();
+    updateSkillsRows();
     ticking = false;
 }
 
-function requestHeroUpdate() {
+function scheduleFrameUpdate() {
     if (!ticking) {
-        window.requestAnimationFrame(updateHeroScroll);
         ticking = true;
+        window.requestAnimationFrame(runFrameUpdates);
     }
 }
 
@@ -104,8 +120,8 @@ function cardT(p, i) {
 }
 
 function positionCard(card, t) {
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
+    const vw = viewportWidth;
+    const vh = viewportHeight;
     const et = easeInOut(t);
 
     const startX = vw * 0.52;
@@ -129,16 +145,16 @@ function positionCard(card, t) {
 }
 
 function animateProjects() {
-    if (window.innerWidth <= 767) return;
+    if (viewportWidth <= 767) return;
     if (!projectsSection || !projectsWord || !projectsBg || !projectCards.length) return;
 
     const rect = projectsSection.getBoundingClientRect();
-    const maxScroll = projectsSection.offsetHeight - window.innerHeight;
+    const maxScroll = projectsSection.offsetHeight - viewportHeight;
     const scrolled = clamp(-rect.top, 0, maxScroll);
     const p = maxScroll > 0 ? scrolled / maxScroll : 0;
 
     const wordT = clamp(p / 0.28, 0, 1);
-    projectsWord.style.transform = `translate3d(0, ${window.innerHeight * 0.50 * easeInOut(wordT)}px, 0)`;
+    projectsWord.style.transform = `translate3d(0, ${viewportHeight * 0.50 * easeInOut(wordT)}px, 0)`;
 
     projectCards.forEach((card, i) => positionCard(card, cardT(p, i)));
 
@@ -155,7 +171,7 @@ function animateProjects() {
 function updateEducationCards() {
     if (!educationSection || !educationCards.length) return;
 
-    if (window.innerWidth <= 767) {
+    if (viewportWidth <= 767) {
         educationCards.forEach(card => {
             card.style.zIndex = '';
             card.style.opacity = '1';
@@ -165,13 +181,13 @@ function updateEducationCards() {
     }
 
     const rect = educationSection.getBoundingClientRect();
-    const viewportH = window.innerHeight;
+    const viewportH = viewportHeight;
     const totalScrollable = educationSection.offsetHeight - viewportH;
     const passed = clamp(-rect.top, 0, totalScrollable);
     const progress = totalScrollable > 0 ? passed / totalScrollable : 0;
 
-    const stackOffset = window.innerWidth <= 900 ? 18 : 28;
-    const baseY = window.innerWidth <= 900 ? -10 : 10;
+    const stackOffset = viewportWidth <= 900 ? 18 : 28;
+    const baseY = viewportWidth <= 900 ? -10 : 10;
 
     educationCards.forEach((card, index) => {
         const startSegment = index / educationCards.length;
@@ -208,12 +224,12 @@ function getSkillsProgress() {
     if (!skillsSection) return 0;
 
     const rect = skillsSection.getBoundingClientRect();
-    const raw = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+    const raw = (viewportHeight - rect.top) / (viewportHeight + rect.height);
     return clamp(raw, 0, 1);
 }
 
 function updateSkillsRows() {
-    if (window.innerWidth <= 768) return;
+    if (viewportWidth <= 768) return;
     if (!skillsSection || !rowA || !rowB || !rowC) return;
 
     const p = getSkillsProgress();
@@ -231,40 +247,25 @@ function updateSkillsRows() {
 window.addEventListener('load', () => {
     requestAnimationFrame(() => {
         if (pieceEntrance) pieceEntrance.classList.add('is-visible');
-        updateHeroScroll();
-        animateProjects();
-        updateEducationCards();
-        updateSkillsRows();
+        runFrameUpdates();
     });
 });
 
 window.addEventListener('scroll', () => {
-    requestHeroUpdate();
-    animateProjects();
-    updateEducationCards();
-    updateSkillsRows();
+    scheduleFrameUpdate();
 }, { passive: true });
 
 window.addEventListener('resize', () => {
-    requestHeroUpdate();
-    animateProjects();
-    updateEducationCards();
-    updateSkillsRows();
+    scheduleFrameUpdate();
 });
 
 if (window.visualViewport) {
     window.visualViewport.addEventListener('resize', () => {
-        requestHeroUpdate();
-        animateProjects();
-        updateEducationCards();
-        updateSkillsRows();
+        scheduleFrameUpdate();
     });
 
     window.visualViewport.addEventListener('scroll', () => {
-        requestHeroUpdate();
-        animateProjects();
-        updateEducationCards();
-        updateSkillsRows();
+        scheduleFrameUpdate();
     });
 }
 
@@ -273,6 +274,35 @@ if (window.visualViewport) {
    ===================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+    let recaptchaScriptLoaded = false;
+
+    function loadRecaptchaScript() {
+        if (recaptchaScriptLoaded) return;
+
+        recaptchaScriptLoaded = true;
+
+        const script = document.createElement('script');
+        script.src = 'https://www.google.com/recaptcha/api.js';
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+    }
+
+    const contactSectionEl = document.getElementById('contact');
+    if (contactSectionEl) {
+        const recaptchaObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    loadRecaptchaScript();
+                    recaptchaObserver.disconnect();
+                }
+            });
+        }, {
+            rootMargin: '300px 0px'
+        });
+
+        recaptchaObserver.observe(contactSectionEl);
+    }    
     /* Logo link scroll-to-top */
 
     const logoLink = document.querySelector('nav > a[href="#hero"]');
