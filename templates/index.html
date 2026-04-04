@@ -33,11 +33,12 @@
     <!-- Fonts (performance optimized) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&family=Space+Grotesk:wght@300;400;500;700&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet"/>
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Style -->
+    <link rel="preload" href="{{ url_for('static', filename='css/app.min.css') }}" as="style">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.min.css') }}">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicons/favicon.ico') }}?v=2">
@@ -865,17 +866,9 @@
     </section>
 
     <!-- ── Footer ── -->
-    <footer class="w-full border-t border-[#3b494c]/15 py-12 bg-[#0e0e0e] font-mono text-[10px] uppercase tracking-[0.2em] text-[#e5e2e1]/50">
-        <div class="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto px-8">
-            <div class="font-serif italic text-lg text-[#e5e2e1] mb-4 md:mb-0">Konstantinos Tsaousidis</div>
-            <div class="text-center md:text-left mb-4 md:mb-0">
-                © 2026 Konstantinos Tsaousidis | Built with strategy, precision, and clean code.
-            </div>
-            <div class="flex gap-8">
-                <a class="text-[#e5e2e1]/40 hover:text-[#00e5ff] transition-colors duration-200" href="https://www.linkedin.com/in/konstantinos-tsaousidis-1b7360225/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                <a class="text-[#e5e2e1]/40 hover:text-[#00e5ff] transition-colors duration-200" href="https://github.com/Tsaousidis" target="_blank" rel="noopener noreferrer">GitHub</a>
-                <a class="text-[#e5e2e1]/40 hover:text-[#00e5ff] transition-colors duration-200" href="mailto:kostastsaousbm@gmail.com">Email</a>
-            </div>
+    <footer class="w-full border-t border-[#3b494c]/15 py-6 bg-[#0e0e0e] font-mono text-[11px] uppercase tracking-[0.2em] text-[#e5e2e1]/50">
+        <div class="flex justify-center items-center max-w-7xl mx-auto px-8 text-center">
+            © 2026 Konstantinos Tsaousidis – All rights reserved
         </div>
     </footer>
 
