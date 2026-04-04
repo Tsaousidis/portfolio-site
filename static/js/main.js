@@ -80,7 +80,6 @@ function updateHeroScroll() {
     if (!hero) return;
 
     const rect = hero.getBoundingClientRect();
-    const viewportHeight = getViewportHeight();
     const totalScrollable = hero.offsetHeight - viewportHeight;
 
     let progress = 0;
@@ -91,12 +90,31 @@ function updateHeroScroll() {
     root.style.setProperty('--scroll-progress', progress.toFixed(4));
 }
 
+function isNearViewport(el, extra = 300) {
+    if (!el) return false;
+    const rect = el.getBoundingClientRect();
+    return rect.bottom >= -extra && rect.top <= viewportHeight + extra;
+}
+
 function runFrameUpdates() {
     updateViewportMetrics();
-    updateHeroScroll();
-    animateProjects();
-    updateEducationCards();
-    updateSkillsRows();
+
+    if (isNearViewport(hero, 200)) {
+        updateHeroScroll();
+    }
+
+    if (isNearViewport(projectsSection, 300)) {
+        animateProjects();
+    }
+
+    if (isNearViewport(educationSection, 300)) {
+        updateEducationCards();
+    }
+
+    if (isNearViewport(skillsSection, 250)) {
+        updateSkillsRows();
+    }
+
     ticking = false;
 }
 
@@ -140,7 +158,7 @@ function positionCard(card, t) {
     opacity = clamp(opacity, 0, 1);
 
     card.style.opacity = opacity;
-    card.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) rotate(${rotate}deg)`;
+    card.style.transform = `translate3d(calc(-50% + ${Math.round(x)}px), calc(-50% + ${Math.round(y)}px), 0) rotate(${rotate}deg)`;
     card.style.pointerEvents = opacity > 0.2 ? 'auto' : 'none';
 }
 
@@ -235,9 +253,9 @@ function updateSkillsRows() {
     const p = getSkillsProgress();
     const offset = (p - 0.5) * SKILLS_MOVE * 2;
 
-    rowA.style.transform = `translateX(${-offset}px)`;
-    rowB.style.transform = `translateX(${offset}px)`;
-    rowC.style.transform = `translateX(${-offset}px)`;
+    rowA.style.transform = `translate3d(${Math.round(-offset)}px, 0, 0)`;
+    rowB.style.transform = `translate3d(${Math.round(offset)}px, 0, 0)`;
+    rowC.style.transform = `translate3d(${Math.round(-offset)}px, 0, 0)`;
 }
 
 /* =====================================================
@@ -317,6 +335,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const sections = Array.from(document.querySelectorAll('#hero, #projects, #studies, #skills, #education'));
     const navLinks = Array.from(document.querySelectorAll('nav div a[href^="#"]'));
+    const mobileMenuSectionLinks = Array.from(document.querySelectorAll('.mobile-nav-link[href^="#"]'));
+    const smoothScrollLinks = [...navLinks, ...mobileMenuSectionLinks];
+
+    function getNavbarOffset() {
+        const nav = document.querySelector('nav');
+        return nav ? nav.offsetHeight + 24 : 100;
+    }
+
+    smoothScrollLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const targetId = link.getAttribute('href');
+            const targetEl = document.querySelector(targetId);
+
+            if (!targetEl) return;
+
+            // Άφησε το ειδικό mobile logic για το Projects να συνεχίσει να δουλεύει
+            if (window.innerWidth <= 767 && targetId === '#projects') {
+                return;
+            }
+
+            e.preventDefault();
+
+            const top = window.scrollY + targetEl.getBoundingClientRect().top - getNavbarOffset();
+
+            window.scrollTo({
+                top,
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const targetId = link.getAttribute('href');
+            const targetEl = document.querySelector(targetId);
+
+            if (!targetEl) return;
+
+            e.preventDefault();
+            targetEl.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+    });
 
     function setActiveNav(id) {
         navLinks.forEach(link => {

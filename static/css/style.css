@@ -1440,3 +1440,20 @@ section#hero {
     color: #9cf0ff;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .piece-scroll,
+  .project-card,
+  .tech-row,
+  .education-card,
+  .card-link svg,
+  .contact-button,
+  .contact-link {
+    animation: none !important;
+    transition: none !important;
+  }
+}
