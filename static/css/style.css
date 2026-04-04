@@ -1302,7 +1302,7 @@ section#hero {
   .nav-connect {
     display: none !important;
   }
-  
+
   section#hero {
     min-height: 120vh;
   }
@@ -1330,24 +1330,6 @@ section#hero {
 
   .projects-desktop {
     display: none;
-  }
-
-  .projects-mobile {
-    display: block;
-  }
-
-  .projects-mobile .group {
-    min-height: 420px;
-  }
-
-  .projects-mobile h3 {
-    font-size: 1.6rem;
-    white-space: normal;
-    overflow: visible;
-  }
-
-  .projects-mobile p {
-    max-width: 100%;
   }
 
   nav {
@@ -1442,6 +1424,169 @@ section#hero {
   .mobile-nav-link:focus {
     background: rgba(255,255,255,0.05);
     color: #9cf0ff;
+  }
+
+  .projects-mobile {
+    display: block;
+    padding: 5.5rem 0;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(0, 229, 255, 0.05), transparent 28%),
+      linear-gradient(180deg, #090909 0%, #050505 100%);
+  }
+
+  .projects-mobile-shell {
+    width: min(100%, 680px);
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .projects-mobile-heading {
+    margin-bottom: 2rem;
+  }
+
+  .projects-mobile-kicker {
+    margin-bottom: 0.75rem;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: rgba(156, 240, 255, 0.72);
+  }
+
+  .projects-mobile-title {
+    font-size: clamp(2.4rem, 10vw, 3.5rem);
+    line-height: 0.95;
+    color: #f4f1ee;
+    margin-bottom: 1rem;
+    letter-spacing: -0.04em;
+  }
+
+  .projects-mobile-intro {
+    color: rgba(186, 201, 204, 0.82);
+    font-size: 0.95rem;
+    line-height: 1.75;
+    max-width: 36ch;
+  }
+
+  .projects-mobile-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .project-mobile-card {
+    overflow: hidden;
+    border-radius: 24px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.02));
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow:
+      0 18px 40px rgba(0,0,0,0.28),
+      inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+
+  .project-mobile-image-wrap {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #0d1117;
+  }
+
+  .project-mobile-image-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to top, rgba(5, 5, 5, 0.32), rgba(5, 5, 5, 0.02));
+    pointer-events: none;
+  }
+
+  .project-mobile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .project-mobile-content {
+    padding: 1.2rem 1.15rem 1.15rem;
+  }
+
+  .project-mobile-eyebrow {
+    display: inline-block;
+    margin-bottom: 0.65rem;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #9cf0ff;
+  }
+
+  .project-mobile-title-card {
+    font-family: 'Newsreader', serif;
+    font-size: 1.7rem;
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    color: #f4f1ee;
+    margin-bottom: 0.85rem;
+  }
+
+  .project-mobile-text {
+    color: rgba(186, 201, 204, 0.82);
+    font-size: 0.93rem;
+    line-height: 1.72;
+    margin-bottom: 1rem;
+  }
+
+  .project-mobile-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-mobile-tags span {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.42rem 0.72rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.03);
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(229, 226, 225, 0.72);
+  }
+
+  .project-mobile-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.78rem 1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(156, 240, 255, 0.22);
+    background: rgba(255,255,255,0.03);
+    color: #9cf0ff;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  }
+
+  .project-mobile-link svg {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+  }
+
+  .project-mobile-link:active {
+    transform: scale(0.98);
+  }
+
+  .project-mobile-link-static {
+    cursor: default;
+    color: rgba(229, 226, 225, 0.72);
+    border-color: rgba(255,255,255,0.12);
   }
 }
 

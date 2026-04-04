@@ -253,120 +253,159 @@
     </section>
 
     <!-- ── Projects Section Mobile (Old Logic) ── -->
-    <section class="projects-mobile py-20 px-6 max-w-7xl mx-auto" id="projects-mobile">
-        <div class="mb-14">
-            <h2 class="font-headline text-4xl text-on-surface">
-                Projects &amp;<br><span class="italic">Strategic Builds</span>
-            </h2>
-        </div>
-
-        <div class="grid grid-cols-1 gap-6 overflow-hidden">
-            <div class="group relative min-h-[420px] overflow-hidden bg-surface-container rounded-sm transition-all duration-500">
-                <img
-                    class="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity"
-                    src="{{ url_for('static', filename='images/projects/flights-notifier.webp') }}"
-                    loading="lazy"
-                    decoding="async"                    
-                    alt="Flight Price Alert System preview"
-                />
-                <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
-                <div class="relative h-full flex flex-col justify-end p-8">
-                    <span class="font-label text-[10px] text-primary-fixed-dim uppercase tracking-widest mb-2">Automation System</span>
-                    <h3 class="font-headline text-[1.6rem] mb-4">Flight Price Alert System</h3>
-                    <p class="font-body text-on-surface-variant max-w-full text-sm mb-6">
-                        A Python-based system that tracks airfare prices through the Amadeus API
-                        and sends automated email alerts when prices drop below a chosen threshold.
-                    </p>
-                    <a href="https://github.com/Tsaousidis/oop-api-smtp-flights-notifier"
-                    class="card-link"
-                    target="_blank"
-                    rel="noopener noreferrer">
-                        View Project
-                        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                            <path d="M1 11L11 1M11 1H4M11 1V8"></path>
-                        </svg>
-                    </a>
-                </div>
+    <section class="projects-mobile" id="projects-mobile">
+        <div class="projects-mobile-shell">
+            <div class="projects-mobile-heading">
+                <p class="projects-mobile-kicker">Selected Work</p>
+                <h2 class="projects-mobile-title">
+                    Projects &amp; <span class="italic">Strategic Builds</span>
+                </h2>
+                <p class="projects-mobile-intro">
+                    A selection of software, automation, and problem-solving projects built with a focus on practical value and clean execution.
+                </p>
             </div>
 
-            <div class="group relative min-h-[420px] overflow-hidden bg-surface-container rounded-sm transition-all duration-500">
-                <img
-                    class="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity"
-                    src="{{ url_for('static', filename='images/projects/billboard-to-spotify.webp') }}"
-                    loading="lazy"
-                    decoding="async"                    
-                    alt="Billboard to Spotify preview"
-                />
-                <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
-                <div class="relative h-full flex flex-col justify-end p-8">
-                    <span class="font-label text-[10px] text-primary-fixed-dim uppercase tracking-widest mb-2">Automation</span>
-                    <h3 class="font-headline text-[1.6rem] mb-4">Billboard to Spotify</h3>
-                    <p class="font-body text-on-surface-variant max-w-full text-sm mb-6">
-                        A Python automation project that scrapes the Billboard Hot 100 chart and creates a Spotify playlist for a selected date.
-                    </p>
-                    <a href="https://github.com/Tsaousidis/scraper-api-billboard-to-spotify"
-                    class="card-link"
-                    target="_blank"
-                    rel="noopener noreferrer">
-                        View Project
-                        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                            <path d="M1 11L11 1M11 1H4M11 1V8"></path>
-                        </svg>
-                    </a>
-                </div>
-            </div>
+            <div class="projects-mobile-list">
+                <article class="project-mobile-card">
+                    <div class="project-mobile-image-wrap">
+                        <img
+                            src="{{ url_for('static', filename='images/projects/flights-notifier.webp') }}"
+                            loading="lazy"
+                            decoding="async"
+                            alt="Flight Price Alert System preview"
+                            class="project-mobile-image"
+                        />
+                    </div>
 
-            <div class="group relative min-h-[420px] overflow-hidden bg-surface-container rounded-sm transition-all duration-500">
-                <img
-                    class="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity"
-                    src="{{ url_for('static', filename='images/projects/iss-tracker.webp') }}"
-                    loading="lazy"
-                    decoding="async"
-                    alt="ISS Tracker preview"
-                />
-                <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+                    <div class="project-mobile-content">
+                        <span class="project-mobile-eyebrow">Automation System</span>
+                        <h3 class="project-mobile-title-card">Flight Price Alert System</h3>
+                        <p class="project-mobile-text">
+                            A Python-based system that tracks airfare prices through the Amadeus API and sends automated email alerts when prices drop below a chosen threshold.
+                        </p>
 
-                <div class="relative h-full flex flex-col justify-end p-8">
-                    <span class="font-label text-[10px] text-primary-fixed-dim uppercase tracking-widest mb-2">Data Tracking</span>
-                    <h3 class="font-headline text-[1.6rem] mb-4">ISS Real-Time Tracker</h3>
-                    <p class="font-body text-on-surface-variant max-w-full text-sm mb-6">
-                        Track the International Space Station in real time using Python, API calls, and an interactive map that updates automatically every few seconds.
-                    </p>
-                    <a href="https://github.com/Tsaousidis/api-folium-iss-tracker/"
-                    class="card-link"
-                    target="_blank"
-                    rel="noopener noreferrer">
-                        View Project
-                        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                            <path d="M1 11L11 1M11 1H4M11 1V8"></path>
-                        </svg>
-                    </a>
-                </div>
-            </div>
+                        <div class="project-mobile-tags">
+                            <span>Python</span>
+                            <span>API</span>
+                            <span>Automation</span>
+                        </div>
 
-            <div class="group relative min-h-[420px] overflow-hidden bg-surface-container rounded-sm transition-all duration-500">
-                <img
-                    class="absolute inset-0 w-full h-full object-cover opacity-30 transition-opacity"
-                    src="{{ url_for('static', filename='images/projects/product-configuration-tools.webp') }}"
-                    loading="lazy"
-                    decoding="async"
-                    alt="Product Configuration Tools preview"
-                />
-                <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
-                <div class="relative h-full flex flex-col justify-end p-8">
-                    <span class="font-label text-[10px] text-primary-fixed-dim uppercase tracking-widest mb-2">Frontend Tools</span>
-                    <h3 class="font-headline text-[1.6rem] mb-4">Product Configuration Tools</h3>
-                    <p class="font-body text-on-surface-variant max-w-full text-sm mb-6">
-                        Developed interactive frontend tools using PHP and JavaScript to enable real-time product configuration, calculations, and recommendations based on custom logic.
-                    </p>
+                        <a href="https://github.com/Tsaousidis/oop-api-smtp-flights-notifier"
+                        class="project-mobile-link"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                            View Project
+                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <path d="M1 11L11 1M11 1H4M11 1V8"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
 
-                    <button type="button" class="card-link card-link-static" aria-label="Ask for project details">
-                        Available on Request
-                        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                            <path d="M1 11L11 1M11 1H4M11 1V8"></path>
-                        </svg>
-                    </button>
-                </div>
+                <article class="project-mobile-card">
+                    <div class="project-mobile-image-wrap">
+                        <img
+                            src="{{ url_for('static', filename='images/projects/billboard-to-spotify.webp') }}"
+                            loading="lazy"
+                            decoding="async"
+                            alt="Billboard to Spotify preview"
+                            class="project-mobile-image"
+                        />
+                    </div>
+
+                    <div class="project-mobile-content">
+                        <span class="project-mobile-eyebrow">Automation</span>
+                        <h3 class="project-mobile-title-card">Billboard to Spotify</h3>
+                        <p class="project-mobile-text">
+                            A Python automation project that scrapes the Billboard Hot 100 chart for a selected date and creates a private Spotify playlist with the top songs of that day.
+                        </p>
+
+                        <div class="project-mobile-tags">
+                            <span>Python</span>
+                            <span>API</span>
+                            <span>Web Scraping</span>
+                        </div>
+
+                        <a href="https://github.com/Tsaousidis/scraper-api-billboard-to-spotify"
+                        class="project-mobile-link"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                            View Project
+                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <path d="M1 11L11 1M11 1H4M11 1V8"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="project-mobile-card">
+                    <div class="project-mobile-image-wrap">
+                        <img
+                            src="{{ url_for('static', filename='images/projects/iss-tracker.webp') }}"
+                            loading="lazy"
+                            decoding="async"
+                            alt="ISS Real-Time Tracker preview"
+                            class="project-mobile-image"
+                        />
+                    </div>
+
+                    <div class="project-mobile-content">
+                        <span class="project-mobile-eyebrow">Data Tracking</span>
+                        <h3 class="project-mobile-title-card">ISS Real-Time Tracker</h3>
+                        <p class="project-mobile-text">
+                            A Python-based application that tracks the International Space Station in real time using an API and visualizes its position on an interactive map that updates automatically.
+                        </p>
+
+                        <div class="project-mobile-tags">
+                            <span>Python</span>
+                            <span>API</span>
+                            <span>Real-Time System</span>
+                        </div>
+
+                        <a href="https://github.com/Tsaousidis/api-folium-iss-tracker/"
+                        class="project-mobile-link"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                            View Project
+                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <path d="M1 11L11 1M11 1H4M11 1V8"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="project-mobile-card">
+                    <div class="project-mobile-image-wrap">
+                        <img
+                            src="{{ url_for('static', filename='images/projects/product-configuration-tools.webp') }}"
+                            loading="lazy"
+                            decoding="async"
+                            alt="Product Configuration Tools preview"
+                            class="project-mobile-image"
+                        />
+                    </div>
+
+                    <div class="project-mobile-content">
+                        <span class="project-mobile-eyebrow">Frontend Tools</span>
+                        <h3 class="project-mobile-title-card">Product Configuration Tools</h3>
+                        <p class="project-mobile-text">
+                            Developed interactive frontend tools using PHP and JavaScript for real-time product configuration, calculations, and recommendations based on custom logic.
+                        </p>
+
+                        <div class="project-mobile-tags">
+                            <span>PHP</span>
+                            <span>JavaScript</span>
+                            <span>Custom Logic</span>
+                        </div>
+
+                        <button type="button" class="project-mobile-link project-mobile-link-static" aria-label="Ask for project details">
+                            Available on Request
+                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <path d="M1 11L11 1M11 1H4M11 1V8"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
