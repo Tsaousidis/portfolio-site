@@ -858,12 +858,12 @@ input:where([type='file']):focus {
   height: 0.75rem;
 }
 
-.h-full {
-  height: 100%;
-}
-
 .h-5 {
   height: 1.25rem;
+}
+
+.h-full {
+  height: 100%;
 }
 
 .min-h-\[420px\] {
@@ -872,6 +872,10 @@ input:where([type='file']):focus {
 
 .w-3 {
   width: 0.75rem;
+}
+
+.w-5 {
+  width: 1.25rem;
 }
 
 .w-5\/12 {
@@ -888,10 +892,6 @@ input:where([type='file']):focus {
 
 .w-px {
   width: 1px;
-}
-
-.w-5 {
-  width: 1.25rem;
 }
 
 .max-w-2xl {

@@ -8,7 +8,8 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet"/>
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
@@ -185,7 +186,9 @@
                     <div>
                         <div class="thumb">
                             <img
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCl3_2T1OwTFdYkerIwPJ4DL1tl_MleyH1mwRPQem9lW-i1G5BzliKXxrmOOf5sIfr5UbNUa49dFzmy1I1yJW58wClzX-sSttUEaXKL6Mp0nbjfXC_zOjw26iLoY2J57p-Qdd9B4tUArOXmrBfLyui4W02JKy9-knzR4fs4cCHSP6fLHn20GLeGDX7Io5chkEPMU3lJ6MgZxD6PacwoU5mSGHWIgnoSWzdMT-mo3boB-PuBA5ArINTrCr_dVHmkYbtNpLaptj31Ch0"
+                                src="{{ url_for('static', filename='images/projects/product-configuration-tools.webp') }}"
+                                loading="lazy"
+                                decoding="async"
                                 alt="Product Configuration Tools preview"
                             />
                         </div>
@@ -200,6 +203,13 @@
                             <span>JavaScript</span>
                             <span>Custom Logic</span>
                         </div>
+
+                        <button type="button" class="card-link card-link-static" aria-label="Ask for project details">
+                            Available on Request
+                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <path d="M1 11L11 1M11 1H4M11 1V8"></path>
+                            </svg>
+                        </button>
                     </div>
                 </article>
             </div>
@@ -336,7 +346,9 @@
             <div class="group relative min-h-[420px] overflow-hidden bg-surface-container rounded-sm transition-all duration-500">
                 <img
                     class="absolute inset-0 w-full h-full object-cover opacity-30 transition-opacity"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCl3_2T1OwTFdYkerIwPJ4DL1tl_MleyH1mwRPQem9lW-i1G5BzliKXxrmOOf5sIfr5UbNUa49dFzmy1I1yJW58wClzX-sSttUEaXKL6Mp0nbjfXC_zOjw26iLoY2J57p-Qdd9B4tUArOXmrBfLyui4W02JKy9-knzR4fs4cCHSP6fLHn20GLeGDX7Io5chkEPMU3lJ6MgZxD6PacwoU5mSGHWIgnoSWzdMT-mo3boB-PuBA5ArINTrCr_dVHmkYbtNpLaptj31Ch0"
+                    src="{{ url_for('static', filename='images/projects/product-configuration-tools.webp') }}"
+                    loading="lazy"
+                    decoding="async"
                     alt="Product Configuration Tools preview"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
@@ -346,6 +358,13 @@
                     <p class="font-body text-on-surface-variant max-w-full text-sm mb-6">
                         Developed interactive frontend tools using PHP and JavaScript to enable real-time product configuration, calculations, and recommendations based on custom logic.
                     </p>
+
+                    <button type="button" class="card-link card-link-static" aria-label="Ask for project details">
+                        Available on Request
+                        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                            <path d="M1 11L11 1M11 1H4M11 1V8"></path>
+                        </svg>
+                    </button>
                 </div>
             </div>
         </div>
