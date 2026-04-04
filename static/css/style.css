@@ -1299,6 +1299,10 @@ section#hero {
 /* Hero, Projects, Navigation */
 
 @media (max-width: 767px) {
+  .nav-connect {
+    display: none !important;
+  }
+  
   section#hero {
     min-height: 120vh;
   }
