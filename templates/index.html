@@ -3,15 +3,44 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
     <title>Konstantinos Tsaousidis | Portfolio</title>
 
-    <!-- Fonts -->
+    <meta property="og:image" content="https://tsaousidis.site/static/images/og/portfolio-preview.jpg">
+    <meta name="twitter:image" content="https://tsaousidis.site/static/images/og/portfolio-preview.jpg">
+
+    <!-- SEO -->
+    <meta name="description" content="Konstantinos Tsaousidis is a Software Developer focused on automation, APIs, and building data-driven applications.">
+    <meta name="author" content="Konstantinos Tsaousidis">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#131313">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://tsaousidis.site{{ request.path }}">
+
+    <!-- Open Graph (LinkedIn, Facebook etc) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tsaousidis.site{{ request.path }}">
+    <meta property="og:title" content="Konstantinos Tsaousidis | Portfolio">
+    <meta property="og:description" content="Software Developer focused on automation, APIs, and data-driven applications.">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://tsaousidis.site{{ request.path }}">
+    <meta name="twitter:title" content="Konstantinos Tsaousidis | Portfolio">
+    <meta name="twitter:description" content="Software Developer focused on automation, APIs, and data-driven applications.">
+
+    <!-- Fonts (performance optimized) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+
     <!-- Styles -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
     <!-- Favicon -->
-    <link rel="icon" href="{{ url_for('static', filename='images/favicons/favicon.ico') }}?v=2">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicons/favicon.ico') }}?v=2">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicons/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicons/favicon-16x16.png') }}">
     <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/favicons/favicon-180x180.png') }}">
