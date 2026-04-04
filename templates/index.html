@@ -158,22 +158,24 @@
                     <div>
                         <div class="thumb">
                             <img
-                                src="{{ url_for('static', filename='images/projects/turtle-snake-game.webp') }}"
-                                alt="The Classic Snake Game preview"
+                                src="{{ url_for('static', filename='images/projects/iss-tracker.webp') }}"
+                                loading="lazy"
+                                decoding="async"
+                                alt="ISS Real-Time Tracker preview"
                             />
                         </div>
-                        <h3>The Classic Snake Game</h3>
+                        <h3>ISS Real-Time Tracker</h3>
                         <p>
-                            A fun and addictive Snake game built using Python's turtle module. Guide the snake, eat the food, grow longer, and avoid crashing into the walls... or your own tail. How long can you survive?
+                            A Python-based application that tracks the International Space Station in real time using an API and visualizes its position on an interactive map that updates every 10 seconds.
                         </p>
                     </div>
                     <div>
                         <div class="project-tags">
                             <span>Python</span>
-                            <span>Game</span>
-                            <span>OOP</span>
+                            <span>API</span>
+                            <span>Real-Time System</span>
                         </div>
-                        <a href="https://github.com/Tsaousidis/oop-turtle-snake-game" class="card-link" target="_blank" rel="noopener noreferrer">
+                        <a href="https://github.com/Tsaousidis/api-folium-iss-tracker/" class="card-link" target="_blank" rel="noopener noreferrer">
                             View Project
                             <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8">
                                 <path d="M1 11L11 1M11 1H4M11 1V8"></path>
@@ -307,37 +309,40 @@
             <div class="group relative min-h-[420px] overflow-hidden bg-surface-container rounded-sm transition-all duration-500">
                 <img
                     class="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity"
-                    src="{{ url_for('static', filename='images/projects/turtle-snake-game.webp') }}"
+                    src="{{ url_for('static', filename='images/projects/iss-tracker.webp') }}"
                     loading="lazy"
-                    decoding="async"                    
-                    alt="Snake Game preview"
+                    decoding="async"
+                    alt="ISS Tracker preview"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+
                 <div class="relative h-full flex flex-col justify-end p-8">
-                    <span class="font-label text-[10px] text-primary-fixed-dim uppercase tracking-widest mb-2">Game</span>
-                    <h3 class="font-headline text-[1.6rem] mb-4">The Classic Snake Game</h3>
+                    <span class="font-label text-[10px] text-primary-fixed-dim uppercase tracking-widest mb-2">Data Tracking</span>
+                    <h3 class="font-headline text-[1.6rem] mb-4">ISS Real-Time Tracker</h3>
                     <p class="font-body text-on-surface-variant max-w-full text-sm mb-6">
-                        A Python-based Snake game built with the turtle module, focusing on object-oriented design and gameplay logic.
+                        Track the International Space Station in real time using Python, API calls, and an interactive map that updates automatically every few seconds.
                     </p>
+
                     <div class="flex gap-4">
                         <a class="text-primary hover:text-white transition-colors"
-                           href="https://github.com/Tsaousidis/oop-turtle-snake-game"
-                           target="_blank" rel="noopener noreferrer"
-                            aria-label="View code">
-                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l-4 3 4 3"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 9l4 3-4 3"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l-4 14"></path>
-                                </svg>
+                        href="https://github.com/Tsaousidis/api-folium-iss-tracker/"
+                        target="_blank" rel="noopener noreferrer"
+                        aria-label="View code">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l-4 3 4 3"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16 9l4 3-4 3"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l-4 14"></path>
+                            </svg>
                         </a>
+
                         <a class="text-primary hover:text-white transition-colors"
-                           href="https://github.com/Tsaousidis/oop-turtle-snake-game"
-                           target="_blank" rel="noopener noreferrer"
-                            aria-label="Open project">
-                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h8v8"></path>
-                                </svg>                           
+                        href="https://github.com/Tsaousidis/api-folium-iss-tracker/"
+                        target="_blank" rel="noopener noreferrer"
+                        aria-label="Open project">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h8v8"></path>
+                            </svg>
                         </a>
                     </div>
                 </div>
