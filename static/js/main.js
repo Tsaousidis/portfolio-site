@@ -97,7 +97,6 @@ function isNearViewport(el, extra = 300) {
 }
 
 function runFrameUpdates() {
-    updateViewportMetrics();
 
     if (isNearViewport(hero, 200)) {
         updateHeroScroll();
@@ -263,6 +262,8 @@ function updateSkillsRows() {
    ===================================================== */
 
 window.addEventListener('load', () => {
+    updateViewportMetrics();
+    
     requestAnimationFrame(() => {
         if (pieceEntrance) pieceEntrance.classList.add('is-visible');
         runFrameUpdates();
@@ -274,15 +275,13 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 window.addEventListener('resize', () => {
+    updateViewportMetrics();
     scheduleFrameUpdate();
 });
 
 if (window.visualViewport) {
     window.visualViewport.addEventListener('resize', () => {
-        scheduleFrameUpdate();
-    });
-
-    window.visualViewport.addEventListener('scroll', () => {
+        updateViewportMetrics();
         scheduleFrameUpdate();
     });
 }
