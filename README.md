@@ -1,142 +1,141 @@
-# 🌟 Portfolio Website - Konstantinos Tsaousidis 🚀
+# 🚀 Scroll-Driven Portfolio — Konstantinos Tsaousidis
 
-A modern, responsive portfolio website built with Flask and modern web technologies, featuring an interactive UI, real-time chat support, and dynamic content presentation.
+A performance-focused, interaction-driven portfolio built with Flask and modern frontend practices.
+Designed to showcase projects through **scroll-based storytelling**, clean UI architecture, and mobile-first optimization.
 
-![Python](https://img.shields.io/badge/Python-3.12-blue)
-![Flask](https://img.shields.io/badge/Flask-Latest-green)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple)
-
----
-
-### ✨ Features
-
-#### 🎯 Core Features
-- 🎨 Modern, responsive design with glassmorphism effects
-- 💬 Interactive chatbot for visitor assistance
-- 📱 Mobile-first approach with adaptive layouts
-- 🔄 Dynamic content loading with smooth animations
-- 📧 Secure contact form with email integration
-- 🎮 Interactive UI elements and 3D animations
-
-#### 🛠 Technical Highlights
-- 🔒 Secure form handling and input validation
-- 🌐 SEO-optimized structure
-- 📊 Performance-optimized assets
-- 🎭 Cross-browser compatibility
-- 🔍 Clean, maintainable code structure
+🔗 Live: https://tsaousidis.site
 
 ---
 
-### 🚀 Live Demo
-Visit the live site: [tsaousidis.site](https://tsaousidis.site)
+## ✨ Experience Highlights
 
-### 💻 Tech Stack
-
-#### Frontend
-- HTML5 & CSS3
-- JavaScript (ES6+)
-- Bootstrap 5
-- Font Awesome 6.5.1
-- Custom animations (AOS, Typed.js, Particles.js)
-
-#### Backend
-- Python 3.12
-- Flask Framework
-- Flask-Mail
-- Gunicorn WSGI server
-
-#### Development & Deployment
-- Git & GitHub
-- Render Cloud Platform
-- Environment variable management
-- Responsive design tools
+* 🎯 Scroll-driven project presentation with sticky sections
+* 📱 Dual rendering logic (interactive desktop / optimized mobile layout)
+* ⚡ Performance-first design (optimized assets & rendering path)
+* 🎨 Minimal, intentional UI with subtle motion and hierarchy
+* 🔍 SEO-friendly structure and accessibility-conscious layout
 
 ---
 
-### 📁 Project Structure
+## 🧠 Design Approach
+
+This portfolio is not just a static showcase.
+It is built as an **experience**, focusing on:
+
+* Structured content flow instead of page fragmentation
+* Controlled animations (no unnecessary motion)
+* Clear visual hierarchy and readability
+* Consistent behavior across devices
+
+---
+
+## 💻 Tech Stack
+
+### Frontend
+
+* HTML5
+* Tailwind CSS
+* Vanilla JavaScript (ES6+)
+
+### Backend
+
+* Python 3.12
+* Flask
+
+### Deployment
+
+* Render (Gunicorn)
+
+---
+
+## 🚀 Performance Optimizations
+
+* ⚡ Merged and minified CSS
+* 🚫 Reduced render-blocking resources
+* 🖼 Responsive images (mobile-optimized assets)
+* 💤 Lazy loading for non-critical images
+* 🔗 Preconnect & preload for critical resources
+* 📉 Optimized critical rendering path
+
+📊 Lighthouse Performance:
+
+* Mobile: ~88
+* Desktop: ~98
+
+---
+
+## 📁 Project Structure
+
 ```
 portfolio-site/
+├── src/
+│   └── tailwind-input.css        # Tailwind source file
+│
 ├── static/
 │   ├── css/
-│   │   └── style.css
-│   │   └── style.min.css
+│   │   ├── app.min.css          # Production (merged & minified)
+│   │   ├── style.css            # Custom styles (dev)
+│   │   └── tailwind.css         # Generated Tailwind (dev)
+│   │
 │   ├── js/
-│   │   └── chatbot.js
-│   └── img/
+│   │   └── main.js              # Core frontend logic
+│   │
+│   ├── images/                  # Optimized assets (webp, responsive)
+│   ├── robots.txt
+│   └── sitemap.xml
+│
 ├── templates/
-│   ├── base.html
-│   ├── index.html
-│   ├── projects.html
-│   ├── technologies.html
-│   └── contact.html
-├── app.py
-├── wsgi.py
-├── requirements.txt
-├── render.yaml
-└── .gitignore
+│   └── index.html               # Main template (SPA-style rendering)
+│
+├── app.py                       # Flask app entry point
+├── wsgi.py                      # Production server entry
+│
+├── requirements.txt             # Python dependencies
+├── package.json                 # Build tools (Tailwind)
+├── package-lock.json
+├── postcss.config.js
+├── tailwind.config.js
+│
+├── render.yaml                  # Deployment config
+├── .env / .env.example          # Environment variables
+├── .gitignore
+└── README.md
 ```
 
 ---
 
-### 📱 Responsive Design
+## 📱 Responsive Strategy
 
-The website is fully responsive across all devices:
-- 📱 Mobile devices (320px and up)
-- 📱 Tablets (768px and up)
-- 💻 Desktops (1024px and up)
-- 🖥 Large screens (1200px and up)
+The site uses a **device-aware approach**:
 
----
-
-### 🔒 Security Features
-
-- ✔️ Form validation and sanitization
-- 🛡️ Environment variable protection
-- 🔒 CSRF protection with secure token implementation
-- 📝 Input validation and XSS prevention
-- 🔑 Rate limiting on sensitive endpoints
-- 🛑 SQL injection prevention
-- 🔍 Security headers implementation (HSTS, CSP, X-Frame-Options)
-- 🔐 Session security with secure cookie configuration
-- 🚦 IP-based request throttling
-- 🛡️ Protected file uploads with type validation
-- 🚫 Bot protection with reCAPTCHA integration
+* 📱 Mobile: simplified vertical layout for clarity & performance
+* 💻 Desktop: scroll-based interactions and richer presentation
+* ⚖️ Consistent UX across all breakpoints
 
 ---
 
-### 🚀 Performance Optimizations
+## 🔒 Security Features
 
-- ⚡ Lazy loading images
-- 📦 Minified assets
-- 🔄 Efficient DOM updates
-- 💾 Browser caching
-- 🎯 Optimized resource loading
-- 📱 Responsive images
+* CSRF protection
+* Input validation & sanitization
+* reCAPTCHA integration (contact form)
+* Secure environment variable handling
 
 ---
 
-### 👨‍💻 Author
+## 👨‍💻 Author
 
 **Konstantinos Tsaousidis**
-- 💼 [LinkedIn](https://www.linkedin.com/in/konstantinos-tsaousidis-1b7360225/)
-- 🌐 [Portfolio](https://tsaousidis.site)
-- 📧 [Email](mailto:kostastsaousbm@gmail.com)
+
+* 💼 LinkedIn: https://www.linkedin.com/in/konstantinos-tsaousidis-1b7360225/
+* 💻 GitHub: https://github.com/Tsaousidis
+* 🌐 Portfolio: https://tsaousidis.site
+* 📧 Email: [kostastsaousbm@gmail.com](mailto:kostastsaousbm@gmail.com)
 
 ---
 
-### ©️ Copyright
+## ©️ License
 
-© 2025 Konstantinos Tsaousidis. All rights reserved.
-This portfolio and its contents are personal work and may not be reproduced without permission.
+© 2026 Konstantinos Tsaousidis — All rights reserved.
 
----
-
-### 🛠 Contributing
-
-Contributions, issues, and feature requests are welcome! Feel free to check [contact page](https://tsaousidis.site/contact).
-
----
-
-### 🌟 Show your support
-
-Give a ⭐️ if you like this project! 
+This project is personal work and may not be reproduced without permission.
