@@ -366,21 +366,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            const targetId = link.getAttribute('href');
-            const targetEl = document.querySelector(targetId);
-
-            if (!targetEl) return;
-
-            e.preventDefault();
-            targetEl.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        });
-    });
-
     function setActiveNav(id) {
         navLinks.forEach(link => {
             const isActive = link.getAttribute('href') === `#${id}`;
