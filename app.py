@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory
 from flask_mail import Mail, Message
 from flask_wtf.csrf import CSRFProtect
 from dotenv import load_dotenv
@@ -64,6 +64,14 @@ def add_security_headers(response):
     response.headers['Referrer-Policy'] = 'no-referrer-when-downgrade'
     return response
 
+@app.route("/robots.txt")
+def robots_txt():
+    return send_from_directory(app.root_path, "robots.txt", mimetype="text/plain")
+
+
+@app.route("/sitemap.xml")
+def sitemap_xml():
+    return send_from_directory(app.root_path, "sitemap.xml", mimetype="application/xml")
 
 @app.route("/", methods=["GET", "POST"])
 def home():
