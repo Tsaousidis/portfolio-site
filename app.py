@@ -49,13 +49,13 @@ def add_security_headers(response):
         "default-src 'self'; "
         "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com "
         "https://cdnjs.cloudflare.com https://unpkg.com https://*.google-analytics.com "
-        "https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; "
+        "https://www.google.com https://www.gstatic.com; "
         "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com "
         "https://fonts.googleapis.com https://unpkg.com; "
-        "img-src 'self' data: https: https://*.google-analytics.com; "
+        "img-src 'self' data: https:; "
         "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; "
-        "connect-src 'self' https://*.google-analytics.com; "
-        "frame-src 'self' https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; "
+        "connect-src 'self' https://*.google-analytics.com https://www.google.com https://www.gstatic.com; "
+        "frame-src 'self' https://www.google.com https://recaptcha.google.com; "
         "form-action 'self';"
     )
     response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
