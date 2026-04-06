@@ -49,13 +49,13 @@ def add_security_headers(response):
         "default-src 'self'; "
         "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com "
         "https://cdnjs.cloudflare.com https://unpkg.com https://*.google-analytics.com "
-        "https://www.google.com https://www.gstatic.com; "
+        "https://www.google.com https://www.gstatic.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; "
         "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com "
         "https://fonts.googleapis.com https://unpkg.com; "
-        "img-src 'self' data: https:; "
+        "img-src 'self' data: https: https://*.google-analytics.com; "
         "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; "
         "connect-src 'self' https://*.google-analytics.com https://www.google.com https://www.gstatic.com; "
-        "frame-src 'self' https://www.google.com https://recaptcha.google.com; "
+        "frame-src 'self' https://www.google.com https://recaptcha.google.com https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; "
         "form-action 'self';"
     )
     response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
@@ -76,50 +76,65 @@ def sitemap_xml():
 @app.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
-        # Honeypot check
-        if request.form.get("website"):
-            flash("Bot detected. Access denied.", "error")
-            return redirect(url_for("home") + "#contact")
-
-        # Verify reCAPTCHA
-        recaptcha_response = request.form.get("g-recaptcha-response")
-        if not recaptcha_response:
-            flash("Please complete the reCAPTCHA.", "error")
-            return redirect(url_for("home") + "#contact")
-
-        verify_response = requests.post(
-            "https://www.google.com/recaptcha/api/siteverify",
-            data={
-                "secret": RECAPTCHA_SECRET_KEY,
-                "response": recaptcha_response
-            }
-        ).json()
-
-        if not verify_response.get("success"):
-            flash("reCAPTCHA verification failed. Please try again.", "error")
-            return redirect(url_for("home") + "#contact")
-
-        name = request.form.get("name", "").strip()
-        email = request.form.get("email", "").strip()
-        message = request.form.get("message", "").strip()
-
-        if not all([name, email, message]):
-            flash("All fields are required.", "error")
-            return redirect(url_for("home") + "#contact")
-
-        if len(name) < 2:
-            flash("Please enter a valid name.", "error")
-            return redirect(url_for("home") + "#contact")
-
-        if len(message) < 10 or len(message) > 1000:
-            flash("Message must be between 10 and 1000 characters.", "error")
-            return redirect(url_for("home") + "#contact")
-
         try:
-            msg = Message(
-                subject="Contact from tsaousidis.site",
-                recipients=[app.config['MAIL_USERNAME']],
-                body=f"""
+            # Honeypot check
+            if request.form.get("website"):
+                flash("Bot detected. Access denied.", "error")
+                return redirect(url_for("home") + "#contact")
+
+            # Verify reCAPTCHA
+            recaptcha_response = request.form.get("g-recaptcha-response")
+            if not recaptcha_response:
+                flash("Please complete the reCAPTCHA.", "error")
+                return redirect(url_for("home") + "#contact")
+
+            try:
+                verify_response = requests.post(
+                    "https://www.google.com/recaptcha/api/siteverify",
+                    data={
+                        "secret": RECAPTCHA_SECRET_KEY,
+                        "response": recaptcha_response,
+                        "remoteip": request.remote_addr
+                    },
+                    timeout=10
+                )
+                verify_response.raise_for_status()
+                verify_data = verify_response.json()
+            except requests.RequestException as e:
+                print(f"reCAPTCHA request error: {e}")
+                flash("Unable to verify reCAPTCHA right now. Please try again.", "error")
+                return redirect(url_for("home") + "#contact")
+            except ValueError as e:
+                print(f"reCAPTCHA JSON parse error: {e}")
+                flash("Invalid response from reCAPTCHA verification. Please try again.", "error")
+                return redirect(url_for("home") + "#contact")
+
+            if not verify_data.get("success"):
+                print(f"reCAPTCHA failed response: {verify_data}")
+                flash("reCAPTCHA verification failed. Please try again.", "error")
+                return redirect(url_for("home") + "#contact")
+
+            name = request.form.get("name", "").strip()
+            email = request.form.get("email", "").strip()
+            message = request.form.get("message", "").strip()
+
+            if not all([name, email, message]):
+                flash("All fields are required.", "error")
+                return redirect(url_for("home") + "#contact")
+
+            if len(name) < 2:
+                flash("Please enter a valid name.", "error")
+                return redirect(url_for("home") + "#contact")
+
+            if len(message) < 10 or len(message) > 1000:
+                flash("Message must be between 10 and 1000 characters.", "error")
+                return redirect(url_for("home") + "#contact")
+
+            try:
+                msg = Message(
+                    subject="Contact from tsaousidis.site",
+                    recipients=[app.config["MAIL_USERNAME"]],
+                    body=f"""
 New contact received from your portfolio website:
 
 From: {name} ({email})
@@ -127,14 +142,19 @@ From: {name} ({email})
 Message:
 {message}
 """
-            )
-            mail.send(msg)
-            flash("Thank you for your message! I will get back to you soon.", "success")
-            return redirect(url_for("home") + "#contact")
+                )
+                mail.send(msg)
+                flash("Thank you for your message! I will get back to you soon.", "success")
+                return redirect(url_for("home") + "#contact")
+
+            except Exception as e:
+                print(f"Error sending email: {str(e)}")
+                flash("Sorry, there was an error sending your message. Please try again later.", "error")
+                return redirect(url_for("home") + "#contact")
 
         except Exception as e:
-            print(f"Error sending email: {str(e)}")
-            flash("Sorry, there was an error sending your message. Please try again later.", "error")
+            print(f"Unhandled POST error: {str(e)}")
+            flash("Something went wrong. Please try again later.", "error")
             return redirect(url_for("home") + "#contact")
 
     return render_template("index.html", recaptcha_site_key=RECAPTCHA_SITE_KEY)
