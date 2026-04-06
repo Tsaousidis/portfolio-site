@@ -30,6 +30,18 @@ const mobileChips = mobileChipsWrap
     ? Array.from(mobileChipsWrap.querySelectorAll('.tech-chip'))
     : [];
 
+let layoutCache = new Map();
+
+function getLayout(el) {
+    if (!layoutCache.has(el)) {
+        layoutCache.set(el, {
+            rect: el.getBoundingClientRect(),
+            height: el.offsetHeight
+        });
+    }
+    return layoutCache.get(el);
+}
+
 /* =====================================================
    State and Constants
    ===================================================== */
@@ -79,8 +91,8 @@ function updateViewportMetrics() {
 function updateHeroScroll() {
     if (!hero) return;
 
-    const rect = hero.getBoundingClientRect();
-    const totalScrollable = hero.offsetHeight - viewportHeight;
+    const { rect, height } = getLayout(hero);
+    const totalScrollable = height - viewportHeight;
 
     let progress = 0;
     if (totalScrollable > 0) {
@@ -92,26 +104,31 @@ function updateHeroScroll() {
 
 function isNearViewport(el, extra = 300) {
     if (!el) return false;
-    const rect = el.getBoundingClientRect();
+    const { rect } = getLayout(el);
     return rect.bottom >= -extra && rect.top <= viewportHeight + extra;
 }
 
 function runFrameUpdates() {
+    layoutCache.clear();
 
-    if (isNearViewport(hero, 200)) {
+    if (hero && isNearViewport(hero, 200)) {
         updateHeroScroll();
     }
 
-    if (isNearViewport(projectsSection, 300)) {
+    if (projectsSection && isNearViewport(projectsSection, 300)) {
         animateProjects();
     }
 
-    if (isNearViewport(educationSection, 300)) {
-        updateEducationCards();
-    }
+    // ΜΟΝΟ desktop βαριά animations
+    if (viewportWidth > 767) {
 
-    if (isNearViewport(skillsSection, 250)) {
-        updateSkillsRows();
+        if (educationSection && isNearViewport(educationSection, 300)) {
+            updateEducationCards();
+        }
+
+        if (skillsSection && isNearViewport(skillsSection, 250)) {
+            updateSkillsRows();
+        }
     }
 
     ticking = false;
@@ -165,8 +182,8 @@ function animateProjects() {
     if (viewportWidth <= 767) return;
     if (!projectsSection || !projectsWord || !projectsBg || !projectCards.length) return;
 
-    const rect = projectsSection.getBoundingClientRect();
-    const maxScroll = projectsSection.offsetHeight - viewportHeight;
+    const { rect, height } = getLayout(projectsSection);
+    const maxScroll = height - viewportHeight;
     const scrolled = clamp(-rect.top, 0, maxScroll);
     const p = maxScroll > 0 ? scrolled / maxScroll : 0;
 
@@ -197,9 +214,9 @@ function updateEducationCards() {
         return;
     }
 
-    const rect = educationSection.getBoundingClientRect();
+    const { rect, height } = getLayout(educationSection);
     const viewportH = viewportHeight;
-    const totalScrollable = educationSection.offsetHeight - viewportH;
+    const totalScrollable = height - viewportH;
     const passed = clamp(-rect.top, 0, totalScrollable);
     const progress = totalScrollable > 0 ? passed / totalScrollable : 0;
 
@@ -240,8 +257,8 @@ function updateEducationCards() {
 function getSkillsProgress() {
     if (!skillsSection) return 0;
 
-    const rect = skillsSection.getBoundingClientRect();
-    const raw = (viewportHeight - rect.top) / (viewportHeight + rect.height);
+    const { rect, height } = getLayout(skillsSection);
+    const raw = (viewportHeight - rect.top) / (viewportHeight + height);
     return clamp(raw, 0, 1);
 }
 
@@ -262,6 +279,7 @@ function updateSkillsRows() {
    ===================================================== */
 
 window.addEventListener('load', () => {
+    document.querySelector('.hero-sticky')?.classList.add('bg-loaded');
     updateViewportMetrics();
     
     requestAnimationFrame(() => {
@@ -270,9 +288,7 @@ window.addEventListener('load', () => {
     });
 });
 
-window.addEventListener('scroll', () => {
-    scheduleFrameUpdate();
-}, { passive: true });
+window.addEventListener('scroll', scheduleFrameUpdate, { passive: true });
 
 window.addEventListener('resize', () => {
     updateViewportMetrics();

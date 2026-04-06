@@ -53,11 +53,14 @@ section#hero {
   justify-content: center;
   overflow: hidden;
   background-image:
-    linear-gradient(rgba(19, 19, 19, 0.58), rgba(19, 19, 19, 0.82)),
-    url("../images/hero/chessboard.webp");
+    none;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.hero-sticky.bg-loaded {
+    background-image: linear-gradient(hsla(0,0%,7%,.58),hsla(0,0%,7%,.82)), url(../images/hero/chessboard.webp);
 }
 
 .hero-content {
@@ -251,7 +254,6 @@ section#hero {
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.92);
   text-shadow: 0 12px 50px rgba(0, 0, 0, 0.28);
-  will-change: transform, opacity;
 }
 
 .projects-track {
@@ -432,7 +434,6 @@ section#hero {
   flex-wrap: nowrap;
   width: max-content;
   margin: 0 auto;
-  will-change: transform;
   transition: transform 0.08s linear;
 }
 
@@ -556,7 +557,6 @@ section#hero {
   box-shadow:
     0 40px 90px rgba(0, 0, 0, 0.32),
     0 10px 28px rgba(0, 0, 0, 0.16);
-  will-change: transform, opacity;
 }
 
 .education-card-inner {
