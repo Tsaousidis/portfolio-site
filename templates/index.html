@@ -796,6 +796,7 @@
                                 placeholder="Your name"
                                 type="text"
                                 name="name"
+                                value="{{ form_data.name if form_data else '' }}"
                                 required
                             />
                         </div>
@@ -808,6 +809,7 @@
                                 placeholder="your@email.com"
                                 type="email"
                                 name="email"
+                                value="{{ form_data.email if form_data else '' }}"
                                 required
                             />
                         </div>
@@ -822,7 +824,7 @@
                             rows="5"
                             name="message"
                             required
-                        ></textarea>
+                        >{{ form_data.message if form_data else '' }}</textarea>
                     </div>
 
                     <div class="contact-actions flex flex-col items-start gap-4">
