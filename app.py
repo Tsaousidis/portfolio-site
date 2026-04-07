@@ -94,9 +94,8 @@ def home():
                     data={
                         "secret": RECAPTCHA_SECRET_KEY,
                         "response": recaptcha_response,
-                        "remoteip": request.remote_addr
                     },
-                    timeout=10
+                    timeout=5
                 )
                 verify_response.raise_for_status()
                 verify_data = verify_response.json()
@@ -143,7 +142,9 @@ Message:
 {message}
 """
                 )
+                print("About to send email...")
                 mail.send(msg)
+                print("Email sent successfully.")
                 flash("Thank you for your message! I will get back to you soon.", "success")
                 return redirect(url_for("home") + "#contact")
 
