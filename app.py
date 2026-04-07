@@ -39,6 +39,7 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = os.environ.get('EMAIL_USER')
 app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASS')
 app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('EMAIL_USER')
+app.config['MAIL_TIMEOUT'] = 10
 
 mail = Mail(app)
 
@@ -133,23 +134,24 @@ def home():
                 msg = Message(
                     subject="Contact from tsaousidis.site",
                     recipients=[app.config["MAIL_USERNAME"]],
-                    body=f"""
-New contact received from your portfolio website:
+                    body=f"""New contact received from your portfolio website:
 
-From: {name} ({email})
+            From: {name} ({email})
 
-Message:
-{message}
-"""
+            Message:
+            {message}
+            """
                 )
+
                 print("About to send email...")
                 mail.send(msg)
                 print("Email sent successfully.")
+
                 flash("Thank you for your message! I will get back to you soon.", "success")
                 return redirect(url_for("home") + "#contact")
 
             except Exception as e:
-                print(f"Error sending email: {str(e)}")
+                print(f"Error sending email: {repr(e)}")
                 flash("Sorry, there was an error sending your message. Please try again later.", "error")
                 return redirect(url_for("home") + "#contact")
 
