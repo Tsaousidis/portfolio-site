@@ -307,35 +307,6 @@ if (window.visualViewport) {
    ===================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-    let recaptchaScriptLoaded = false;
-
-    function loadRecaptchaScript() {
-        if (recaptchaScriptLoaded) return;
-
-        recaptchaScriptLoaded = true;
-
-        const script = document.createElement('script');
-        script.src = 'https://www.google.com/recaptcha/api.js';
-        script.async = true;
-        script.defer = true;
-        document.head.appendChild(script);
-    }
-
-    const contactSectionEl = document.getElementById('contact');
-    if (contactSectionEl) {
-        const recaptchaObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    loadRecaptchaScript();
-                    recaptchaObserver.disconnect();
-                }
-            });
-        }, {
-            rootMargin: '300px 0px'
-        });
-
-        recaptchaObserver.observe(contactSectionEl);
-    }    
     /* Logo link scroll-to-top */
 
     const logoLink = document.querySelector('nav > a[href="#hero"]');
@@ -409,25 +380,6 @@ document.addEventListener('DOMContentLoaded', () => {
     );
 
     sections.forEach(section => observer.observe(section));
-
-    /* Contact form feedback */
-
-    const form = document.querySelector('#contact form');
-    if (form) {
-        form.addEventListener('submit', (e) => {
-            if (!form.checkValidity()) {
-                e.preventDefault();
-                form.reportValidity();
-                return;
-            }
-
-            const btn = form.querySelector('button[type="submit"]');
-            if (btn) {
-                btn.disabled = true;
-                btn.innerHTML = '<span>Sending...</span><span class="contact-button-icon">↗</span>';
-            }
-        });
-    }
 
     /* Mobile skills chips */
 
