@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory
 from flask_mail import Mail, Message
 from flask_wtf.csrf import CSRFProtect
 from dotenv import load_dotenv
@@ -6,19 +6,19 @@ import os
 import requests
 
 # Load environment variables from .env file in development
-if os.path.exists('.env'):
+if os.path.exists(".env"):
     load_dotenv()
 
 app = Flask(__name__)
 
 # Set secret key first, before any other configuration
-app.secret_key = os.environ.get('SECRET_KEY')
+app.secret_key = os.environ.get("SECRET_KEY")
 if not app.secret_key:
     raise ValueError("No SECRET_KEY set in environment variables")
 
 # reCAPTCHA configuration
-RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY')
-RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_SECRET_KEY')
+RECAPTCHA_SITE_KEY = os.environ.get("RECAPTCHA_SITE_KEY")
+RECAPTCHA_SECRET_KEY = os.environ.get("RECAPTCHA_SECRET_KEY")
 
 if not RECAPTCHA_SITE_KEY or not RECAPTCHA_SECRET_KEY:
     raise ValueError("reCAPTCHA keys not set in environment variables")
@@ -27,238 +27,192 @@ if not RECAPTCHA_SITE_KEY or not RECAPTCHA_SECRET_KEY:
 csrf = CSRFProtect(app)
 
 # Session security configurations
-app.config['SESSION_COOKIE_SECURE'] = True  # Ensure cookies only sent over HTTPS
-app.config['SESSION_COOKIE_HTTPONLY'] = True  # Prevent JavaScript access to session cookie
-app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Protect against CSRF
-app.config['PERMANENT_SESSION_LIFETIME'] = 3600  # Session timeout in seconds (1 hour)
+app.config["SESSION_COOKIE_SECURE"] = True
+app.config["SESSION_COOKIE_HTTPONLY"] = True
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+app.config["PERMANENT_SESSION_LIFETIME"] = 3600
 
 # Configure Flask-Mail
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('EMAIL_USER')
-app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASS')
-app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('EMAIL_USER')
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USERNAME"] = os.environ.get("EMAIL_USER")
+app.config["MAIL_PASSWORD"] = os.environ.get("EMAIL_PASS")
+app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("EMAIL_USER")
+app.config["MAIL_TIMEOUT"] = 10
 
 mail = Mail(app)
 
-# Security Headers
+
 @app.after_request
 def add_security_headers(response):
-    # Content Security Policy - Carefully configured to allow necessary resources
-    response.headers['Content-Security-Policy'] = "default-src 'self'; " \
-        "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com https://cdnjs.cloudflare.com https://unpkg.com https://*.google-analytics.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; " \
-        "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://unpkg.com; " \
-        "img-src 'self' data: https: https://*.google-analytics.com; " \
-        "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; " \
-        "connect-src 'self' https://*.google-analytics.com; " \
-        "frame-src 'self' https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; " \
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com "
+        "https://cdnjs.cloudflare.com https://unpkg.com https://*.google-analytics.com "
+        "https://www.google.com https://www.gstatic.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; "
+        "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com "
+        "https://fonts.googleapis.com https://unpkg.com; "
+        "img-src 'self' data: https: https://*.google-analytics.com; "
+        "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; "
+        "connect-src 'self' https://*.google-analytics.com https://www.google.com https://www.gstatic.com; "
+        "frame-src 'self' https://www.google.com https://recaptcha.google.com https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; "
         "form-action 'self';"
-    
-    # HSTS (HTTP Strict Transport Security)
-    response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
-    
-    # Prevent Clickjacking
-    response.headers['X-Frame-Options'] = 'DENY'
-    
-    # Prevent content-type sniffing
-    response.headers['X-Content-Type-Options'] = 'nosniff'
-    
-    # Referrer Policy
-    response.headers['Referrer-Policy'] = 'no-referrer-when-downgrade'
-    
+    )
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["Referrer-Policy"] = "no-referrer-when-downgrade"
     return response
 
-@app.route("/")
+
+@app.route("/robots.txt")
+def robots_txt():
+    return send_from_directory(app.root_path, "robots.txt", mimetype="text/plain")
+
+
+@app.route("/sitemap.xml")
+def sitemap_xml():
+    return send_from_directory(app.root_path, "sitemap.xml", mimetype="application/xml")
+
+
+@app.route("/", methods=["GET", "POST"])
 def home():
-    return render_template("index.html")
+    form_data = {
+        "name": "",
+        "email": "",
+        "message": ""
+    }
 
-@app.route("/projects")
-def projects():
-    my_projects = [
-        {
-            "title": "Flights Notifier",
-            "description": "A system to track and notify users about low-price flights for specific destinations using the Amadeus API, Sheety for data management, and email notifications via SMTP.",
-            "technologies": [
-                {"name": "Python", "icon": "fab fa-python"},
-                {"name": "APIs", "icon": "fas fa-cloud"},
-                {"name": "SMTP", "icon": "fas fa-envelope"},
-                {"name": "Amadeus", "icon": "fas fa-plane"}
-            ],
-            "link": "https://github.com/Tsaousidis/oop-api-flights-notifier",
-            "image": url_for('static', filename='img/flights-notifier.webp')
-        },
-        {
-            "title": "Billboard to Spotify",
-            "description": "A Python automation project that scrapes the Billboard Hot 100 chart for a user-specified date and creates a private Spotify playlist with the top 100 songs of that day.",
-            "technologies": [
-                {"name": "Python", "icon": "fab fa-python"},
-                {"name": "Web Scraping", "icon": "fas fa-spider"},
-                {"name": "Spotify", "icon": "fab fa-spotify"},
-                {"name": "APIs", "icon": "fas fa-cloud"},
-            ],
-            "link": "https://github.com/Tsaousidis/scraper-api-billboard-to-spotify",
-            "image": url_for('static', filename='img/billboard-to-spotify.webp')
-        },
-        {
-            "title": "Greek Flash Card Learning App",
-            "description": "A simple flash card application built with Python and Tkinter to help users learn Greek vocabulary. The app displays Greek words on flash cards, allowing users to test their knowledge and track progress.",
-            "technologies": [
-                {"name": "Python", "icon": "fab fa-python"},
-                {"name": "GUI", "icon": "fas fa-desktop"},
-                {"name": "Automation", "icon": "fas fa-robot"},
-                {"name": "Tkinter", "icon": "fas fa-window-maximize"},
-                {"name": "Greek Language", "icon": "fas fa-language"}
-            ],
-            "link": "https://github.com/Tsaousidis/gui-pandas-greek-flashcards",
-            "image": url_for('static', filename='img/greek-flashcards.webp')
-        },
-        {
-            "title": "ISS Real-Time Tracker",
-            "description": "This script fetches the current position of the ISS from an API and updates an interactive map every 10 seconds. The map is displayed in your browser, showing the ISS's latest location.",
-            "technologies": [
-                {"name": "Python", "icon": "fab fa-python"},
-                {"name": "API", "icon": "fas fa-cloud"},
-                {"name": "Automation", "icon": "fas fa-robot"},
-                {"name": "Folium", "icon": "fas fa-map-marked-alt"}
-            ],
-            "link": "https://github.com/Tsaousidis/api-folium-iss-tracker",
-            "image": url_for('static', filename='img/iss-tracker.webp')
-        },
-        {
-            "title": "The Classic Snake Game",
-            "description": "A fun and addictive Snake game built using Python's turtle module. Guide the snake, eat the food, grow longer, and avoid crashing into the walls or your own tail. How long can you survive?",
-            "technologies": [
-                {"name": "Python", "icon": "fab fa-python"},
-                {"name": "Game", "icon": "fas fa-gamepad"},
-                {"name": "OOP", "icon": "fas fa-cubes"}
-            ],
-            "link": "https://github.com/Tsaousidis/oop-turtle-snake-game",
-            "image": url_for('static', filename='img/turtle-snake-game.webp')
-        },
-        {
-            "title": "Password Manager",
-            "description": "A password manager built with Python and Tkinter that allows you to generate and store secure passwords efficiently.",
-            "technologies": [
-                {"name": "Python", "icon": "fab fa-python"},
-                {"name": "GUI", "icon": "fas fa-desktop"},
-                {"name": "Password Manager", "icon": "fas fa-key"},
-                {"name": "Tkinter", "icon": "fas fa-window-maximize"}
-            ],
-            "link": "https://github.com/Tsaousidis/gui-password-manager",
-            "image": url_for('static', filename='img/password-manager.webp')
-        }
-    ]
+    if request.method == "POST":
+        # Honeypot check
+        if request.form.get("website"):
+            flash("Bot detected. Access denied.", "error")
+            return render_template(
+                "index.html",
+                recaptcha_site_key=RECAPTCHA_SITE_KEY,
+                form_data=form_data
+            )
 
-    return render_template("projects.html", projects=my_projects)
-
-@app.route("/technologies")
-def technologies():
-    tech_list = [
-        {
-            "category": "Programming Languages",
-            "tech_items": ["Python", "SQL", "JavaScript", "PHP", "HTML", "CSS"]
-        },
-        {
-            "category": "Frameworks & Libraries",
-            "tech_items": [
-                "Flask", "AOS", "Typed.js", "Requests", "BeautifulSoup4", "SMTP", "Folium",
-                "Tkinter", "Turtle"
-            ]
-        },
-        {
-            "category": "Tools & Platforms",
-            "tech_items": [
-                "Git", "GitHub", "Docker", "Postman", "Camunda", "Azure", "AWS", "Render", "Flask-Mail", "Gunicorn"
-            ]
-        },
-        {
-            "category": "Data & Visualization",
-            "tech_items": ["Pandas", "NumPy", "Tableau", "Power BI", "Excel"]
-        },
-        {
-            "category": "Concepts & Methodologies",
-            "tech_items": ["OOP", "REST APIs", "BPM", "Agile", "Business Intelligence", "Data Science", "Web Apps"]
-        },
-        {
-            "category": "AI & Machine Learning",
-            "tech_items": ["Salesforce AI Fundamentals"]
-        }
-    ]
-    return render_template("technologies.html", technologies=tech_list)
-
-@app.route("/contact", methods=['GET', 'POST'])
-def contact():
-    if request.method == 'POST':
-        # CSRF token is automatically checked by flask-wtf
-        
-        # Check honeypot field - if it's filled, it's probably a bot
-        if request.form.get('website'):
-            flash('Bot detected. Access denied.', 'error')
-            return redirect(url_for('contact'))
-            
-        # Verify reCAPTCHA
-        recaptcha_response = request.form.get('g-recaptcha-response')
-        if not recaptcha_response:
-            flash('Please complete the reCAPTCHA.', 'error')
-            return render_template("contact.html", form_data=request.form, recaptcha_site_key=RECAPTCHA_SITE_KEY)
-            
-        # Verify the reCAPTCHA response with Google
-        verify_response = requests.post('https://www.google.com/recaptcha/api/siteverify', {
-            'secret': RECAPTCHA_SECRET_KEY,
-            'response': recaptcha_response
-        }).json()
-        
-        if not verify_response['success']:
-            flash('reCAPTCHA verification failed. Please try again.', 'error')
-            return render_template("contact.html", form_data=request.form, recaptcha_site_key=RECAPTCHA_SITE_KEY)
-            
-        name = request.form.get('name', '').strip()
-        email = request.form.get('email', '').strip()
-        message = request.form.get('message', '').strip()
-        
+        # Keep entered values on validation errors
         form_data = {
-            'name': name,
-            'email': email,
-            'message': message
+            "name": request.form.get("name", "").strip(),
+            "email": request.form.get("email", "").strip(),
+            "message": request.form.get("message", "").strip()
         }
-        
+
+        # reCAPTCHA presence check
+        recaptcha_response = request.form.get("g-recaptcha-response")
+        if not recaptcha_response:
+            flash("Please complete the reCAPTCHA.", "error")
+            return render_template(
+                "index.html",
+                recaptcha_site_key=RECAPTCHA_SITE_KEY,
+                form_data=form_data
+            )
+
+        # Verify reCAPTCHA with Google
+        try:
+            verify_response = requests.post(
+                "https://www.google.com/recaptcha/api/siteverify",
+                data={
+                    "secret": RECAPTCHA_SECRET_KEY,
+                    "response": recaptcha_response
+                },
+                timeout=5
+            )
+            verify_response.raise_for_status()
+            verify_data = verify_response.json()
+        except requests.RequestException as e:
+            print(f"reCAPTCHA request error: {repr(e)}")
+            flash("Unable to verify reCAPTCHA right now. Please try again.", "error")
+            return render_template(
+                "index.html",
+                recaptcha_site_key=RECAPTCHA_SITE_KEY,
+                form_data=form_data
+            )
+        except ValueError as e:
+            print(f"reCAPTCHA JSON parse error: {repr(e)}")
+            flash("Invalid response from reCAPTCHA verification. Please try again.", "error")
+            return render_template(
+                "index.html",
+                recaptcha_site_key=RECAPTCHA_SITE_KEY,
+                form_data=form_data
+            )
+
+        if not verify_data.get("success"):
+            print("reCAPTCHA failed response:", verify_data)
+            flash("reCAPTCHA verification failed. Please try again.", "error")
+            return render_template(
+                "index.html",
+                recaptcha_site_key=RECAPTCHA_SITE_KEY,
+                form_data=form_data
+            )
+
+        name = form_data["name"]
+        email = form_data["email"]
+        message = form_data["message"]
+
         # Validate inputs
         if not all([name, email, message]):
-            flash('All fields are required.', 'error')
-            return render_template("contact.html", form_data=form_data, recaptcha_site_key=RECAPTCHA_SITE_KEY)
-        
-        if len(name) < 2 or not name.replace(' ', '').isalpha():
-            flash('Please enter a valid name (letters only).', 'error')
-            return render_template("contact.html", form_data=form_data, recaptcha_site_key=RECAPTCHA_SITE_KEY)
-        
+            flash("All fields are required.", "error")
+            return render_template(
+                "index.html",
+                recaptcha_site_key=RECAPTCHA_SITE_KEY,
+                form_data=form_data
+            )
+
+        if len(name) < 2:
+            flash("Please enter a valid name.", "error")
+            return render_template(
+                "index.html",
+                recaptcha_site_key=RECAPTCHA_SITE_KEY,
+                form_data=form_data
+            )
+
         if len(message) < 10 or len(message) > 1000:
-            flash('Message must be between 10 and 1000 characters.', 'error')
-            return render_template("contact.html", form_data=form_data, recaptcha_site_key=RECAPTCHA_SITE_KEY)
-        
+            flash("Message must be between 10 and 1000 characters.", "error")
+            return render_template(
+                "index.html",
+                recaptcha_site_key=RECAPTCHA_SITE_KEY,
+                form_data=form_data
+            )
+
         try:
             msg = Message(
-                subject="contact from tsaousidis.site",
-                recipients=[app.config['MAIL_USERNAME']],
-                body=f"""
-                New contact received from your portfolio website:
-                
-                From: {name} ({email})
-                
-                Message:
-                {message}
-                """
+                subject="Contact from tsaousidis.site",
+                recipients=[app.config["MAIL_USERNAME"]],
+                body=f"""New contact received from your portfolio website:
+
+From: {name} ({email})
+
+Message:
+{message}
+"""
             )
+
+            print("About to send email...")
             mail.send(msg)
-            flash('Thank you for your feedback! I will get back to you soon.', 'success')
-            return redirect(url_for('contact'))
+            print("Email sent successfully.")
+
+            flash("Thank you for your message! I will get back to you soon.", "success")
+            return redirect(url_for("home") + "#contact")
+
         except Exception as e:
-            print(f"Error sending email: {str(e)}")
-            print(f"Mail settings: SERVER={app.config['MAIL_SERVER']}, PORT={app.config['MAIL_PORT']}, USERNAME={app.config['MAIL_USERNAME']}")
-            flash('Sorry, there was an error sending your feedback. Please try again later.', 'error')
-            return render_template("contact.html", form_data=form_data, recaptcha_site_key=RECAPTCHA_SITE_KEY)
-            
-    return render_template("contact.html", form_data={}, recaptcha_site_key=RECAPTCHA_SITE_KEY)
+            print(f"Error sending email: {repr(e)}")
+            flash("Sorry, there was an error sending your message. Please try again later.", "error")
+            return render_template(
+                "index.html",
+                recaptcha_site_key=RECAPTCHA_SITE_KEY,
+                form_data=form_data
+            )
+
+    return render_template(
+        "index.html",
+        recaptcha_site_key=RECAPTCHA_SITE_KEY,
+        form_data=form_data
+    )
+
 
 if __name__ == "__main__":
     app.run(debug=True)
