@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory
-from flask_mail import Mail, Message
 from flask_wtf.csrf import CSRFProtect
 from dotenv import load_dotenv
 import os
 import requests
+import resend
 
 # Load environment variables from .env file in development
 if os.path.exists(".env"):
@@ -32,16 +32,10 @@ app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["PERMANENT_SESSION_LIFETIME"] = 3600
 
-# Configure Flask-Mail
-app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_PORT"] = 587
-app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = os.environ.get("EMAIL_USER")
-app.config["MAIL_PASSWORD"] = os.environ.get("EMAIL_PASS")
-app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("EMAIL_USER")
-app.config["MAIL_TIMEOUT"] = 10
-
-mail = Mail(app)
+# Resend email configuration
+resend.api_key = os.environ.get("RESEND_API_KEY")
+if not resend.api_key:
+    raise ValueError("No RESEND_API_KEY set in environment variables")
 
 
 @app.after_request
@@ -179,21 +173,19 @@ def home():
             )
 
         try:
-            msg = Message(
-                subject="Contact from tsaousidis.site",
-                recipients=[app.config["MAIL_USERNAME"]],
-                body=f"""New contact received from your portfolio website:
+            params = {
+                "from": "contact@tsaousidis.site",
+                "to": ["kostastsaousbm@gmail.com"],
+                "subject": "Contact from tsaousidis.site",
+                "text": f"""New contact received from your portfolio website:
 
-From: {name} ({email})
+            From: {name} ({email})
 
-Message:
-{message}
-"""
-            )
-
-            print("About to send email...")
-            mail.send(msg)
-            print("Email sent successfully.")
+            Message:
+            {message}
+            """
+            }
+            resend.Emails.send(params)
 
             flash("Thank you for your message! I will get back to you soon.", "success")
             return redirect(url_for("home") + "#contact")
