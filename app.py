@@ -205,6 +205,11 @@ def home():
         form_data=form_data
     )
 
+@app.route("/technologies")
+@app.route("/projects")
+@app.route("/contact")
+def legacy_redirects():
+    return redirect(url_for("home"), 301)
 
 if __name__ == "__main__":
     app.run(debug=True)

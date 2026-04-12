@@ -45,6 +45,22 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicons/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicons/favicon-16x16.png') }}">
     <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/favicons/favicon-180x180.png') }}">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Konstantinos Tsaousidis",
+    "url": "https://tsaousidis.site",
+    "jobTitle": "Software Developer",
+    "description": "Software Developer focused on automation, APIs, and building data-driven applications.",
+    "sameAs": [
+        "https://www.linkedin.com/in/konstantinos-tsaousidis-1b7360225/",
+        "https://github.com/Tsaousidis"
+    ]
+    }
+    </script>     
 </head>
 
 <body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
