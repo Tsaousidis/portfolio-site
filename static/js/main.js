@@ -112,14 +112,16 @@ function runFrameUpdates() {
     layoutCache.clear();
 
     if (hero && isNearViewport(hero, 200)) {
-        updateHeroScroll();
+        if (viewportWidth > 767) {       
+            updateHeroScroll();
+        }
     }
 
     if (projectsSection && isNearViewport(projectsSection, 300)) {
         animateProjects();
     }
 
-    // ΜΟΝΟ desktop βαριά animations
+    // Only desktop heavy animations
     if (viewportWidth > 767) {
 
         if (educationSection && isNearViewport(educationSection, 300)) {
