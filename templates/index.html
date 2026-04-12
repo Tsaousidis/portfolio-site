@@ -269,6 +269,37 @@
                         </button>
                     </div>
                 </article>
+
+                <article class="project-card">
+                    <div>
+                        <div class="thumb">
+                            <img
+                                src="{{ url_for('static', filename='images/projects/portfolio-site.webp') }}"
+                                loading="lazy"
+                                decoding="async"
+                                alt="Portfolio Website preview"
+                            />
+                        </div>
+                        <h3>Personal Portfolio Website</h3>
+                        <p>
+                            A full-stack portfolio site built with Flask, featuring scroll-driven animations,
+                            CSRF protection, reCAPTCHA, email integration via Resend, and a custom CSS/Tailwind build pipeline.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="project-tags">
+                            <span>Python</span>
+                            <span>Flask</span>
+                            <span>Tailwind</span>
+                        </div>
+                        <button type="button" class="card-link card-link-static" aria-label="Private repository">
+                            Private Repository
+                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <path d="M1 11L11 1M11 1H4M11 1V8"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
@@ -421,6 +452,37 @@
 
                         <button type="button" class="project-mobile-link project-mobile-link-static" aria-label="Ask for project details">
                             Available on Request
+                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <path d="M1 11L11 1M11 1H4M11 1V8"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </article>
+
+                <article class="project-mobile-card">
+                    <div class="project-mobile-image-wrap">
+                        <img
+                            src="{{ url_for('static', filename='images/projects/portfolio-site-640.webp') }}"
+                            loading="lazy"
+                            decoding="async"
+                            alt="Portfolio Website preview"
+                            class="project-mobile-image"
+                        />
+                    </div>
+                    <div class="project-mobile-content">
+                        <span class="project-mobile-eyebrow">Full-Stack</span>
+                        <h3 class="project-mobile-title-card">Personal Portfolio Website</h3>
+                        <p class="project-mobile-text">
+                            A full-stack portfolio site built with Flask, featuring scroll-driven animations,
+                            CSRF protection, reCAPTCHA, email integration, and a custom CSS/Tailwind build pipeline.
+                        </p>
+                        <div class="project-mobile-tags">
+                            <span>Python</span>
+                            <span>Flask</span>
+                            <span>Tailwind</span>
+                        </div>
+                        <button type="button" class="project-mobile-link project-mobile-link-static" aria-label="Private repository">
+                            Private Repository
                             <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                                 <path d="M1 11L11 1M11 1H4M11 1V8"></path>
                             </svg>
