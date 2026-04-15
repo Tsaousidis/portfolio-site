@@ -174,9 +174,9 @@ def home():
 
         try:
             params = {
-                "from": "contact@tsaousidis.site",
+                "from": "contact@tsaousidis.online",
                 "to": ["kostastsaousbm@gmail.com"],
-                "subject": "Contact from tsaousidis.site",
+                "subject": "Contact from tsaousidis.online",
                 "text": f"""New contact received from your portfolio website:
 
             From: {name} ({email})

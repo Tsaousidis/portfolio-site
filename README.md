@@ -3,7 +3,7 @@
 A performance-focused, interaction-driven portfolio built with Flask and modern frontend practices.
 Designed to showcase projects through **scroll-based storytelling**, clean UI architecture, and mobile-first optimization.
 
-🔗 Live: https://tsaousidis.site
+🔗 Live: https://tsaousidis.online
 
 ---
 
@@ -129,7 +129,7 @@ The site uses a **device-aware approach**:
 
 * 💼 LinkedIn: https://www.linkedin.com/in/konstantinos-tsaousidis-1b7360225/
 * 💻 GitHub: https://github.com/Tsaousidis
-* 🌐 Portfolio: https://tsaousidis.site
+* 🌐 Portfolio: https://tsaousidis.online
 * 📧 Email: [kostastsaousbm@gmail.com](mailto:kostastsaousbm@gmail.com)
 
 ---
