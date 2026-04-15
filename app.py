@@ -37,6 +37,17 @@ resend.api_key = os.environ.get("RESEND_API_KEY")
 if not resend.api_key:
     raise ValueError("No RESEND_API_KEY set in environment variables")
 
+@app.before_request
+def redirect_old_domain():
+    old_hosts = {"tsaousidis.site", "www.tsaousidis.site"}
+    host = request.host.split(":")[0]
+
+    if host in old_hosts:
+        query = request.query_string.decode("utf-8")
+        new_url = f"https://tsaousidis.online{request.path}"
+        if query:
+            new_url += f"?{query}"
+        return redirect(new_url, code=301)
 
 @app.after_request
 def add_security_headers(response):
@@ -204,12 +215,6 @@ def home():
         recaptcha_site_key=RECAPTCHA_SITE_KEY,
         form_data=form_data
     )
-
-@app.route("/technologies")
-@app.route("/projects")
-@app.route("/contact")
-def legacy_redirects():
-    return redirect(url_for("home"), 301)
 
 if __name__ == "__main__":
     app.run(debug=True)
