@@ -161,6 +161,36 @@
                     <div>
                         <div class="thumb">
                             <img
+                                src="{{ url_for('static', filename='images/projects/music-ai-assistant.webp') }}"
+                                loading="lazy"
+                                decoding="async"
+                                alt="AI Music Recommendation Engine preview"
+                            />
+                        </div>
+                        <h3>AI Music Recommendation Engine</h3>
+                        <p>
+                            A conversational AI music discovery app that understands natural language input, refines recommendations through iterative prompts, and generates Spotify playlists in real time using Gemini AI and the Spotify API.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="project-tags">
+                            <span>Gemini AI</span>
+                            <span>Node.js</span>
+                            <span>React</span>
+                        </div>
+                        <a href="https://github.com/Tsaousidis/music-ai-assistant" class="card-link" target="_blank" rel="noopener noreferrer">
+                            View Project
+                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M1 11L11 1M11 1H4M11 1V8"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <div>
+                        <div class="thumb">
+                            <img
                                 src="{{ url_for('static', filename='images/projects/flights-notifier.webp') }}"
                                 loading="lazy"
                                 decoding="async"
@@ -180,37 +210,6 @@
                             <span>Automation</span>
                         </div>
                         <a href="https://github.com/Tsaousidis/oop-api-smtp-flights-notifier" class="card-link" target="_blank" rel="noopener noreferrer">
-                            View Project
-                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8">
-                                <path d="M1 11L11 1M11 1H4M11 1V8"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-
-                <article class="project-card">
-                    <div>
-                        <div class="thumb">
-                            <img
-                                src="{{ url_for('static', filename='images/projects/billboard-to-spotify.webp') }}"
-                                loading="lazy"
-                                decoding="async"
-                                alt="Billboard to Spotify preview"
-                            />
-                        </div>
-                        <h3>Billboard to Spotify</h3>
-                        <p>
-                            A Python automation project that scrapes the Billboard Hot 100 chart 
-                            for a user-specified date and creates a private Spotify playlist with the top 100 songs of that day.
-                        </p>
-                    </div>
-                    <div>
-                        <div class="project-tags">
-                            <span>Python</span>
-                            <span>API</span>
-                            <span>Web Scraping</span>
-                        </div>
-                        <a href="https://github.com/Tsaousidis/scraper-api-billboard-to-spotify" class="card-link" target="_blank" rel="noopener noreferrer">
                             View Project
                             <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8">
                                 <path d="M1 11L11 1M11 1H4M11 1V8"></path>
@@ -331,6 +330,42 @@
                 <article class="project-mobile-card">
                     <div class="project-mobile-image-wrap">
                         <img
+                            src="{{ url_for('static', filename='images/projects/music-ai-assistant-640.webp') }}"
+                            loading="lazy"
+                            decoding="async"
+                            alt="AI Music Recommendation Engine preview"
+                            class="project-mobile-image"
+                        />
+                    </div>
+
+                    <div class="project-mobile-content">
+                        <span class="project-mobile-eyebrow">Automation</span>
+                        <h3 class="project-mobile-title-card">AI Music Recommendation Engine</h3>
+                        <p class="project-mobile-text">
+                            A conversational AI music discovery app that understands natural language input, refines recommendations through iterative prompts, and generates Spotify playlists in real time using Gemini AI and the Spotify API.
+                        </p>
+
+                        <div class="project-mobile-tags">
+                            <span>Gemini AI</span>
+                            <span>Node.js</span>
+                            <span>React</span>
+                        </div>
+
+                        <a href="https://github.com/Tsaousidis/music-ai-assistant"
+                        class="project-mobile-link"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                            View Project
+                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <path d="M1 11L11 1M11 1H4M11 1V8"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+                                
+                <article class="project-mobile-card">
+                    <div class="project-mobile-image-wrap">
+                        <img
                             src="{{ url_for('static', filename='images/projects/flights-notifier-640.webp') }}"
                             loading="lazy"
                             decoding="async"
@@ -353,42 +388,6 @@
                         </div>
 
                         <a href="https://github.com/Tsaousidis/oop-api-smtp-flights-notifier"
-                        class="project-mobile-link"
-                        target="_blank"
-                        rel="noopener noreferrer">
-                            View Project
-                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                <path d="M1 11L11 1M11 1H4M11 1V8"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-
-                <article class="project-mobile-card">
-                    <div class="project-mobile-image-wrap">
-                        <img
-                            src="{{ url_for('static', filename='images/projects/billboard-to-spotify-640.webp') }}"
-                            loading="lazy"
-                            decoding="async"
-                            alt="Billboard to Spotify preview"
-                            class="project-mobile-image"
-                        />
-                    </div>
-
-                    <div class="project-mobile-content">
-                        <span class="project-mobile-eyebrow">Automation</span>
-                        <h3 class="project-mobile-title-card">Billboard to Spotify</h3>
-                        <p class="project-mobile-text">
-                            A Python automation project that scrapes the Billboard Hot 100 chart for a selected date and creates a private Spotify playlist with the top songs of that day.
-                        </p>
-
-                        <div class="project-mobile-tags">
-                            <span>Python</span>
-                            <span>API</span>
-                            <span>Web Scraping</span>
-                        </div>
-
-                        <a href="https://github.com/Tsaousidis/scraper-api-billboard-to-spotify"
                         class="project-mobile-link"
                         target="_blank"
                         rel="noopener noreferrer">
