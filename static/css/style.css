@@ -1618,3 +1618,69 @@ section#hero {
     transition: none !important;
   }
 }
+
+/* ── Education: fix heading/card overlap at 768–910px ── */
+@media (min-width: 768px) and (max-height: 910px) {
+    .education-heading {
+        top: 28px;
+        max-width: 55%;
+    }
+
+    .education-heading h2 {
+        font-size: clamp(1.8rem, 5vw, 2.6rem);
+        margin-bottom: 10px;
+    }
+
+    .education-heading p {
+        font-size: 0.82rem;
+        line-height: 1.55;
+    }
+
+    .education-card {
+        width: calc(100% - 40px);
+    }
+
+    /* Σπρώχνουμε τις κάρτες λίγο προς τα κάτω ώστε να μην κρύβονται από το heading */
+    .education-card-inner {
+        padding: 22px;
+        gap: 16px;
+    }
+}
+
+/* ── Projects: fix card visibility on short viewports ── */
+@media (min-width: 768px) and (max-height: 1000px) {
+    .project-card {
+        width: min(300px, 72vw);
+        padding: 1rem;
+    }
+
+    .project-card .thumb {
+        height: 110px;
+        margin-bottom: 0.6rem;
+    }
+
+    .project-card h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .project-card p {
+        font-size: 0.82rem;
+        margin-bottom: 0.6rem;
+        line-height: 1.5;
+        /* Κόβουμε το overflow αν χρειαστεί */
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .project-tags {
+        margin-bottom: 0.6rem;
+    }
+
+    .project-tags span {
+        font-size: 0.72rem;
+        padding: 0.2rem 0.5rem;
+    }
+}
