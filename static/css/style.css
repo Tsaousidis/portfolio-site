@@ -1622,7 +1622,7 @@ section#hero {
 /* ── Education: fix heading/card overlap at 768–1200px ── */
 @media (min-width: 768px) and (max-height: 1200px) {
     .education-heading {
-        top: clamp(24px, 6vh, 72px);
+        top: clamp(85px, 10vh, 120px);
     }
 
     .education-section {
@@ -1644,7 +1644,7 @@ section#hero {
     }
 
     .education-card {
-        width: calc(100% - 40px);
+        top: clamp(52%, 55%, 60%);
     }
 
     /* Σπρώχνουμε τις κάρτες λίγο προς τα κάτω ώστε να μην κρύβονται από το heading */
