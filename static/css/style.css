@@ -646,26 +646,30 @@ section#hero {
 }
 
 .education-card-1 {
-  background: linear-gradient(135deg, #0f172a 0%, #1f2937 100%);
+  background: linear-gradient(135deg, #06b6d4 0%, #075985 100%);
 }
 
 .education-card-2 {
-  background: linear-gradient(135deg, #004f58 0%, #001f24 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #1f2937 100%);
 }
 
 .education-card-3 {
-  background: linear-gradient(135deg, #4338ca 0%, #1e1b4b 100%);
+  background: linear-gradient(135deg, #004f58 0%, #001f24 100%);
 }
 
 .education-card-4 {
-  background: linear-gradient(135deg, #0f766e 0%, #134e4a 100%);
+  background: linear-gradient(135deg, #4338ca 0%, #1e1b4b 100%);
 }
 
 .education-card-5 {
+  background: linear-gradient(135deg, #0f766e 0%, #134e4a 100%);
+}
+
+.education-card-6 {
   background: linear-gradient(135deg, #7c2d12 0%, #431407 100%);
 }
 
-.education-card-6 { 
+.education-card-7 { 
   background: linear-gradient(135deg, #881337 0%, #4c0519 100%); 
 }
 
