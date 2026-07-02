@@ -673,6 +673,10 @@ section#hero {
   background: linear-gradient(135deg, #881337 0%, #4c0519 100%); 
 }
 
+.education-card-8 {
+  background: linear-gradient(135deg, #2d2b6f 0%, #0f172a 100%);
+}
+
 .education-scroll-hint {
   position: absolute;
   left: 48px;
