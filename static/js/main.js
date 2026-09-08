@@ -263,6 +263,10 @@ function updateEducationCards() {
 
     const stackOffset = viewportWidth <= 900 ? 18 : 28;
     const baseY = viewportWidth <= 900 ? -10 : 10;
+    // Center-based transforms need a height correction to align the top edges.
+    // Read all heights before writing transforms, including after a resize.
+    const cardHeights = educationCards.map(card => card.offsetHeight);
+    const anchorHeight = cardHeights[0];
 
     educationCards.forEach((card, index) => {
         const startSegment = index / educationCards.length;
@@ -278,7 +282,7 @@ function updateEducationCards() {
         }
 
         const startY = viewportH * 0.95 + index * 40;
-        const targetY = baseY + index * stackOffset;
+        const targetY = baseY + index * stackOffset + (cardHeights[index] - anchorHeight) / 2;
         const currentY = index === 0 ? targetY : lerp(startY, targetY, local);
 
         const scale = index === 0 ? 1 : lerp(0.96, 1, local);
