@@ -6,10 +6,10 @@ const root = document.documentElement;
 const hero = document.getElementById('hero');
 const pieceEntrance = document.getElementById('pieceEntrance');
 
-const projectsSection = document.querySelector('.projects-scroll');
-const projectsWord = document.querySelector('.projects-word');
-const projectsBg = document.querySelector('.projects-bg');
-const projectCards = Array.from(document.querySelectorAll('.project-card'));
+const projectsSection = document.querySelector('.depth-projects');
+const projectCards = Array.from(document.querySelectorAll('.depth-project'));
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
 
 const skillsSection = document.getElementById('skills');
 const rowA = document.getElementById('rowA');
@@ -48,8 +48,6 @@ function getLayout(el) {
 
 let ticking = false;
 
-const CARDS_START = 0.18;
-const CARDS_END = 0.80;
 const SKILLS_MOVE = 180;
 
 let viewportWidth = window.innerWidth;
@@ -147,58 +145,99 @@ function scheduleFrameUpdate() {
    Projects Scroll Animation
    ===================================================== */
 
-function cardT(p, i) {
-    const totalWindow = CARDS_END - CARDS_START;
-    const step = totalWindow / (projectCards.length + 1.8);
-    const dur = step * 3.6;
-    const start = CARDS_START + i * step;
-    return clamp((p - start) / dur, 0, 1);
-}
+const projectList = projectsSection?.querySelector('.depth-list');
+let projectRunway;
+let projectNavigation;
+let projectPinned = false;
 
-function positionCard(card, t) {
-    const vw = viewportWidth;
-    const vh = viewportHeight;
-    const et = easeInOut(t);
-
-    const startX = vw * 0.52;
-    const endX = -vw * 0.52;
-    const x = lerp(startX, endX, et);
-
-    const bottomOffset = vh * 0.28;
-    const arc = 1 - 4 * Math.pow(t - 0.5, 2);
-    const y = bottomOffset * (1 - arc) - vh * 0.24;
-
-    const rotate = lerp(22, -22, et);
-
-    let opacity = 1;
-    if (t < 0.12) opacity = t / 0.12;
-    if (t > 0.88) opacity = (1 - t) / 0.12;
-    opacity = clamp(opacity, 0, 1);
-
-    card.style.opacity = opacity;
-    card.style.transform = `translate3d(calc(-50% + ${Math.round(x)}px), calc(-50% + ${Math.round(y)}px), 0) rotate(${rotate}deg)`;
-    card.style.pointerEvents = opacity > 0.2 ? 'auto' : 'none';
+if (projectList && projectCards.length) {
+    projectRunway = document.createElement('div');
+    projectRunway.className = 'depth-runway';
+    projectRunway.style.setProperty('--project-count', projectCards.length);
+    projectList.before(projectRunway);
+    projectRunway.append(projectList);
+    projectNavigation = document.createElement('nav');
+    projectNavigation.className = 'depth-navigation';
+    projectNavigation.setAttribute('aria-label', 'Choose a project');
+    projectCards.forEach((card, index) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = String(index + 1).padStart(2, '0');
+        button.setAttribute('aria-label', card.querySelector('h3').textContent);
+        button.addEventListener('click', () => {
+            const top = window.scrollY + projectRunway.getBoundingClientRect().top;
+            const step = (projectRunway.offsetHeight - projectList.offsetHeight) / projectCards.length;
+            window.scrollTo({ top: top + (index + .2) * step, behavior: reducedMotion.matches ? 'instant' : 'smooth' });
+        });
+        projectNavigation.append(button);
+    });
+    projectList.append(projectNavigation);
 }
 
 function animateProjects() {
-    if (viewportWidth <= 767) return;
-    if (!projectsSection || !projectsWord || !projectsBg || !projectCards.length) return;
-
-    const { rect, height } = getLayout(projectsSection);
-    const maxScroll = height - viewportHeight;
-    const scrolled = clamp(-rect.top, 0, maxScroll);
-    const p = maxScroll > 0 ? scrolled / maxScroll : 0;
-
-    const wordT = clamp(p / 0.28, 0, 1);
-    projectsWord.style.transform = `translate3d(0, ${viewportHeight * 0.50 * easeInOut(wordT)}px, 0)`;
-
-    projectCards.forEach((card, i) => positionCard(card, cardT(p, i)));
-
-    const endP = clamp((p - CARDS_END) / (1 - CARDS_END), 0, 1);
-    projectsBg.style.opacity = 1;
-    projectsBg.style.transform = `scale(${1.08 - endP * 0.08})`;
-    projectsWord.style.opacity = 1;
+    if (!projectRunway) return;
+    const pin = !reducedMotion.matches && viewportWidth > 900 && viewportHeight >= 650;
+    if (pin !== projectPinned) {
+        projectPinned = pin;
+        projectsSection.classList.toggle('depth-pinned', pin);
+        layoutCache.clear();
+    }
+    if (pin) {
+        const { rect, height } = getLayout(projectRunway);
+        const distance = Math.max(1, height - projectList.offsetHeight);
+        const progress = clamp(-rect.top / distance, 0, 1) * projectCards.length;
+        // Each project rests for 55% of its chapter before the next enters.
+        const chapter = Math.floor(progress);
+        const transition = easeInOut(clamp((progress - chapter - .55) / .45, 0, 1));
+        const position = Math.min(projectCards.length - 1, chapter + transition);
+        const active = Math.round(position);
+        projectCards.forEach((card, index) => {
+            const delta = index - position;
+            const visibility = Math.max(0, 1 - Math.abs(delta));
+            card.style.opacity = visibility.toFixed(3);
+            card.style.visibility = visibility > 0 ? 'visible' : 'hidden';
+            card.style.transform = `perspective(1500px) translate3d(${delta * 70}px, ${delta * viewportHeight * .62}px, ${-Math.abs(delta) * 420}px) rotateX(${delta * -12}deg)`;
+            card.style.setProperty('--depth-scroll', (delta * 28).toFixed(2) + 'px');
+            card.style.zIndex = index === active ? '2' : '1';
+            card.inert = index !== active;
+            const button = projectNavigation.children[index];
+            button.setAttribute('aria-current', String(index === active));
+        });
+    } else {
+        projectCards.forEach(card => {
+            card.inert = false;
+            card.style.visibility = '';
+            card.style.zIndex = '';
+            const { rect } = getLayout(card);
+            const reveal = reducedMotion.matches ? 1 : easeOutCubic(clamp((viewportHeight - rect.top) / (viewportHeight * .45), 0, 1));
+            // Never conceal the focused link during keyboard navigation.
+            const visible = card.contains(document.activeElement) ? 1 : reveal;
+            card.style.opacity = (.15 + visible * .85).toFixed(3);
+            card.style.transform = `translateY(${(1 - visible) * 65}px) scale(${.96 + visible * .04})`;
+            card.style.setProperty('--depth-scroll', '0px');
+        });
+    }
 }
+
+projectCards.forEach(card => {
+    let pointerFrame = 0;
+    card.addEventListener('pointermove', event => {
+        if (reducedMotion.matches || !finePointer.matches || viewportWidth <= 900) return;
+        cancelAnimationFrame(pointerFrame);
+        pointerFrame = requestAnimationFrame(() => {
+            const rect = card.getBoundingClientRect();
+            card.style.setProperty('--tilt-y', ((event.clientX - rect.left) / rect.width * 6 - 3).toFixed(2) + 'deg');
+            card.style.setProperty('--tilt-x', (3 - (event.clientY - rect.top) / rect.height * 6).toFixed(2) + 'deg');
+        });
+    });
+    card.addEventListener('pointerleave', () => {
+        cancelAnimationFrame(pointerFrame);
+        card.style.setProperty('--tilt-x', '0deg');
+        card.style.setProperty('--tilt-y', '0deg');
+    });
+});
+reducedMotion.addEventListener('change', scheduleFrameUpdate);
+projectsSection?.addEventListener('focusin', scheduleFrameUpdate);
 
 /* =====================================================
    Education Stack Animation
@@ -338,12 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!targetEl) return;
 
-            // Άφησε το ειδικό mobile logic για το Projects να συνεχίσει να δουλεύει
-            if (window.innerWidth <= 767 && targetId === '#projects') {
-                return;
-            }
-
-            e.preventDefault();
+e.preventDefault();
 
             const top = window.scrollY + targetEl.getBoundingClientRect().top - getNavbarOffset();
 
@@ -432,17 +466,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* Mobile projects anchor override */
 
-    const allProjectsLinks = Array.from(document.querySelectorAll('a[href="#projects"]'));
-    const mobileProjectsSection = document.getElementById('projects-mobile');
-
-    allProjectsLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            if (window.innerWidth <= 767 && mobileProjectsSection) {
-                e.preventDefault();
-                mobileProjectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    });
 });
